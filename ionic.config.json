@@ -1,0 +1,7 @@
+{
+  "name": "hoop-link-front-2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
