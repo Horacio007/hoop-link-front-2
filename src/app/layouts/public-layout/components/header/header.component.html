@@ -1,0 +1,97 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="p-0">
+    <div class="flex items-center justify-between mx-2 md:mx-4 lg:mx-10 my-4">
+
+      <picture (click)="redirectHome()" class="cursor-pointer">
+        <source media="(max-width: 640px)" srcset="assets/images/logos/HOOPArtboard_59@8x.png" />
+        <img
+          src="assets/images/logos/HOOPArtboard 51@8x.png"
+          alt="Logo"
+          class="w-[16rem] md:w-64 lg:w-80 xl:w-96"
+        />
+      </picture>
+
+      <div class="hidden md:flex items-center space-x-2 lg:space-x-12">
+
+        <a href="#" class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font">
+            <ion-icon name="trophy-outline" class="text-xl"></ion-icon> <span>Jugadores</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font">
+            <ion-icon name="business-outline" class="text-xl"></ion-icon> <span>Escuelas</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font">
+            <ion-icon name="calendar-outline" class="text-xl"></ion-icon> <span>Eventos</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font">
+            <ion-icon name="star-outline" class="text-xl"></ion-icon> <span>Patrocinadores</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font">
+            <ion-icon name="briefcase-outline" class="text-xl"></ion-icon> <span>Empresas</span>
+        </a>
+
+      </div>
+      <div class="md:hidden flex items-center">
+       <ion-button
+          fill="clear"
+          id="menu-trigger"
+          class="tailwind-custom-button"
+        >
+          <ion-icon slot="icon-only" name="menu-outline" class="text-3xl text-black"></ion-icon>
+        </ion-button>
+      </div>
+
+        <ion-button
+          (click)="goLogin()"
+          shape="round"
+          size="default"
+          class="tailwind-custom-button"
+          [style]="{'--background': '#f47621', '--border-color': '#f47621'}"
+        >
+          <span class="components-font">Inicio Sesion</span>
+        </ion-button>
+
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-popover
+    trigger="menu-trigger"
+    triggerAction="click"
+    side="bottom"
+    alignment="end"
+    css-class="custom-popover-class"
+    [showBackdrop]="true"
+  >
+  <ng-template>
+    <ion-content class="ion-no-padding">
+      <ion-list lines="none">
+        <ion-item button detail="false">
+          <ion-icon slot="start" name="trophy-outline" class="mr-3"></ion-icon>
+          <ion-label>Jugadores</ion-label>
+        </ion-item>
+        <ion-item button detail="false">
+          <ion-icon slot="start" name="business-outline" class="mr-3"></ion-icon>
+          <ion-label>Escuelas</ion-label>
+        </ion-item>
+        <ion-item button detail="false">
+          <ion-icon slot="start" name="calendar-outline" class="mr-3"></ion-icon>
+          <ion-label>Eventos</ion-label>
+        </ion-item>
+        <ion-item button detail="false">
+          <ion-icon slot="start" name="star-outline" class="mr-3"></ion-icon>
+          <ion-label>Patrocinadores</ion-label>
+        </ion-item>
+        <ion-item button detail="false">
+          <ion-icon slot="start" name="briefcase-outline" class="mr-3"></ion-icon>
+          <ion-label>Empresas</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>
+</ion-content>

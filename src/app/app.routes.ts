@@ -2,12 +2,8 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
+    path: 'portal',
+    title: 'Portal | HoopLink',
+    loadComponent: () => import('./layouts/public-layout/public-portal-layout/public-portal-layout.component').then( m => m.PublicPortalLayoutComponent)
   },
 ];
