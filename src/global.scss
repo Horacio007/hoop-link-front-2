@@ -120,3 +120,12 @@ h1, h2, h3, h4, h5, h6 {
 .components-font {
   font-family: 'Bebas Neue', serif !important;
 }
+
+/* src/global.scss o layout.component.scss */
+
+.container-page-layout {
+  display: grid;
+  min-height: 100dvh;
+  /* Define el header (auto), el contenido principal (1fr), y el footer (auto) */
+  grid-template-rows: auto 1fr auto;
+}

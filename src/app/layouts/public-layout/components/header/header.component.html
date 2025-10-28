@@ -13,8 +13,8 @@
 
       <div class="hidden md:flex items-center space-x-2 lg:space-x-12">
         @for (link of listLinks; track $index) {
-          <a class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font">
-              <ion-icon [name]="link.icon" class="text-xl"></ion-icon> <span>{{ link.name }}</span>
+          <a class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font text-2xl">
+              <ion-icon [name]="link.icon"></ion-icon> <span>{{ link.name }}</span>
           </a>
         }
       </div>

@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { LogLevel } from 'src/app/core/enums';
 import { LoggerService } from 'src/app/core/services/logger/logger.service';
 import { HeaderComponent } from "../components/header/header.component";
-import { IonRouterOutlet } from "@ionic/angular/standalone";
+import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-public-portal-layout',
   templateUrl: './public-portal-layout.component.html',
   styleUrls: ['./public-portal-layout.component.scss'],
-  imports: [IonRouterOutlet, HeaderComponent],
+  imports: [HeaderComponent, FooterComponent, RouterModule],
 })
 export class PublicPortalLayoutComponent  implements OnInit {
 

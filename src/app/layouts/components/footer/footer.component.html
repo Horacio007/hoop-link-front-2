@@ -1,0 +1,60 @@
+<ion-footer class="ion-no-border">
+  <div class="bg-[#004e6d] border-t border-gray-200 p-4 sm:p-6 md:p-8">
+
+    <div class="grid grid-cols-12 lg:my-4">
+
+      <div class="col-span-12 sm:col-span-12 lg:col-span-2 flex items-center justify-center lg:justify-start mb-6 lg:mb-0">
+        <ion-img
+            src="assets/images/logos/HOOPArtboard 49@8x.png"
+            alt="Logo de HoopLink"
+            style="width: 100px; max-width: 100%; height: auto;"
+            (click)="redirectHome()"
+            [style]="{'cursor': isLegal ? '' : 'pointer'}">
+        </ion-img>
+      </div>
+
+      <div class="col-span-12 lg:col-span-10">
+        <div class="grid grid-cols-12 gap-y-8 lg:gap-y-0">
+
+          <div class="col-span-6 md:col-span-4">
+            <label for="nosotros-label" class="components-font text-white font-bold text-2xl block mb-4">Nosotros</label>
+
+            @for (section of sections; track $index) {
+              <a [routerLink]="section.route" target="_blank" class="block !text-white hover:text-orange-500 no-underline mb-2">{{section.title}}</a>
+            }
+          </div>
+
+          <div class="col-span-6 md:col-span-4">
+            <label for="servicio-cliente-label" class="components-font text-white font-bold text-2xl block mb-4">Servicio al Cliente</label>
+
+            <label for="correo-label" class="text-white block mt-2">Correo electrónico:</label>
+            <a href="mailto:hooplink2&#64;gmail.com" class="!text-white underline hover:text-orange-500 block">hooplink2&#64;gmail.com</a>
+
+            <label for="horario-atencion-label" class="text-white block mt-4">Horario de atención:</label>
+            <label class="text-white block">Lunes a Sábado de 8:00 a.m. a 6:00 p.m.</label>
+          </div>
+
+          <div class="col-span-12 md:col-span-4">
+            <label for="siguenos-label" class="components-font text-white font-bold text-2xl block mb-4">Síguenos</label>
+
+            <div class="flex flex-row space-x-12 md:space-x-4">
+              <ion-icon name="logo-instagram" class="text-4xl lg:text-5xl text-white cursor-pointer"></ion-icon>
+              <ion-icon name="logo-whatsapp" class="text-4xl lg:text-5xl text-white cursor-pointer"></ion-icon>
+              <ion-icon name="logo-youtube" class="text-4xl lg:text-5xl text-white cursor-pointer"></ion-icon>
+              <ion-icon name="logo-tiktok" class="text-4xl lg:text-5xl text-white cursor-pointer"></ion-icon>
+              <ion-icon name="logo-facebook" class="text-4xl lg:text-5xl text-white cursor-pointer"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="w-full border-t border-dashed border-white my-4"></div>
+
+    <div class="flex justify-center align-center">
+      <label for="anio-label" class="text-white text-sm">© {{anio}}, HoopLink // Estrategia, Sitio y contenido por Sport Forum</label>
+    </div>
+
+  </div>
+</ion-footer>
