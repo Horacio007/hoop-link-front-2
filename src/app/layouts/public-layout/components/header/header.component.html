@@ -12,27 +12,11 @@
       </picture>
 
       <div class="hidden md:flex items-center space-x-2 lg:space-x-12">
-
-        <a href="#" class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font">
-            <ion-icon name="trophy-outline" class="text-xl"></ion-icon> <span>Jugadores</span>
-        </a>
-
-        <a href="#" class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font">
-            <ion-icon name="business-outline" class="text-xl"></ion-icon> <span>Escuelas</span>
-        </a>
-
-        <a href="#" class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font">
-            <ion-icon name="calendar-outline" class="text-xl"></ion-icon> <span>Eventos</span>
-        </a>
-
-        <a href="#" class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font">
-            <ion-icon name="star-outline" class="text-xl"></ion-icon> <span>Patrocinadores</span>
-        </a>
-
-        <a href="#" class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font">
-            <ion-icon name="briefcase-outline" class="text-xl"></ion-icon> <span>Empresas</span>
-        </a>
-
+        @for (link of listLinks; track $index) {
+          <a class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font">
+              <ion-icon [name]="link.icon" class="text-xl"></ion-icon> <span>{{ link.name }}</span>
+          </a>
+        }
       </div>
       <div class="md:hidden flex items-center">
        <ion-button
@@ -70,26 +54,12 @@
   <ng-template>
     <ion-content class="ion-no-padding">
       <ion-list lines="none">
-        <ion-item button detail="false">
-          <ion-icon slot="start" name="trophy-outline" class="mr-3"></ion-icon>
-          <ion-label>Jugadores</ion-label>
-        </ion-item>
-        <ion-item button detail="false">
-          <ion-icon slot="start" name="business-outline" class="mr-3"></ion-icon>
-          <ion-label>Escuelas</ion-label>
-        </ion-item>
-        <ion-item button detail="false">
-          <ion-icon slot="start" name="calendar-outline" class="mr-3"></ion-icon>
-          <ion-label>Eventos</ion-label>
-        </ion-item>
-        <ion-item button detail="false">
-          <ion-icon slot="start" name="star-outline" class="mr-3"></ion-icon>
-          <ion-label>Patrocinadores</ion-label>
-        </ion-item>
-        <ion-item button detail="false">
-          <ion-icon slot="start" name="briefcase-outline" class="mr-3"></ion-icon>
-          <ion-label>Empresas</ion-label>
-        </ion-item>
+        @for (link of listLinks; track $index) {
+          <ion-item button detail="false">
+            <ion-icon slot="start" [name]="link.icon" class="mr-3"></ion-icon>
+            <ion-label>{{ link.name }}</ion-label>
+          </ion-item>
+        }
       </ion-list>
     </ion-content>
   </ng-template>

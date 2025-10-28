@@ -7,6 +7,7 @@ import { IResizeImg } from 'src/app/shared/interfaces/ui/ui.interface';
 import { redibujaImg } from 'src/app/shared/utils/ui/responsive.util';
 import { addIcons } from 'ionicons';
 import { menuOutline, trophyOutline, businessOutline, calendarOutline, starOutline, briefcaseOutline } from 'ionicons/icons';
+import { IHeader } from './interface/header.interface';
 
 @Component({
   selector: 'app-header',
@@ -27,6 +28,33 @@ export class HeaderComponent  implements OnInit, OnDestroy {
   };
 
   private readonly _contextLog = 'HeaderComponent';
+  public listLinks: IHeader[] = [
+    {
+      icon: 'trophy-outline',
+      name: 'Jugadores',
+      url: ''
+    },
+     {
+      icon: 'business-outline',
+      name: 'Escuelas',
+      url: ''
+    },
+     {
+      icon: 'calendar-outline',
+      name: 'Eventos',
+      url: ''
+    },
+     {
+      icon: 'star-outline',
+      name: 'Patrocinadores',
+      url: ''
+    },
+     {
+      icon: 'briefcase-outline',
+      name: 'Empresas',
+      url: ''
+    }
+  ];
 //#endregion
 
 //#region Constructor
@@ -42,29 +70,6 @@ export class HeaderComponent  implements OnInit, OnDestroy {
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, `Componente inicializado.`);
 
     this.widthImg = redibujaImg(this._imgWidht, 1);
-
-    // this.items = [
-    //   {
-    //     label: 'Jugadores',
-    //     icon: 'pi pi-trophy'
-    //   },
-    //   {
-    //     label: 'Escuelas',
-    //     icon: 'pi pi-building-columns'
-    //   },
-    //   {
-    //     label: 'Eventos',
-    //     icon: 'pi pi-calendar-plus'
-    //   },
-    //   {
-    //     label: 'Patrocinadores',
-    //     icon: 'pi pi-star'
-    //   },
-    //   {
-    //     label: 'Empresas',
-    //     icon: 'pi pi-briefcase'
-    //   }
-    // ];
   }
 
   ngOnDestroy(): void {

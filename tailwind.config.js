@@ -3,13 +3,21 @@
 module.exports = {
   content: [
     // Busca HTML en todas las carpetas de src (páginas, componentes, etc.)
-    "./src/**/*.{html}", 
-    
+    "./src/**/*.{html}",
+
     // Busca clases en todos los archivos TS, importante para clases dinámicas
-    "./src/**/*.{ts}", 
+    "./src/**/*.{ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      borderRadius: {
+        'xs': '2px',
+        'sm': '4px',
+        'md': '6px',
+        'lg': '8px',
+        'xl': '12px',
+      }
+    },
   },
   plugins: [],
 }
