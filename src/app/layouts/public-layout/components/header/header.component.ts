@@ -1,6 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonHeader, IonToolbar, IonButton, IonIcon, IonPopover, IonContent, IonList, IonItem, IonLabel } from "@ionic/angular/standalone";
+import { IonButton, IonIcon, IonPopover, IonContent, IonList, IonItem, IonLabel } from "@ionic/angular/standalone";
 import { LogLevel } from 'src/app/core/enums';
 import { LoggerService } from 'src/app/core/services/logger/logger.service';
 import { IResizeImg } from 'src/app/shared/interfaces/ui/ui.interface';
@@ -13,7 +13,7 @@ import { IHeader } from './interface/header.interface';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  imports: [IonLabel, IonItem, IonList, IonPopover, IonButton, IonHeader, IonToolbar, IonIcon, IonContent]
+  imports: [IonLabel, IonItem, IonList, IonPopover, IonButton, IonIcon, IonContent]
 })
 export class HeaderComponent  implements OnInit, OnDestroy {
 

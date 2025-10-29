@@ -1,0 +1,278 @@
+<ion-content [fullscreen]="true" >
+  <app-header></app-header>
+
+  <div class="max-w-screen-xl mx-auto px-4 pt-[7rem]">
+    <div class="grid grid-cols-12">
+      <div class="col-span-12 md:col-span-6 lg:col-span-7 flex items-center justify-center">
+        <div class="flex flex-col">
+          <div class="flex items-center justify-center">
+            <ion-label class="text-left text-7xl components-font" >conectando jugadores con<br> buscadores de talento</ion-label>
+          </div>
+          <br>
+          <div class="flex items-center justify-center ">
+            <ion-button (onClick)="onClickUnirse()" shape="round" size="default" class="animate-bounce" [style]="{'--background': '#f47621', '--border-color': '#f47621'}">
+              <span class="components-font">UNIRSE AHORA</span>
+            </ion-button>
+          </div>
+          <br>
+          <div class="flex items-center justify-center mb-4">
+            <p class="text-center text-xl">
+              Al hacer clic en unirse ahora o iniciar sesión <br>aceptas las <a routerLink="/legal/condiciones-uso" target="_blank">Condiciones de uso</a>,
+              la <a routerLink="/legal/politica-privacidad" target="_blank">Política de Privacidad</a><br> y la <a routerLink="/legal/politica-cookies" target="_blank">Política de Cookies</a> de HoopLink.
+            </p>
+          </div>
+          <div class="flex items-center justify-center">
+            <ion-label class="text-3xl components-font">¿TIENES LO NECESARIO?</ion-label>
+          </div>
+          <br>
+        </div>
+      </div>
+      <div class="col-span-12 md:col-span-6 lg:col-span-5 flex sm:items-center sm:justify-center items-left justify-start m-0 p-0">
+        <div class="vertical-top">
+          <ion-img
+              src="assets/images/inicio/rebote-sin-bg.png"
+              alt="Image"
+              [style.width]="widthImg"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-portal">
+    <div class="grid grid-cols-12 my-4 mx-4">
+      <div class="lg:col-span-12 col-span-12">
+        <ion-label class="components-font text-6xl flex items-center justify-center pt-4">¿Quiénes Somos?</ion-label>
+      </div>
+      <div class="col-span-12 justify-center">
+        <p class="text-center text-xl">
+          En HoopLink, vivimos y respiramos baloncesto. Somos una plataforma digital innovadora creada para conectar a jugadores,
+          entrenadores, equipos y fanáticos en un solo lugar. Nuestro objetivo es revolucionar la forma en que el baloncesto se
+          juega, se analiza y se disfruta, integrando herramientas avanzadas, contenido exclusivo.
+        </p>
+      </div>
+    </div>
+    <div class="grid grid-cols-12 my-4 mx-4">
+      <div class="lg:col-span-12 col-span-12">
+        <ion-label class="components-font text-6xl flex items-center justify-center ">Misión</ion-label>
+      </div>
+      <div class="col-span-12 justify-center">
+        <p class="text-center tamanio-letra">
+          Facilitar el acceso a tecnología, datos y conexiones estratégicas para que cada jugador y entrenador
+          pueda maximizar su potencial dentro y fuera de la cancha.
+        </p>
+      </div>
+    </div>
+    <div class="grid grid-cols-12 my-4 mx-4">
+      <div class="lg:col-span-12 col-span-12">
+        <ion-label class="components-font text-6xl flex items-center justify-center ">Visión</ion-label>
+      </div>
+      <div class="col-span-12 justify-center">
+        <p class="text-center tamanio-letra mb-2">
+          Ser la plataforma digital de referencia para el ecosistema del baloncesto, impulsando la
+          evolución del juego a través de la innovación y la comunidad.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-screen-xl mx-auto px-4">
+    <div class="grid grid-cols-12">
+      <div class="lg:col-span-12 col-span-12">
+        <ion-label class="components-font text-6xl flex items-center justify-center ">¿Porque HoopLink?</ion-label>
+      </div>
+      <div class="col-span-12 justify-center">
+        <p class="text-center tamanio-letra">
+          La mejor plataforma para optimizar la comunicación y oportunidades entre jugadores y entrenadores.
+        </p>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="grid grid-cols-12 ">
+      <div class="col-span-12">
+        <div class="grid grid-cols-12 gap-x-4 gap-y-8">
+          <div class="col-span-12 lg:col-span-4 flex">
+            <ion-card class="shadow-none rounded-lg">
+              <ion-card-header class="ion-no-padding pt-6">
+                <div class="flex items-center justify-center">
+                  <ion-icon class="!text-8xl color-encabezados" name="basketball-outline"></ion-icon>
+                </div>
+              </ion-card-header>
+
+              <ion-card-title class="py-3">
+                <div class="flex items-center justify-center ">
+                  <ion-label class="!text-4xl color-encabezados components-font">Plataforma Total</ion-label>
+                </div>
+              </ion-card-title>
+
+              <ion-card-content class="ion-padding-bottom">
+                <p class="flex items-center justify-center !text-xl text-center ">
+                  Todo el mundo del basketball en un solo lugar.
+                </p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+          <div class="col-span-12 lg:col-span-4 flex items-center justify-center">
+            <ion-card class="shadow-none rounded-lg w-full">
+              <ion-card-header class="ion-no-padding pt-6">
+                <div class="flex items-center justify-center ">
+                  <ion-icon class="!text-7xl color-encabezados" name="stats-chart-outline"></ion-icon>
+                </div>
+              </ion-card-header>
+
+              <ion-card-title class="py-3">
+                <div class="flex items-center justify-center ">
+                  <ion-label class="!text-4xl color-encabezados components-font">Análisis y  Contenido Exclusivo</ion-label>
+                </div>
+              </ion-card-title>
+
+              <ion-card-content class="ion-padding-bottom">
+                <p class="flex items-center justify-center !text-xl text-center ">
+                  Datos, estadísticas, clips y scouting.
+                </p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+          <div class="col-span-12 lg:col-span-4 flex items-center justify-center">
+            <ion-card class="shadow-none rounded-lg w-full">
+              <ion-card-header class="ion-no-padding pt-6">
+                <div class="flex items-center justify-center">
+                  <ion-icon class="!text-7xl color-encabezados" name="people-outline"></ion-icon>
+                </div>
+              </ion-card-header>
+
+              <ion-card-title class="py-3">
+                <div class="flex items-center justify-center ">
+                  <ion-label class="!text-4xl color-encabezados components-font">Conexión Global</ion-label>
+                </div>
+              </ion-card-title>
+
+              <ion-card-content class="ion-padding-bottom">
+                <p class="flex items-center justify-center !text-xl text-center ">
+                  Jugadores, entrenadores y fans en una sola comunidad.
+                </p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+          <div class="col-span-12 lg:col-span-4 flex items-center justify-center">
+            <ion-card class="shadow-none rounded-lg w-full">
+              <ion-card-header class="ion-no-padding pt-6">
+                <div class="flex items-center justify-center">
+                  <ion-icon class="!text-8xl color-encabezados" name="phone-portrait-outline"></ion-icon>
+                </div>
+              </ion-card-header>
+
+              <ion-card-title class="py-3">
+                <div class="flex items-center justify-center ">
+                  <ion-label class="!text-4xl color-encabezados components-font">Interfaz Moderna</ion-label>
+                </div>
+              </ion-card-title>
+
+              <ion-card-content class="ion-padding-bottom">
+                <p class="flex items-center justify-center !text-xl text-center ">
+                  Experiencia intuitiva y fácil de usar.
+                </p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+          <div class="col-span-12 lg:col-span-4 flex items-center justify-center">
+            <ion-card class="shadow-none rounded-lg w-full">
+              <ion-card-header class="ion-no-padding pt-6">
+                <div class="flex items-center justify-center">
+                  <ion-icon class="!text-8xl color-encabezados" name="chatbubbles-outline"></ion-icon>
+                </div>
+              </ion-card-header>
+
+              <ion-card-title class="py-3">
+                <div class="flex items-center justify-center ">
+                  <ion-label class="!text-4xl color-encabezados components-font">Comunidad Activa</ion-label>
+                </div>
+              </ion-card-title>
+
+              <ion-card-content class="ion-padding-bottom">
+                <p class="flex items-center justify-center !text-xl text-center ">
+                  Chats, foros y networking para jugadores y entrenadores.
+                </p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+           <div class="col-span-12 lg:col-span-4 flex items-center justify-center">
+            <ion-card class="shadow-none rounded-lg w-full">
+              <ion-card-header class="ion-no-padding pt-6">
+                <div class="flex items-center justify-center">
+                  <ion-icon class="!text-8xl color-encabezados" name="trophy-outline"></ion-icon>
+                </div>
+              </ion-card-header>
+
+              <ion-card-title class="py-3">
+                <div class="flex items-center justify-center ">
+                  <ion-label class="!text-4xl color-encabezados components-font">Competencias Digitales</ion-label>
+                </div>
+              </ion-card-title>
+
+              <ion-card-content class="ion-padding-bottom">
+                <p class="flex items-center justify-center !text-xl text-center ">
+                  Rankings, desafíos y retos.
+                </p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-portal my-4">
+    <div class="grid grid-cols-12 mx-4">
+      <div class="col-span-full flex justify-start">
+        <ion-label class="text-6xl components-font">Preguntas frecuentes</ion-label>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-screen-xl mx-auto px-4">
+    <div class="grid grid-cols-12 my-4">
+      <div class="lg:col-span-6 col-span-12 flex justify-center items-center h-full">
+        <ion-img
+            src="assets/images/generales/unirse-sin-bg.png"
+            alt="Image"
+            [style.width]="widthImageUnirse"
+            (click)="onClickUnirse()"
+            [style]="{'cursor': 'pointer'}"/>
+      </div>
+      <div class="lg:col-span-6 col-span-12 flex justify-center items-center h-full">
+        <div class="flex flex-col w-full">
+          <ion-card class="shadow-8 rounded-lg w-full max-w-lg">
+
+              <ion-card-title class="py-3">
+                <div class="flex items-center justify-center w-full">
+                  <ion-label class="!text-4xl color-encabezados components-font text-center">
+                      Suscribete a nuestro Newsletter
+                  </ion-label>
+                </div>
+              </ion-card-title>
+
+              <ion-card-content class="ion-padding-bottom">
+                <div class="flex border border-gray-300 rounded-lg w-full max-w-sm mx-auto shadow-md">
+
+                  <ion-input
+                      placeholder="Correo electrónico"
+                      type="email"
+                      class="flex-grow text-base border-none custom-input-style"
+                      style="--padding-start: 15px; --padding-end: 10px; --border-color: transparent;">
+                  </ion-input>
+
+                  <ion-button
+                      color="light"
+                      class="h-full rounded-r-lg rounded-l-none bg-gray-200 animate-pulse"
+                      style="--box-shadow: none; --background: transparent; height: auto;">
+                      <ion-icon name="checkmark-outline" class="text-2xl text-green-600"></ion-icon>
+                  </ion-button>
+
+                </div>
+              </ion-card-content>
+            </ion-card>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</ion-content>

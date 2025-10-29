@@ -1,0 +1,43 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="light">
+
+    <ion-title class="text-center font-bold text-base hidden md:block sm:text-base md:text-lg ion-text-wrap">
+      ¡Importante! Confirma tu correo electrónico ✅ para activar tu cuenta.
+    </ion-title>
+
+    <ion-label class="md:hidden block font-bold text-lg mx-4">
+      ¡Importante! Confirma tu correo electrónico ✅ para activar tu cuenta.
+    </ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="onDidDismiss()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="w-full mx-auto">
+    <p class="text-base text-gray-700 leading-relaxed">
+      Gracias por registrarte en HoopLink. Estamos muy contentos de tenerte a bordo 😊.<br><br>
+      Para poder iniciar sesión 🔑 y disfrutar de todas las funcionalidades de nuestra plataforma, es necesario que
+      <span class="fontBoldSpam">confirmes la validez de tu dirección de correo electrónico.</span>📧<br><br>
+      Cuando te registraste, te enviamos un mensaje a tu correo. Dentro de ese correo, encontrarás un <span class="fontBoldSapm">botón de confirmación</span> 👍.<br><br>
+      <span class="fontBoldSpam">Por favor, sigue estos sencillos pasos para activar tu cuenta:</span><br>
+    </p>
+
+    <ol class="list-decimal pl-6 mt-4 space-y-4 text-gray-700">
+      <li>
+        <span class="fontBoldSpam">Revisa tu bandeja de entrada</span> 📥. ¡No olvides mirar en la carpeta de spam o correo no deseado 🧐, a veces los correos se esconden allí!
+      </li>
+      <li>
+        <span class="fontBoldSpam">Busca el correo electrónico</span> que te enviamos con un asunto como "Bienvenido a nuestra plataforma" o "Verifica tu cuenta". ✉️
+      </li>
+      <li>
+        Haz clic en el <span class="fontBoldSpam">botón de confirmar</span> ✅ que está dentro del correo.
+      </li>
+    </ol>
+  </div>
+</ion-content>

@@ -44,7 +44,6 @@
 :root {
   /* Aplica la fuente "Raleway" a todo el cuerpo de la app */
   --ion-font-family: "Raleway", sans-serif;
-
   /* ------------------- */
   /* COLORES PRINCIPALES */
   /* ------------------- */
@@ -106,22 +105,11 @@
   --ion-border-radius: 6px;
 }
 
+
 body {
-  margin: 0;
-  padding: 0;
+ margin: 0;
+ padding: 0;
 }
-
-/* Aplica Monospace solo a los títulos (h1, h2, h3, etc.) */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Bebas Neue', serif;
-  color: #334155;
-}
-
-.components-font {
-  font-family: 'Bebas Neue', serif !important;
-}
-
-/* src/global.scss o layout.component.scss */
 
 .container-page-layout {
   display: grid;
@@ -129,3 +117,46 @@ h1, h2, h3, h4, h5, h6 {
   /* Define el header (auto), el contenido principal (1fr), y el footer (auto) */
   grid-template-rows: auto 1fr auto;
 }
+
+/* Aplica Monospace solo a los títulos (h1, h2, h3, etc.) */
+// h1, h2, h3, h4, h5, h6 {
+//   font-family: 'Bebas Neue', serif;
+//   color: #334155;
+// }
+
+.components-font {
+  font-family: 'Bebas Neue', serif;
+}
+
+.section-portal {
+  background-color: #deebf983 !important;
+}
+
+.tamanio-letra {
+  font-size: 20px;
+}
+
+.color-encabezados {
+  color: #374151;
+}
+
+.custom-modal-registro {
+  /* Por defecto, ocupa casi toda la pantalla en móvil */
+  --width: 90vw;
+  --max-width: 95vw;
+  --max-height: 90vh; /* Permite que crezca hasta el 90% del viewport */
+  --min-height: 50vh; /* Se mantiene este mínimo para que se vea bien */
+
+  /* Asegura que la alineación no lo empuje hacia arriba o abajo */
+  --justify-content: center;
+  --align-items: center;
+  --border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Estilos para el texto en negrita (reemplazo de fontBoldSpam) */
+.fontBoldSpam {
+  font-weight: 700;
+  color: var(--ion-color-primary, #3880ff); /* Usar tu color primario de Ionic */
+}
+
+/* src/global.scss o layout.component.scss */

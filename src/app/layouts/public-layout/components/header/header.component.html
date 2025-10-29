@@ -1,49 +1,43 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar class="p-0">
-    <div class="flex items-center justify-between mx-2 md:mx-4 lg:mx-10 my-4">
+<div class="flex items-center justify-between mx-4 lg:mx-10 my-4">
 
-      <picture (click)="redirectHome()" class="cursor-pointer">
-        <source media="(max-width: 640px)" srcset="assets/images/logos/HOOPArtboard_59@8x.png" />
-        <img
-          src="assets/images/logos/HOOPArtboard 51@8x.png"
-          alt="Logo"
-          class="w-[16rem] md:w-64 lg:w-80 xl:w-96"
-        />
-      </picture>
+  <picture (click)="redirectHome()" class="cursor-pointer">
+    <source media="(max-width: 640px)" srcset="assets/images/logos/HOOPArtboard_59@8x.png" />
+    <img
+      src="assets/images/logos/HOOPArtboard 51@8x.png"
+      alt="Logo"
+      class="w-[16rem] md:w-64 lg:w-80 xl:w-96"
+    />
+  </picture>
 
-      <div class="hidden md:flex items-center space-x-2 lg:space-x-12">
-        @for (link of listLinks; track $index) {
-          <a class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font text-2xl">
-              <ion-icon [name]="link.icon"></ion-icon> <span>{{ link.name }}</span>
-          </a>
-        }
-      </div>
-      <div class="md:hidden flex items-center">
-       <ion-button
-          fill="clear"
-          id="menu-trigger"
-          class="tailwind-custom-button"
-        >
-          <ion-icon slot="icon-only" name="menu-outline" class="text-3xl text-black"></ion-icon>
-        </ion-button>
-      </div>
+  <div class="hidden md:flex items-center space-x-2 lg:space-x-12">
+    @for (link of listLinks; track $index) {
+      <a class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 components-font text-2xl">
+          <ion-icon [name]="link.icon"></ion-icon> <span>{{ link.name }}</span>
+      </a>
+    }
+  </div>
+  <div class="md:hidden flex items-center">
+    <ion-button
+      fill="clear"
+      id="menu-trigger"
+      class="tailwind-custom-button"
+    >
+      <ion-icon slot="icon-only" name="menu-outline" class="text-3xl text-black"></ion-icon>
+    </ion-button>
+  </div>
 
-        <ion-button
-          (click)="goLogin()"
-          shape="round"
-          size="default"
-          class="tailwind-custom-button"
-          [style]="{'--background': '#f47621', '--border-color': '#f47621'}"
-        >
-          <span class="components-font">Inicio Sesion</span>
-        </ion-button>
+  <ion-button
+    (click)="goLogin()"
+    shape="round"
+    size="default"
+    [style]="{'--background': '#f47621', '--border-color': '#f47621'}"
+  >
+    <span class="components-font">Inicio Sesion</span>
+  </ion-button>
 
-    </div>
-  </ion-toolbar>
-</ion-header>
+</div>
 
-<ion-content>
-  <ion-popover
+<ion-popover
     trigger="menu-trigger"
     triggerAction="click"
     side="bottom"
@@ -64,4 +58,3 @@
     </ion-content>
   </ng-template>
 </ion-popover>
-</ion-content>
