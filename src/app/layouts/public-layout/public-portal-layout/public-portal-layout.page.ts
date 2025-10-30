@@ -2,8 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonFooter, IonRouterOutlet } from '@ionic/angular/standalone';
-import { HeaderComponent } from "../components/header/header.component";
-import { FooterComponent } from "../../components/footer/footer.component";
 import { LogLevel } from 'src/app/core/enums';
 import { LoggerService } from 'src/app/core/services/logger/logger.service';
 import { ViewWillEnter } from '@ionic/angular';
@@ -13,7 +11,7 @@ import { ViewWillEnter } from '@ionic/angular';
   templateUrl: './public-portal-layout.page.html',
   styleUrls: ['./public-portal-layout.page.scss'],
   standalone: true,
-  imports: [IonRouterOutlet, IonContent, IonHeader, CommonModule, FormsModule, HeaderComponent]
+  imports: [IonRouterOutlet, IonContent, CommonModule, FormsModule]
 })
 export class PublicPortalLayoutPage implements OnInit, OnDestroy, ViewWillEnter {
 

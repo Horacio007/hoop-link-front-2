@@ -11,6 +11,11 @@ export const routes: Routes = [
         pathMatch: 'full',
         loadComponent: () => import('./features/portal/pages/portal/portal.page').then( m => m.PortalPage)
       },
+      {
+        path: 'terminos-condiciones',
+        title: 'Terminos y Condiciones | HoopLink',
+        loadComponent: () => import('./features/portal/pages/terminos-condiciones/terminos-condiciones.page').then( m => m.TerminosCondicionesPage)
+      }
     ]
-  }
+  },
 ];
