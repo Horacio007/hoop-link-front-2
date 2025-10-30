@@ -33,6 +33,11 @@ export const routes: Routes = [
         title: 'Acerca de | HoopLink',
         loadComponent: () => import('./features/legal/pages/acerca-de/acerca-de.page').then( m => m.AcercaDePage)
       },
+      {
+        path: 'condiciones-uso',
+        title: 'Condiciones de Uso | HoopLink',
+        loadComponent: () => import('./features/legal/pages/condiciones-uso/condiciones-uso.page').then( m => m.CondicionesUsoPage)
+      },
     ]
   },
 ];

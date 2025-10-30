@@ -1,0 +1,170 @@
+<ion-content [fullscreen]="true">
+
+    <app-header-legal></app-header-legal>
+
+    <div class="max-w-3xl mx-auto px-4">
+
+      <h1 class="!text-5xl sm:text-5xl font-bold text-center my-6">
+        Términos y Condiciones de Uso
+      </h1>
+      <p class="text-center mb-8">Última actualización: 01-01-2025</p>
+
+      <p class="leading-relaxed mt-4 mb-8">
+        Bienvenido a HoopLink, una plataforma operada por Sport Forum, S.A.P.I. de C.V. Al acceder
+        y utilizar nuestro sitio web y servicios, aceptas los presentes Términos y Condiciones. Por
+        favor, léelos cuidadosamente antes de registrarte o utilizar nuestra plataforma.
+      </p>
+
+      <h2 class="text-3xl font-bold text-left mb-4">Índice</h2>
+      <ol class="list-decimal ml-6 mb-10">
+        @for (section of sections; track $index) {
+          <li class="my-2">
+            <a [href]="'#'+section.id" (click)="moveToSection(section.id, $event)" class="text-blue-600 underline">
+              {{section.title}}
+            </a>
+          </li>
+        }
+      </ol>
+
+      @for (section of sections; track $index) {
+        <section [id]="section.id" class="my-10">
+
+          <h3 class="text-3xl font-bold mb-4">{{section.title}}</h3>
+
+          @if (section.id === 'pol1') {
+            <p class="leading-relaxed">
+                Al registrarte en HoopLink, confirmas que:
+            </p>
+            <ul class="list-disc ml-6 mt-4 leading-relaxed">
+              <li>
+                Eres mayor de 18 años o cuentas con el consentimiento de tus padres o tutores legales si eres menor de edad.
+              </li>
+              <li>
+                Toda la información proporcionada en tu registro es veraz y actualizada.
+              </li>
+              <li>
+                Cumplirás con los presentes Términos y Condiciones, así como con las leyes aplicables.
+              </li>
+            </ul>
+          }
+
+          @if (section.id === 'pol2') {
+            <p class="leading-relaxed">
+                Para utilizar nuestra plataforma, debes crear una cuenta proporcionando información precisa, incluyendo:
+            </p>
+            <ul class="list-disc ml-6 mt-4 leading-relaxed">
+              <li>Nombre completo.</li>
+              <li>Fecha de nacimiento.</li>
+              <li>Correo electrónico válido.</li>
+              <li>Número de celular activo.</li>
+              <li>Datos deportivos y académicos, si aplican.</li>
+            </ul>
+            <p class="leading-relaxed mt-4">
+                Es tu responsabilidad mantener la confidencialidad de tus credenciales de acceso y no compartir tu cuenta con terceros.
+            </p>
+          }
+
+          @if (section.id === 'pol3') {
+            <p class="leading-relaxed">
+                Los menores de edad pueden registrarse en HoopLink únicamente con el consentimiento explícito de sus padres o tutores legales:
+            </p>
+            <ul class="list-disc ml-6 mt-4 leading-relaxed">
+              <li>
+                Los tutores son responsables de supervisar la actividad del menor en la plataforma.
+              </li>
+              <li>
+                HoopLink se reserva el derecho de solicitar comprobantes del consentimiento de los tutores en cualquier momento.
+              </li>
+            </ul>
+          }
+
+          @if (section.id === 'pol4') {
+            <p class="leading-relaxed">
+                HoopLink debe utilizarse únicamente con fines relacionados con la promoción de talento deportivo y la conexión entre jugadores y escuelas. Está prohibido:
+            </p>
+            <ul class="list-disc ml-6 mt-4 leading-relaxed">
+              <li>
+                Publicar contenido ofensivo, discriminatorio, violento o inadecuado.
+              </li>
+              <li>
+                Suplantar a otras personas o proporcionar información falsa.
+              </li>
+              <li>
+                Utilizar la plataforma para actividades ilegales o comerciales no autorizadas.
+              </li>
+            </ul>
+          }
+
+          @if (section.id === 'pol5') {
+            <p class="leading-relaxed">
+              El contenido publicado por los usuarios, como fotos, videos o comentarios, debe cumplir con
+              nuestras políticas de comunidad y no infringir derechos de terceros. Al publicar contenido
+              en HoopLink, otorgas a Sport Forum, S.A.P.I. de C.V. una licencia no exclusiva para usar,
+              almacenar y mostrar dicho contenido en la plataforma.
+            </p>
+          }
+
+          @if (section.id === 'pol6') {
+            <p class="leading-relaxed">
+              Tu privacidad es importante para nosotros. Consulta nuestra Política de Privacidad para
+              entender cómo recopilamos, usamos y protegemos tu información personal.
+            </p>
+          }
+
+          @if (section.id === 'pol7') {
+            <p class="leading-relaxed">
+              HoopLink actúa como un intermediario entre jugadores y escuelas. No garantizamos que el
+              uso de la plataforma resulte en becas, contratos u oportunidades específicas:
+            </p>
+            <ul class="list-disc ml-6 mt-4 leading-relaxed">
+              <li>
+                No somos responsables del contenido publicado por los usuarios.
+              </li>
+              <li>
+                No asumimos responsabilidad por interacciones fuera de nuestra plataforma entre
+                usuarios y terceros.
+              </li>
+            </ul>
+          }
+
+          @if (section.id === 'pol8') {
+            <p class="leading-relaxed">
+              Podemos suspender o cancelar tu cuenta sin previo aviso si incumples estos Términos y
+              Condiciones, publicas contenido inapropiado o utilizas la plataforma para fines ilegales.
+            </p>
+          }
+
+          @if (section.id === 'pol9') {
+            <p class="leading-relaxed">
+              Sport Forum, S.A.P.I. de C.V. se reserva el derecho de modificar estos Términos y Condiciones
+              en cualquier momento. Los cambios serán publicados en nuestro sitio web, y es tu
+              responsabilidad revisarlos periódicamente.
+            </p>
+          }
+
+          @if (section.id === 'pol10') {
+            <p class="leading-relaxed">
+              Si tienes preguntas o inquietudes sobre estos Términos y Condiciones, puedes contactarnos en:
+            </p>
+            <ul class="list-disc ml-6 mt-4 leading-relaxed">
+              <li>
+                Correo electrónico: hooplink2@gmail.com
+              </li>
+              <li>
+                Empresa: Sport Forum, S.A.P.I. de C.V.
+              </li>
+            </ul>
+          }
+
+          @if (section.id === 'pol11') {
+            <p class="leading-relaxed">
+              Estos Términos y Condiciones se rigen por la legislación mexicana. Cualquier controversia
+              será resuelta en los tribunales competentes de [ciudad o estado].
+            </p>
+          }
+          </section>
+        }
+    </div>
+
+    <app-footer></app-footer>
+</ion-content>
