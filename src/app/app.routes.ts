@@ -18,4 +18,21 @@ export const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'legal',
+    title: 'Legal | HoopLink',
+    loadComponent: () => import('./layouts/public-layout/public-legal-layout/public-legal-layout.page').then( m => m.PublicLegalLayoutPage),
+    children: [
+      {
+        path: '',
+        redirectTo: 'acerca-de',
+        pathMatch: 'full'
+      },
+      {
+        path: 'acerca-de',
+        title: 'Acerca de | HoopLink',
+        loadComponent: () => import('./features/legal/pages/acerca-de/acerca-de.page').then( m => m.AcercaDePage)
+      },
+    ]
+  },
 ];
