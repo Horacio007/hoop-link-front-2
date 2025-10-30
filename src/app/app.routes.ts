@@ -43,6 +43,11 @@ export const routes: Routes = [
         title: 'Política de Privacidad | HoopLink',
         loadComponent: () => import('./features/legal/pages/politica-privacidad/politica-privacidad.page').then( m => m.PoliticaPrivacidadPage)
       },
+      {
+        path: 'politica-cookies',
+        title: 'Política de Cookies | HoopLink',
+        loadComponent: () => import('./features/legal/pages/politica-cookies/politica-cookies.page').then( m => m.PoliticaCookiesPage)
+      },
     ]
   },
 ];

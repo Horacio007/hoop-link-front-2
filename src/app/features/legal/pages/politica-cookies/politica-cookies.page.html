@@ -1,0 +1,145 @@
+<ion-content [fullscreen]="true">
+
+    <app-header-legal></app-header-legal>
+
+    <div class="max-w-3xl mx-auto px-4">
+
+      <h1 class="!text-5xl components-font font-bold text-center my-6">
+        Política de Cookies
+      </h1>
+      <p class="text-center mb-8">Última actualización: 01-01-2025</p>
+
+      <p class="leading-relaxed mt-4 mb-8">
+        En HoopLink, utilizamos cookies y tecnologías similares para mejorar la experiencia de
+        nuestros usuarios, analizar el uso de nuestra plataforma y ofrecer contenido y publicidad
+        personalizada. Esta Política de Cookies explica qué son las cookies, cómo las utilizamos y
+        cómo puedes gestionarlas.
+      </p>
+
+      <h2 class="!text-3xl components-font font-bold text-left mb-4">Índice</h2>
+      <ol class="list-decimal ml-6 mb-10">
+        @for (section of sections; track $index) {
+          <li class="my-2">
+            <a [href]="'#'+section.id" (click)="moveToSection(section.id, $event)" class="text-blue-600 underline">
+              {{section.title}}
+            </a>
+          </li>
+        }
+      </ol>
+
+      @for (section of sections; track $index) {
+        <section [id]="section.id" class="my-10">
+
+          <h3 class="!text-3xl components-font font-bold mb-4">{{section.title}}</h3>
+
+          @if (section.id === 'pol1') {
+            <p class="leading-relaxed">
+              Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando
+              visitas nuestro sitio web o utilizas nuestra aplicación. Estas cookies permiten reconocer tu
+              dispositivo, recordar tus preferencias y mejorar tu experiencia de navegación.
+            </p>
+          }
+
+          @if (section.id === 'pol2') {
+            <p class="leading-relaxed">A continuación, detallamos los tipos de cookies que podemos utilizar en la plataforma:</p>
+            <ol class="list-[lower-alpha] ml-6 mt-4 leading-relaxed">
+
+              <li>
+                <p class="font-semibold mb-1">Cookies esenciales:</p>
+                <ul class="list-disc ml-6">
+                  <li>
+                    Estas cookies son necesarias para el funcionamiento de la plataforma y no pueden
+                    desactivarse en nuestros sistemas. Se utilizan para autenticar usuarios, evitar fraudes
+                    y garantizar la seguridad del sitio.
+                  </li>
+                </ul>
+              </li>
+
+              <li class="mt-4">
+                <p class="font-semibold mb-1">Cookies de rendimiento y análisis:</p>
+                <ul class="list-disc ml-6">
+                  <li>
+                    Nos ayudan a recopilar información sobre cómo los usuarios interactúan con nuestra
+                    plataforma, permitiéndonos mejorar su funcionamiento y optimizar la experiencia del usuario.
+                  </li>
+                </ul>
+              </li>
+
+              <li class="mt-4">
+                <p class="font-semibold mb-1">Cookies de funcionalidad:</p>
+                <ul class="list-disc ml-6">
+                  <li>
+                    Estas cookies permiten recordar tus preferencias, como el idioma y la región, para brindarte
+                    una experiencia personalizada.
+                  </li>
+                </ul>
+              </li>
+
+              <li class="mt-4">
+                <p class="font-semibold mb-1">Cookies de publicidad y marketing:</p>
+                <ul class="list-disc ml-6">
+                  <li>
+                    Utilizamos estas cookies para mostrar anuncios relevantes para ti, tanto en nuestro sitio
+                    como en otras páginas web. También permiten medir la efectividad de nuestras campañas publicitarias.
+                  </li>
+                </ul>
+              </li>
+            </ol>
+          }
+
+          @if (section.id === 'pol3') {
+            <p class="leading-relaxed">
+              Puedes gestionar y desactivar las cookies a través de la configuración de tu navegador. Sin
+              embargo, la desactivación de algunas cookies esenciales podría afectar el funcionamiento de la plataforma.
+            </p>
+          }
+
+          @if (section.id === 'pol4') {
+            <p class="leading-relaxed">
+              Algunas cookies en nuestra plataforma son establecidas por terceros, como proveedores de
+              análisis o socios publicitarios. Estos terceros pueden recopilar información sobre tu
+              actividad en nuestro sitio y otros sitios web.
+            </p>
+          }
+
+          @if (section.id === 'pol5') {
+            <p class="leading-relaxed">
+              Podemos actualizar esta política en cualquier momento. Te recomendamos revisarla
+              periódicamente para estar informado sobre cualquier cambio.
+            </p>
+            <p class="leading-relaxed mt-4">
+                Tomaremos las medidas necesarias, incluyendo la eliminación del contenido si corresponde.
+            </p>
+          }
+
+          @if (section.id === 'pol6') {
+            <p class="leading-relaxed">
+                Para cualquier consulta o autorización sobre el uso de la marca, por favor contacta a:
+            </p>
+            <ul class="list-disc ml-6 mt-4 leading-relaxed">
+              <li>
+                <p class="font-semibold mb-1">Correo electrónico:</p>
+                <ul class="list-disc ml-6">
+                  <li>
+                    hooplink2@gmail.com
+                  </li>
+                </ul>
+              </li>
+              <li class="mt-4">
+                <p class="font-semibold mb-1">Empresa:</p>
+                <ul class="list-disc ml-6">
+                  <li>
+                    Sport Forum, S.A.P.I. de C.V.
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          }
+
+          </section>
+      }
+
+    </div>
+
+    <app-footer></app-footer>
+</ion-content>
