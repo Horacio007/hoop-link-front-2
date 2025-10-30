@@ -48,6 +48,11 @@ export const routes: Routes = [
         title: 'Política de Cookies | HoopLink',
         loadComponent: () => import('./features/legal/pages/politica-cookies/politica-cookies.page').then( m => m.PoliticaCookiesPage)
       },
+      {
+        path: 'politica-copyright',
+        title: 'Política de Copyright | HoopLink',
+        loadComponent: () => import('./features/legal/pages/politica-copyright/politica-copyright.page').then( m => m.PoliticaCopyrightPage)
+      },
     ]
   },
 ];

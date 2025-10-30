@@ -1,0 +1,131 @@
+<ion-content [fullscreen]="true">
+  <app-header-legal></app-header-legal>
+
+  <div class="max-w-3xl mx-auto px-4">
+
+    <h1 class="!text-5xl components-font font-bold text-center my-6">
+      Política de Copyright
+    </h1>
+    <p class="text-center mb-8">Última actualización: 01-01-2025</p>
+
+    <p class="leading-relaxed mt-4 mb-8">
+      Sport Forum, S.A.P.I. de C.V., operadora de la plataforma HoopLink, se compromete a
+      proteger la propiedad intelectual de todo el contenido disponible en nuestra plataforma.
+      Esta política establece las directrices sobre el uso de nuestro contenido y los derechos asociados.
+    </p>
+
+    <h2 class="!text-3xl components-font font-bold text-left mb-4">Índice</h2>
+    <ol class="list-decimal ml-6 mb-10">
+      @for (section of sections; track $index) {
+        <li class="my-2">
+          <a [href]="'#'+section.id" (click)="moveToSection(section.id, $event)" class="text-blue-600 underline">
+            {{section.title}}
+          </a>
+        </li>
+      }
+    </ol>
+
+    @for (section of sections; track $index) {
+      <section [id]="section.id" class="my-10">
+
+        <h3 class="!text-3xl components-font font-bold mb-4">{{section.title}}</h3>
+
+        @if (section.id === 'pol1') {
+          <p class="leading-relaxed">
+            Todo el contenido presente en HoopLink, incluyendo pero no limitado a textos, gráficos,
+            logos, imágenes, videos, diseño de la plataforma y cualquier otro material, es propiedad
+            exclusiva de Sport Forum, S.A.P.I. de C.V. o de sus licenciantes. Este contenido está protegido
+            por las leyes de propiedad intelectual aplicables en México y tratados internacionales.
+          </p>
+        }
+
+        @if (section.id === 'pol2') {
+          <p class="leading-relaxed">
+            Los usuarios conservan los derechos sobre el contenido que comparten en la plataforma
+            (fotos, videos, estadísticas, etc.). Al publicar dicho contenido, el usuario otorga a HoopLink
+            una licencia no exclusiva, gratuita y global para usar, reproducir, modificar, distribuir y
+            mostrar el contenido en la plataforma con fines promocionales o operativos.
+          </p>
+        }
+
+        @if (section.id === 'pol3') {
+          <p class="leading-relaxed">
+            Los usuarios pueden acceder y utilizar el contenido de HoopLink únicamente para fines
+            personales y no comerciales. Está prohibido:
+          </p>
+          <ul class="list-disc ml-6 mt-4 leading-relaxed">
+            <li>
+              Reproducir, distribuir o modificar cualquier contenido sin autorización previa por escrito.
+            </li>
+            <li>
+              Usar el contenido para fines comerciales o lucrativos.
+            </li>
+          </ul>
+        }
+
+        @if (section.id === 'pol4') {
+          <p class="leading-relaxed">
+            Está estrictamente prohibido:
+          </p>
+          <ul class="list-disc ml-6 mt-4 leading-relaxed">
+            <li>
+              Copiar, descargar, distribuir o usar el contenido de HoopLink sin el consentimiento expreso
+              de Sport Forum, S.A.P.I. de C.V.
+            </li>
+            <li>
+              Reclamar como propio cualquier material protegido por copyright de HoopLink
+            </li>
+            <li>
+              Utilizar herramientas automatizadas para recopilar contenido de la plataforma.
+            </li>
+          </ul>
+        }
+
+        @if (section.id === 'pol5') {
+          <p class="leading-relaxed">
+            Si consideras que algún contenido de nuestra plataforma infringe tus derechos de autor, por
+            favor envíanos un reclamo a **hooplink2@gmail.com** con la siguiente información:
+          </p>
+          <ul class="list-disc ml-6 mt-4 leading-relaxed">
+            <li>
+              Descripción del contenido protegido por copyright.
+            </li>
+            <li>
+              Evidencia de que eres el propietario o representante autorizado.
+            </li>
+            <li>
+              Ubicación específica del contenido en nuestra plataforma.
+            </li>
+          </ul>
+          <p class="leading-relaxed mt-4">
+            Tomaremos las medidas necesarias, incluyendo la eliminación del contenido si corresponde.
+          </p>
+        }
+
+        @if (section.id === 'pol6') {
+          <p class="leading-relaxed">
+            HoopLink se reserva el derecho de actualizar esta política en cualquier momento. Cualquier
+            cambio será notificado a través de nuestra plataforma.
+          </p>
+        }
+
+        @if (section.id === 'pol7') {
+          <p class="leading-relaxed">
+            Para cualquier consulta o autorización sobre el uso de la marca, por favor contacta a:
+          </p>
+          <ul class="list-disc ml-6 mt-4 leading-relaxed">
+            <li>
+              <strong class="font-semibold">Correo electrónico:</strong> hooplink2@gmail.com
+            </li>
+            <li>
+              <strong class="font-semibold">Empresa:</strong> Sport Forum, S.A.P.I. de C.V.
+            </li>
+          </ul>
+        }
+
+      </section>
+    }
+  </div>
+
+  <app-footer></app-footer>
+</ion-content>
