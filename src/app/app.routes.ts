@@ -53,6 +53,16 @@ export const routes: Routes = [
         title: 'Política de Copyright | HoopLink',
         loadComponent: () => import('./features/legal/pages/politica-copyright/politica-copyright.page').then( m => m.PoliticaCopyrightPage)
       },
+      {
+        path: 'politica-marca',
+        title: 'Política de Marca | HoopLink',
+        loadComponent: () => import('./features/legal/pages/politica-marca/politica-marca.page').then( m => m.PoliticaMarcaPage)
+      },
     ]
+  },
+  {
+    path: '',
+    redirectTo: '/portal',
+    pathMatch: 'full',
   },
 ];

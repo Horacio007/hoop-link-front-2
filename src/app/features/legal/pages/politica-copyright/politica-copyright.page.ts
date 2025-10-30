@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent } from '@ionic/angular/standalone';
 import { HeaderLegalComponent } from "src/app/layouts/public-layout/components/header-legal/header-legal.component";
 import { FooterComponent } from "src/app/layouts/components/footer/footer.component";
 import { ViewWillEnter } from '@ionic/angular';
@@ -14,7 +14,7 @@ import { removeClass } from 'src/app/shared/utils/ui/design.util';
   templateUrl: './politica-copyright.page.html',
   styleUrls: ['./politica-copyright.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, HeaderLegalComponent, FooterComponent]
+  imports: [IonContent, CommonModule, FormsModule, HeaderLegalComponent, FooterComponent]
 })
 export class PoliticaCopyrightPage implements OnInit, OnDestroy, ViewWillEnter {
 
@@ -41,7 +41,7 @@ export class PoliticaCopyrightPage implements OnInit, OnDestroy, ViewWillEnter {
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
   }
 
-   ionViewWillEnter() {
+  ionViewWillEnter() {
     this._logger.log(LogLevel.Info, `${this._contextLog} >> ionViewWillEnter`, 'La vista está a punto de entrar (cargando datos).');
   }
 

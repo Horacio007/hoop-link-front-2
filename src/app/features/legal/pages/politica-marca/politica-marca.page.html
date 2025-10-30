@@ -1,0 +1,255 @@
+<ion-content [fullscreen]="true">
+  <app-header-legal></app-header-legal>
+
+    <div class="max-w-3xl mx-auto px-4">
+
+      <h1 class="!text-5xl components-font font-bold text-center my-6">
+        Política de Marca
+      </h1>
+      <p class="text-center mb-8">Última actualización: 01-01-2025</p>
+
+      <p class="leading-relaxed mt-4 mb-8">
+        La presente política de marca establece las directrices para el uso correcto de la identidad
+        visual y comunicativa de HoopLink, una plataforma operada por Sport Forum, S.A.P.I. de C.V.
+        El objetivo es garantizar la coherencia y protección de la marca en todos los puntos de contacto.
+      </p>
+
+      <h2 class="!text-3xl components-font font-bold text-left mb-4">Índice</h2>
+      <ol class="list-decimal ml-6 mb-10">
+        @for (section of sections; track $index) {
+          <li class="my-2">
+            <a [href]="'#'+section.id" (click)="moveToSection(section.id, $event)" class="text-blue-600 underline">
+              {{section.title}}
+            </a>
+          </li>
+        }
+      </ol>
+
+      @for (section of sections; track $index) {
+        <section [id]="section.id" class="my-10">
+
+          <h3 class="!text-3xl components-font font-bold mb-4">{{section.title}}</h3>
+
+          @if (section.id === 'pol1') {
+            <p class="font-semibold mb-2">Misión:</p>
+            <ul class="list-disc ml-6 leading-relaxed">
+              <li>Conectar talento deportivo con oportunidades académicas.</li>
+            </ul>
+
+            <p class="font-semibold mt-4 mb-2">Visión:</p>
+            <ul class="list-disc ml-6 leading-relaxed">
+              <li>Ser la plataforma líder en impulsar a jugadores hacia su máximo potencial, creando conexiones entre escuelas y deportistas.</li>
+            </ul>
+
+            <p class="font-semibold mt-4 mb-2">Valores:</p>
+            <ul class="list-disc ml-6 leading-relaxed">
+              <li>Innovación, profesionalismo, accesibilidad, transparencia y compromiso con el desarrollo deportivo y académico.</li>
+            </ul>
+          }
+
+            @if (section.id === 'pol2') {
+              <p class="font-semibold mb-2">Versiones del Logo:</p>
+              <ol class="list-decimal ml-6 leading-relaxed">
+                <li>
+                  <p class="font-medium mb-1">Principal:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Logo completo en colores oficiales.</li>
+                  </ul>
+                </li>
+                <li class="mt-3">
+                  <p class="font-medium mb-1">Monocromático:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Para fondos oscuros o claros, usar versiones en blanco y negro.</li>
+                  </ul>
+                </li>
+                <li class="mt-3">
+                  <p class="font-medium mb-1">Variantes:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Logo horizontal y vertical disponibles según el formato.</li>
+                  </ul>
+                </li>
+              </ol>
+
+              <p class="font-semibold mt-6 mb-2">Normas de Uso del Logo:</p>
+              <ul class="list-disc ml-6 leading-relaxed">
+                <li>
+                  <p class="font-medium mb-1">Espacio de seguridad:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Dejar al menos un margen equivalente al alto de la letra "H" alrededor del logo.</li>
+                  </ul>
+                </li>
+                <li class="mt-3">
+                  <p class="font-medium mb-1">Tamaño mínimo:</p>
+                  <ul class="list-disc ml-6">
+                    <li>El logo no debe ser menor a 50 px de altura para garantizar su legibilidad.</li>
+                  </ul>
+                </li>
+                <li class="mt-3">
+                  <p class="font-medium mb-1">Colores permitidos:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Sólo se utilizarán los colores oficiales de la marca.</li>
+                  </ul>
+                </li>
+                <li class="mt-3">
+                  <p class="font-medium mb-1">Usos prohibidos:</p>
+                  <ul class="list-disc ml-6">
+                    <li>No alterar la proporción del logo.</li>
+                    <li>No cambiar los colores oficiales.</li>
+                    <li>No añadir efectos, sombras o degradados no autorizados.</li>
+                  </ul>
+                </li>
+              </ul>
+            }
+
+            @if (section.id === 'pol3') {
+              <p class="leading-relaxed mb-2">Los colores oficiales de HoopLink son:</p>
+              <ul class="list-disc ml-6 leading-relaxed">
+                <li>
+                  <strong class="font-semibold">Naranja Intenso:</strong>
+                  <app-color-picker-personalizado
+                    [(ngModel)]="naranjaIntenso"
+                    [disabled]="true">
+                  </app-color-picker-personalizado>
+                </li>
+                <li>
+                  <strong class="font-semibold">Naranja:</strong>
+                  <app-color-picker-personalizado
+                    [(ngModel)]="naranja"
+                    [disabled]="true">
+                  </app-color-picker-personalizado>
+                </li>
+                <li>
+                  <strong class="font-semibold">Azul Profundo:</strong>
+                  <app-color-picker-personalizado
+                    [(ngModel)]="azulProdunfo"
+                    [disabled]="true">
+                  </app-color-picker-personalizado>
+                </li>
+                <li>
+                  <strong class="font-semibold">Azul Marino:</strong>
+                  <app-color-picker-personalizado
+                    [(ngModel)]="azulMarino"
+                    [disabled]="true">
+                  </app-color-picker-personalizado>
+                </li>
+                <li>
+                  <strong class="font-semibold">Azul Verde:</strong>
+                    <app-color-picker-personalizado
+                      [(ngModel)]="azulVerde"
+                      [disabled]="true">
+                    </app-color-picker-personalizado>
+                  </li>
+                <li>
+                  <strong class="font-semibold">Azul Claro:</strong>
+                    <app-color-picker-personalizado
+                    [(ngModel)]="azulClaro"
+                    [disabled]="true">
+                    </app-color-picker-personalizado>
+                  </li>
+              </ul>
+            }
+
+            @if (section.id === 'pol4') {
+              <p class="font-semibold mb-2">Fuentes Principales:</p>
+              <ul class="list-disc ml-6 leading-relaxed">
+                <li>
+                  <p class="font-medium mb-1">Títulos y encabezados:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Montserrat Bold</li>
+                  </ul>
+                </li>
+                <li class="mt-3">
+                  <p class="font-medium mb-1">Subtítulos:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Montserrat Medium</li>
+                  </ul>
+                </li>
+                <li class="mt-3">
+                  <p class="font-medium mb-1">Cuerpo de texto:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Open Sans Regular</li>
+                  </ul>
+                </li>
+              </ul>
+
+              <p class="font-semibold mt-6 mb-2">Normas:</p>
+              <ul class="list-disc ml-6 leading-relaxed">
+                <li>No combinar fuentes que no sean las oficiales.</li>
+                <li>Usar tamaños de texto claros y legibles para cada formato.</li>
+              </ul>
+            }
+
+            @if (section.id === 'pol5') {
+              <p class="leading-relaxed mb-2">HoopLink debe comunicarse de manera:</p>
+              <ul class="list-disc ml-6 leading-relaxed">
+                <li>
+                  <p class="font-medium mb-1">Profesional y accesible:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Evitar tecnicismos innecesarios.</li>
+                  </ul>
+                </li>
+                <li class="mt-3">
+                  <p class="font-medium mb-1">Inspiradora:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Enfocada en resaltar logros y oportunidades.</li>
+                  </ul>
+                </li>
+                <li class="mt-3">
+                  <p class="font-medium mb-1">Clara y directa:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Mensajes breves, con un lenguaje positivo y motivador.</li>
+                  </ul>
+                </li>
+              </ul>
+            }
+
+            @if (section.id === 'pol6') {
+              <p class="leading-relaxed mb-2">Los usos prohibidos de la marca incluyen:</p>
+              <ul class="list-disc ml-6 leading-relaxed">
+                <li>No usar el logo o elementos de la marca en materiales no autorizados.</li>
+                <li>No asociar la marca con contenido ofensivo, discriminatorio o político.</li>
+                <li>No modificar el diseño, colores o proporciones de los elementos visuales.</li>
+              </ul>
+            }
+
+            @if (section.id === 'pol7') {
+              <p class="leading-relaxed mb-2">Aplicaciones de la marca en diferentes medios:</p>
+              <ul class="list-disc ml-6 leading-relaxed">
+                <li>
+                  <p class="font-medium mb-1">Redes sociales:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Usar versiones optimizadas del logo para perfiles y publicaciones.</li>
+                    <li>Mantener colores y fuentes consistentes.</li>
+                  </ul>
+                </li>
+                <li class="mt-3">
+                  <p class="font-medium mb-1">Publicidad:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Respetar las proporciones y la paleta oficial.</li>
+                  </ul>
+                </li>
+                <li class="mt-3">
+                  <p class="font-medium mb-1">Sitio web:</p>
+                  <ul class="list-disc ml-6">
+                    <li>Garantizar que los elementos visuales sean compatibles con la identidad de marca.</li>
+                  </ul>
+                </li>
+              </ul>
+            }
+
+            @if (section.id === 'pol8') {
+              <p class="leading-relaxed mb-2">
+                Para cualquier consulta o autorización sobre el uso de la marca, por favor contacta a:
+              </p>
+              <ul class="list-disc ml-6 leading-relaxed">
+                <li><strong class="font-semibold">Correo electrónico:</strong> hooplink2@gmail.com</li>
+                <li><strong class="font-semibold">Empresa:</strong> Sport Forum, S.A.P.I. de C.V.</li>
+              </ul>
+            }
+        </section>
+      }
+
+    </div>
+
+  <app-footer></app-footer>
+</ion-content>
