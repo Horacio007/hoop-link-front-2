@@ -38,6 +38,11 @@ export const routes: Routes = [
         title: 'Condiciones de Uso | HoopLink',
         loadComponent: () => import('./features/legal/pages/condiciones-uso/condiciones-uso.page').then( m => m.CondicionesUsoPage)
       },
+      {
+        path: 'politica-privacidad',
+        title: 'Política de Privacidad | HoopLink',
+        loadComponent: () => import('./features/legal/pages/politica-privacidad/politica-privacidad.page').then( m => m.PoliticaPrivacidadPage)
+      },
     ]
   },
 ];

@@ -1,0 +1,151 @@
+<ion-content [fullscreen]="true">
+
+    <app-header-legal></app-header-legal>
+
+    <div class="max-w-3xl mx-auto px-4">
+
+      <h1 class="!text-5xl components-font font-bold text-center my-6">
+        Política de Privacidad
+      </h1>
+      <p class="text-center mb-8">Última actualización: 01-01-2025</p>
+
+      <p class="leading-relaxed mt-4 mb-8">
+        En Sport Forum, S.A.P.I. de C.V., operadora de la plataforma HoopLink, reconocemos la
+        importancia de proteger los datos personales de nuestros usuarios. Por ello,
+        nos comprometemos a cumplir con la Ley Federal de Protección de Datos Personales en
+        Posesión de los Particulares (LFPDPPP) y otras disposiciones aplicables en México.
+      </p>
+
+      <h2 class="!text-3xl components-font font-bold text-left mb-4">Índice</h2>
+      <ol class="list-decimal ml-6 mb-10">
+        @for (section of sections; track $index) {
+          <li class="my-2">
+            <a [href]="'#'+section.id" (click)="moveToSection(section.id, $event)" class="text-blue-600 underline">
+              {{section.title}}
+            </a>
+          </li>
+        }
+      </ol>
+
+      @for (section of sections; track $index) {
+        <section [id]="section.id" class="my-10">
+
+          <h3 class="!text-3xl components-font font-bold mb-4">{{section.title}}</h3>
+
+          @if (section.id === 'pol1') {
+            <p class="leading-relaxed">
+              La empresa Sport Forum, S.A.P.I. de C.V., con domicilio en [dirección física], es responsable
+              del tratamiento de los datos personales que recopilamos a través de HoopLink.
+            </p>
+          }
+
+          @if (section.id === 'pol2') {
+            <p class="leading-relaxed">
+              Para ofrecer nuestros servicios, podemos recopilar las siguientes categorías de datos personales:
+            </p>
+            <ul class="list-disc ml-6 mt-4 leading-relaxed">
+              <li>
+                Información de contacto: nombre, correo electrónico, teléfono.
+              </li>
+              <li>
+                Información deportiva: estadísticas, videos de desempeño, logros y fotografías.
+              </li>
+              <li>
+                Información académica: nivel educativo, historial académico y escuelas de interés.
+              </li>
+              <li>
+                Datos técnicos: dirección IP, cookies y datos de navegación en nuestra plataforma.
+              </li>
+            </ul>
+            <p class="leading-relaxed mt-4">
+              No recopilamos datos sensibles como información sobre religión, salud o afiliación política.
+            </p>
+          }
+
+          @if (section.id === 'pol3') {
+            <p class="leading-relaxed">
+              Los datos personales recopilados serán utilizados para:
+            </p>
+            <ul class="list-disc ml-6 mt-4 leading-relaxed">
+              <li>
+                Crear y gestionar perfiles de jugadores.
+              </li>
+              <li>
+                Conectar a los jugadores con escuelas interesadas en su desempeño deportivo.
+              </li>
+              <li>
+                Enviar notificaciones, actualizaciones y comunicaciones relacionadas con nuestros servicios.
+              </li>
+              <li>
+                Mejorar la experiencia del usuario en la plataforma.
+              </li>
+            </ul>
+          }
+
+          @if (section.id === 'pol4') {
+            <p class="leading-relaxed">
+              Con el consentimiento del usuario, los datos personales podrán ser compartidos con:
+            </p>
+            <ul class="list-disc ml-6 mt-4 leading-relaxed">
+              <li>
+                Escuelas y entrenadores interesados en el perfil del jugador.
+              </li>
+              <li>
+                Proveedores de servicios tecnológicos que apoyen la operación de la plataforma.
+              </li>
+            </ul>
+            <p class="leading-relaxed mt-4">
+              No venderemos ni transferiremos tus datos a terceros sin autorización previa.
+            </p>
+          }
+
+          @if (section.id === 'pol5') {
+            <p class="leading-relaxed">
+              En cualquier momento, el titular de los datos personales podrá ejercer sus derechos de
+              Acceso, Rectificación, Cancelación y Oposición (ARCO) mediante una solicitud enviada a
+              nuestro correo electrónico: hooplink2@gmail.com.
+            </p>
+          }
+
+          @if (section.id === 'pol6') {
+            <p class="leading-relaxed">
+              Utilizamos cookies para mejorar la funcionalidad de nuestra plataforma. Puedes
+              deshabilitarlas directamente desde la configuración de tu navegador.
+            </p>
+          }
+
+          @if (section.id === 'pol7') {
+            <p class="leading-relaxed">
+              Implementamos medidas administrativas, técnicas y físicas para proteger los datos
+              personales contra daño, pérdida, alteración, acceso no autorizado o tratamiento indebido.
+            </p>
+          }
+
+          @if (section.id === 'pol8') {
+            <p class="leading-relaxed">
+              Nos reservamos el derecho de actualizar esta política de privacidad en cualquier momento.
+              Las modificaciones serán notificadas a través de nuestro sitio web.
+            </p>
+          }
+
+          @if (section.id === 'cierre') {
+            <p class="leading-relaxed">
+              Si tienes preguntas o inquietudes sobre esta política, contáctanos en:<br>
+              <strong class="font-semibold">hooplink2@gmail.com</strong><br>
+              Sport Forum, S.A.P.I. de C.V.
+            </p>
+          }
+        </section>
+      }
+
+      <section class="my-10">
+        <p class="leading-relaxed">
+          Si tienes preguntas o inquietudes sobre esta política, contáctanos en:<br>
+          <strong class="font-semibold">hooplink2@gmail.com</strong><br>
+          Sport Forum, S.A.P.I. de C.V.
+        </p>
+      </section>
+    </div>
+
+    <app-footer></app-footer>
+</ion-content>

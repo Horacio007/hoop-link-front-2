@@ -4,7 +4,7 @@
 
     <div class="max-w-3xl mx-auto px-4">
 
-      <h1 class="!text-5xl sm:text-5xl font-bold text-center my-6">
+      <h1 class="!text-5xl font-bold text-center my-6">
         Términos y Condiciones de Uso
       </h1>
       <p class="text-center mb-8">Última actualización: 01-01-2025</p>
@@ -15,7 +15,7 @@
         favor, léelos cuidadosamente antes de registrarte o utilizar nuestra plataforma.
       </p>
 
-      <h2 class="text-3xl font-bold text-left mb-4">Índice</h2>
+      <h2 class="!text-3xl components-font font-bold text-left mb-4">Índice</h2>
       <ol class="list-decimal ml-6 mb-10">
         @for (section of sections; track $index) {
           <li class="my-2">
@@ -29,7 +29,7 @@
       @for (section of sections; track $index) {
         <section [id]="section.id" class="my-10">
 
-          <h3 class="text-3xl font-bold mb-4">{{section.title}}</h3>
+          <h3 class="!text-3xl components-font font-bold mb-4">{{section.title}}</h3>
 
           @if (section.id === 'pol1') {
             <p class="leading-relaxed">
