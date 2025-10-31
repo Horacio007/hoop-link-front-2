@@ -105,6 +105,53 @@
 
   /* Radio de Borde (Adaptando de md/lg de PrimeNG: 6px-8px) */
   --ion-border-radius: 6px;
+
+
+
+
+  /* formularios */
+
+  /*
+  target: Estiliza el ion-input cuando:
+  1. Es válido (ng-valid).
+  2. El usuario ya ha interactuado con él (ion-touched).
+  3. NO está enfocado (no tiene el cursor dentro).
+*/
+ion-input.ion-valid.ion-touched:not(.ion-focused) {
+  /*
+    --highlight-background es la variable CSS que controla la línea
+    inferior o el borde de foco en modo 'md' (Material Design).
+    Aquí la configuramos en verde (#10dc60 es el color success de Ionic).
+  */
+  --highlight-background: #10dc60 !important;
+  /*
+    --border-color es la variable para el borde en inputs de tipo 'fill' o 'outline'.
+    Si usas el modo iOS, el borde completo se pondrá verde.
+  */
+  --border-color: #10dc60 !important;
+}
+
+/* Opcional: Para mantener el texto/label verde */
+ion-input.ion-valid.ion-touched:not(.ion-focused) .label-text {
+  color: #10dc60 !important;
+}
+
+/* Apunta a las clases de Angular Forms */
+ion-item.ng-valid.ng-touched:not(.ion-focused) {
+  /* ¡Importante! Reemplaza la variable CSS de Ionic */
+  --border-color: #10dc60;
+  /* Si el color no cambia, usa la propiedad CSS nativa del shadow DOM */
+  /* Revisa la documentación o inspecciona el elemento si esto no funciona */
+}
+
+/*
+  Para forzar el color verde cuando está enfocado Y es válido,
+  así no se pierde el color si el foco cambia a otro.
+*/
+ion-input.ion-focused.ion-valid {
+  --highlight-background: #10dc60 !important;
+  --border-color: #10dc60 !important;
+}
 }
 
 /* ========================> Estilos generales <======================== */
@@ -147,9 +194,26 @@ body {
   background-color: #deebf9;
 }
 
+.campoErrorTexto {
+  color: #dc2626;
+}
+
 /* ========================> Estilos modales <======================== */
 
 .custom-modal-registro {
+  /* Por defecto, ocupa casi toda la pantalla en móvil */
+  --width: 90vw;
+  --max-width: 95vw;
+  --max-height: 90vh; /* Permite que crezca hasta el 90% del viewport */
+  --min-height: 50vh; /* Se mantiene este mínimo para que se vea bien */
+
+  /* Asegura que la alineación no lo empuje hacia arriba o abajo */
+  --justify-content: center;
+  --align-items: center;
+  --border-radius: 10px; /* Bordes redondeados */
+}
+
+.custom-modal-selects-search {
   /* Por defecto, ocupa casi toda la pantalla en móvil */
   --width: 90vw;
   --max-width: 95vw;
@@ -168,4 +232,239 @@ body {
   color: var(--ion-color-primary, #3880ff); /* Usar tu color primario de Ionic */
 }
 
-/* src/global.scss o layout.component.scss */
+/* ========================> Estilos overlay <======================== */
+
+/* Contenedor principal del overlay */
+/* global.scss */
+/* ================================================================= */
+/* 🛑 INICIO DE ESTILOS GLOBALES PARA CARGA PERSONALIZADA 🛑 */
+/* ================================================================= */
+
+.custom-loading {
+
+  /* 1. ESTILOS BASE DEL OVERLAY */
+
+  /* Puedes ajustar el color de fondo y opacidad de la cortina (backdrop) */
+  --backdrop-opacity: 0.8;
+
+  /* Asegura que el contenedor de Ionic no tenga fondo ni sombra por defecto */
+  .loading-wrapper {
+    background: transparent !important;
+    box-shadow: none !important;
+
+    /* Centrado forzado: ocupa todo el espacio para centrar tu contenido */
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* El contenedor del mensaje (donde inyectamos el HTML) debe ser limpio */
+  .loading-message {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* 2. ESTRUCTURA Y CENTRADO DE TU CONTENIDO */
+
+  /* Contenedor principal (centered-container) - Se adapta a la necesidad */
+  .centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Las dimensiones 100% ya no son necesarias si el wrapper está centrado */
+  }
+
+  /* Contenedor del contenido para apilar los loaders */
+  .centered-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* 3. ESTILOS Y ANIMACIÓN DEL LOADER 2 (Pelota rebotando) */
+
+  .loader2 {
+    position: relative;
+    width: 120px;
+    height: 90px;
+    margin: 0 auto;
+  }
+
+  .loader2:before {
+    content: "";
+    position: absolute;
+    bottom: 30px;
+    left: 50px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background: #f17621;
+    animation: loading-bounce 0.5s ease-in-out infinite alternate;
+  }
+
+  .loader2:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 7px;
+    width: 45px;
+    border-radius: 4px;
+    box-shadow: 0 5px 0 #fff, -35px 50px 0 #fff, -70px 95px 0 #fff;
+    animation: loading-step 1s ease-in-out infinite;
+  }
+
+  /* 4. ESTILOS Y ANIMACIÓN DEL LOADER 1 (Texto) */
+
+  .loader {
+    width: fit-content;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 45px;
+    text-shadow:
+      0 0 0 rgb(0 78 109),
+      0 0 0 rgb(241 118 33),
+      0 0 0 rgb(0 62 97);
+    animation: l32 1s infinite cubic-bezier(0.5,-2000,0.5,2000);
+    /* Se elimina el .loader:before y el content: attr(data-content) */
+  }
+
+  /* 5. DEFINICIÓN DE KEYFRAMES */
+
+  @keyframes loading-bounce {
+    0% { transform: scale(1, 0.7)}
+    40% { transform: scale(0.8, 1.2)}
+    60% { transform: scale(1, 1)}
+    100% { bottom: 140px }
+  }
+
+  @keyframes loading-step {
+    0% {
+      box-shadow: 0 10px 0 rgba(0,0,0,0),
+                  0 10px 0 #fff,
+                -35px 50px 0 #fff,
+                -70px 90px 0 #fff;
+    }
+    100% {
+      box-shadow: 0 10px 0 #fff,
+                -35px 50px 0 #fff,
+                -70px 90px 0 #fff,
+                -70px 90px 0 rgba(0,0,0,0);
+    }
+  }
+
+  @keyframes l32{
+    25%,100% {
+      text-shadow:
+        0.03px -0.01px 0.01px rgb(0 78 109),
+        0.02px 0.02px 0 #f17621,
+        -0.02px 0.02px 0 rgb(0 62 97);
+    }
+  }
+}
+
+/* ================================= */
+
+
+
+/* ========================> Estilos para controles de select de un tamaño largo <======================== */
+/* Puedes definir este estilo usando clases Tailwind en el div directamente,
+   o definir una clase de utilidad en tu global.css o similar. */
+.tailwind-outline-group {
+    /* Simula el borde gris de los inputs Ionic: */
+    @apply border border-gray-300 rounded-lg overflow-hidden;
+    /* Opcional: Asegura que haya un margen inferior si es necesario */
+    // @apply mb-4;
+}
+
+/* 🛑 Nuevo SCSS para ajustar la apariencia del ion-item */
+ion-list.no-border-list {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+
+    ion-item {
+        /* Quita cualquier residuo de borde que pueda quedar */
+        --border-width: 0px;
+        --inner-border-width: 0px;
+
+        /* Asegura que el padding sea uniforme (opcional, si no usas Tailwind en el item) */
+        --padding-start: 16px;
+        --padding-end: 16px;
+
+        /* Ajustar el color del texto de la selección */
+        .selected-value-display {
+            font-size: 1em;
+            color: var(--ion-color-dark, #000);
+
+            &.placeholder {
+                color: var(--ion-color-medium, #92949c);
+            }
+        }
+
+        /* Línea divisoria entre ESTADO y MUNICIPIO (opcional) */
+        &:first-child {
+            /* Añadir una línea sutil entre los dos ítems si quieres separarlos visualmente */
+            --border-width: 0;
+            --inner-border-width: 0 0 1px 0; /* Línea inferior sutil */
+            --inner-border-color: var(--ion-color-step-150, #dcdcdc);
+        }
+    }
+}
+
+/* ========================> Estilos para el datetime picker <======================== */
+/* Estilo del contenedor del campo de fecha */
+.date-input-container {
+  // margin-bottom: 10px; /* Espacio para separarlo del campo siguiente */
+  padding: 0;
+}
+
+/* Estilo del ion-item para simular el outline */
+ion-item.custom-date-item {
+    // --- Contorno (Mismo estilo que los inputs) ---
+    --background: var(--ion-background-color, #fff);
+    border: 1px solid var(--ion-color-step-300, #cccccc);
+    border-radius: 8px;
+
+    // --- Padding y Altura (Simular ion-input) ---
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --inner-padding-end: 0;
+    --min-height: 56px;
+
+    // --- Quitar líneas por defecto ---
+    --border-width: 0px !important;
+    --inner-border-width: 0px !important;
+
+    // --- Posición del contenido (etiqueta y botón de fecha) ---
+    .item-native {
+      // Usamos Flexbox para alinear la etiqueta y el botón
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      // Ajustar el padding vertical (similar al ion-input)
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+
+    // Estilo de la etiqueta
+    ion-label {
+        font-size: 1em; // Tamaño normal
+        margin: 0;
+        // Opcional: ajustar color si es necesario
+    }
+
+    // Estilo del botón de fecha (el texto "31 oct 2025")
+    ion-datetime-button {
+      // Ajustar el color del texto de la fecha si es diferente al texto principal
+      // color: var(--ion-color-dark, #000);
+    }
+
+    // Estilo al pasar el ratón (hover) o al enfocar (focus)
+    &:focus-within, &:hover {
+        border-color: var(--ion-color-primary, #3880ff);
+    }
+}
+
