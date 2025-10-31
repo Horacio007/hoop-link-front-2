@@ -106,52 +106,92 @@
   /* Radio de Borde (Adaptando de md/lg de PrimeNG: 6px-8px) */
   --ion-border-radius: 6px;
 
-
-
-
   /* formularios */
 
-  /*
-  target: Estiliza el ion-input cuando:
-  1. Es válido (ng-valid).
-  2. El usuario ya ha interactuado con él (ion-touched).
-  3. NO está enfocado (no tiene el cursor dentro).
-*/
-ion-input.ion-valid.ion-touched:not(.ion-focused) {
-  /*
-    --highlight-background es la variable CSS que controla la línea
-    inferior o el borde de foco en modo 'md' (Material Design).
-    Aquí la configuramos en verde (#10dc60 es el color success de Ionic).
+    /*
+    target: Estiliza el ion-input cuando:
+    1. Es válido (ng-valid).
+    2. El usuario ya ha interactuado con él (ion-touched).
+    3. NO está enfocado (no tiene el cursor dentro).
   */
-  --highlight-background: #10dc60 !important;
+  ion-input.ion-valid.ion-touched:not(.ion-focused) {
+    /*
+      --highlight-background es la variable CSS que controla la línea
+      inferior o el borde de foco en modo 'md' (Material Design).
+      Aquí la configuramos en verde (#10dc60 es el color success de Ionic).
+    */
+    --highlight-background: #10dc60 !important;
+    /*
+      --border-color es la variable para el borde en inputs de tipo 'fill' o 'outline'.
+      Si usas el modo iOS, el borde completo se pondrá verde.
+    */
+    --border-color: #10dc60 !important;
+  }
+
+  /* Opcional: Para mantener el texto/label verde */
+  ion-input.ion-valid.ion-touched:not(.ion-focused) .label-text {
+    color: #10dc60 !important;
+  }
+
+  /* Apunta a las clases de Angular Forms */
+  ion-item.ng-valid.ng-touched:not(.ion-focused) {
+    /* ¡Importante! Reemplaza la variable CSS de Ionic */
+    --border-color: #10dc60;
+    /* Si el color no cambia, usa la propiedad CSS nativa del shadow DOM */
+    /* Revisa la documentación o inspecciona el elemento si esto no funciona */
+  }
+
   /*
-    --border-color es la variable para el borde en inputs de tipo 'fill' o 'outline'.
-    Si usas el modo iOS, el borde completo se pondrá verde.
+    Para forzar el color verde cuando está enfocado Y es válido,
+    así no se pierde el color si el foco cambia a otro.
   */
-  --border-color: #10dc60 !important;
-}
+  ion-input.ion-focused.ion-valid {
+    --highlight-background: #10dc60 !important;
+    --border-color: #10dc60 !important;
+  }
 
-/* Opcional: Para mantener el texto/label verde */
-ion-input.ion-valid.ion-touched:not(.ion-focused) .label-text {
-  color: #10dc60 !important;
-}
+  /* --- 1. ESTADO INVÁLIDO (ROJO) --- */
+  /* Aplica al ion-item del campo de fecha (custom-date-item) y a los selects */
+  ion-item.ng-invalid.ng-touched.tailwind-outline-group,
+  ion-item.ng-invalid.ng-touched.custom-date-item,
+  ion-item.ng-invalid.ng-touched.custom-outline-item {
+      /* Usamos border-color porque estás simulando el outline con border */
+      border-color: var(--ion-color-danger, #eb445a) !important;
+  }
 
-/* Apunta a las clases de Angular Forms */
-ion-item.ng-valid.ng-touched:not(.ion-focused) {
-  /* ¡Importante! Reemplaza la variable CSS de Ionic */
-  --border-color: #10dc60;
-  /* Si el color no cambia, usa la propiedad CSS nativa del shadow DOM */
-  /* Revisa la documentación o inspecciona el elemento si esto no funciona */
-}
+  /* --- 2. ESTADO VÁLIDO (VERDE) --- */
+  ion-item.ng-valid.ng-touched:not(.ng-focused).tailwind-outline-group,
+  ion-item.ng-valid.ng-touched:not(.ng-focused).custom-date-item,
+  ion-item.ng-valid.ng-touched:not(.ng-focused).custom-outline-item {
+      /* Aquí usamos el color success de Ionic */
+      border-color: #10dc60 !important;
+  }
 
-/*
-  Para forzar el color verde cuando está enfocado Y es válido,
-  así no se pierde el color si el foco cambia a otro.
-*/
-ion-input.ion-focused.ion-valid {
-  --highlight-background: #10dc60 !important;
-  --border-color: #10dc60 !important;
-}
+  /* --- 3. ESTADO VÁLIDO y ENFOCADO (Opcional, si quieres que el verde se mantenga) --- */
+  ion-item.ng-valid.ng-focused.tailwind-outline-group,
+  ion-item.ng-valid.ng-focused.custom-date-item,
+  ion-item.ng-valid.ng-focused.custom-outline-item {
+      border-color: #10dc60 !important;
+  }
+
+  /* --- 1. ESTADO INVÁLIDO (ROJO) --- */
+  /* Cuando el ITEM es inválido y se ha tocado, haz que la etiqueta se vea roja */
+  ion-item.ng-invalid.ng-touched ion-label {
+      /* Color de peligro de Ionic */
+      color: var(--ion-color-danger, #eb445a) !important;
+  }
+
+  /* --- 2. ESTADO VÁLIDO (VERDE) --- */
+  /* Cuando el ITEM es válido y se ha tocado (y no está enfocado), haz que la etiqueta se vea verde */
+  ion-item.ng-valid.ng-touched:not(.ion-focused) ion-label {
+      /* Color de éxito (#10dc60) */
+      color: #10dc60 !important;
+  }
+
+  /* --- 3. ESTADO VÁLIDO y ENFOCADO (Opcional, para mantener el verde al hacer clic) --- */
+  ion-item.ng-valid.ion-focused ion-label {
+      color: #10dc60 !important;
+  }
 }
 
 /* ========================> Estilos generales <======================== */
@@ -371,46 +411,71 @@ body {
 /* ========================> Estilos para controles de select de un tamaño largo <======================== */
 /* Puedes definir este estilo usando clases Tailwind en el div directamente,
    o definir una clase de utilidad en tu global.css o similar. */
-.tailwind-outline-group {
-    /* Simula el borde gris de los inputs Ionic: */
-    @apply border border-gray-300 rounded-lg overflow-hidden;
-    /* Opcional: Asegura que haya un margen inferior si es necesario */
-    // @apply mb-4;
+.selects-search-outline-group {
+  /* Simula el borde gris de los inputs Ionic: */
+  @apply border border-gray-300 rounded-lg overflow-hidden;
+  /* Opcional: Asegura que haya un margen inferior si es necesario */
+  // @apply mb-4;
+}
+
+/* --- 1. Definición del Borde Gris para el Contenedor --- */
+.selects-search-validation-container {
+    /* Base: Aplica el contorno de caja gris y redondeo */
+    border: 1px solid var(--ion-color-step-300, #cccccc);
+    border-radius: 8px;
+    margin-bottom: 0px; /* Espacio con el campo siguiente */
+    overflow: hidden; /* Importante para que los border-radius funcionen correctamente en el contenido */
+
+    /* Mantenemos la etiqueta roja/verde que ya funciona */
+    &.ng-invalid.ng-touched ion-label {
+        color: var(--ion-color-danger, #eb445a) !important;
+    }
+    &.ng-valid.ng-touched:not(.ion-focused) ion-label {
+        color: #10dc60 !important;
+    }
+
+    /* 🛑 Aplicar el color de validación al BORDE del DIV 🛑 */
+    &.ng-invalid.ng-touched {
+        border-color: var(--ion-color-danger, #eb445a) !important;
+    }
+    &.ng-valid.ng-touched:not(.ng-focused) {
+        border-color: #10dc60 !important;
+    }
 }
 
 /* 🛑 Nuevo SCSS para ajustar la apariencia del ion-item */
 ion-list.no-border-list {
-    margin: 0;
-    padding: 0;
-    background: transparent;
+  margin: 0;
+  padding: 0;
+  background: transparent;
 
-    ion-item {
-        /* Quita cualquier residuo de borde que pueda quedar */
-        --border-width: 0px;
-        --inner-border-width: 0px;
+  ion-item {
+      /* Quita cualquier residuo de borde que pueda quedar */
+      --border-width: 0px;
+      --inner-border-width: 0px;
 
-        /* Asegura que el padding sea uniforme (opcional, si no usas Tailwind en el item) */
-        --padding-start: 16px;
-        --padding-end: 16px;
+      /* Asegura que el padding sea uniforme (opcional, si no usas Tailwind en el item) */
+      --padding-start: 16px;
+      --padding-end: 16px;
 
-        /* Ajustar el color del texto de la selección */
-        .selected-value-display {
-            font-size: 1em;
-            color: var(--ion-color-dark, #000);
+      /* Ajustar el color del texto de la selección */
+      .selected-value-display {
+          font-size: 1em;
+          color: var(--ion-color-dark, #000);
 
-            &.placeholder {
-                color: var(--ion-color-medium, #92949c);
-            }
-        }
+          &.placeholder {
+              color: var(--ion-color-medium, #92949c);
+          }
+      }
 
-        /* Línea divisoria entre ESTADO y MUNICIPIO (opcional) */
-        &:first-child {
-            /* Añadir una línea sutil entre los dos ítems si quieres separarlos visualmente */
-            --border-width: 0;
-            --inner-border-width: 0 0 1px 0; /* Línea inferior sutil */
-            --inner-border-color: var(--ion-color-step-150, #dcdcdc);
-        }
-    }
+      /* Línea divisoria entre ESTADO y MUNICIPIO (opcional) */
+      &:first-child {
+          /* Añadir una línea sutil entre los dos ítems si quieres separarlos visualmente */
+          --border-width: 0;
+          // --inner-border-width: 0 0 1px 0; /* Línea inferior sutil */
+          --inner-border-color: var(--ion-color-step-150, #dcdcdc);
+      }
+  }
 }
 
 /* ========================> Estilos para el datetime picker <======================== */

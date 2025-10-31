@@ -1,0 +1,143 @@
+<ion-content [fullscreen]="true">
+  <app-header></app-header>
+
+  <div class="flex justify-center px-4 py-8">
+    <form [formGroup]="formulario" (ngSubmit)="guardar()" autocomplete="off">
+
+      <ion-card class="shadow-2xl">
+        <ion-card-content>
+          <h1 class="flex justify-center align-center components-font !text-5xl">Ingresa tus Datos</h1>
+
+          <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-12">
+              <ion-input label="Nombre" formControlName='nombre' label-placement="floating" fill="outline"></ion-input>
+              @if (esValido('nombre')) {
+                <ion-note class="campoErrorTexto" [innerHTML]="getErrores('nombre', 'Nombre')" ></ion-note>
+              }
+            </div>
+
+            <div class="col-span-12">
+              <ion-input label="Apellido Paterno" formControlName='apellidoPaterno' label-placement="floating" fill="outline"></ion-input>
+              @if (esValido('apellidoPaterno')) {
+                <ion-note class="campoErrorTexto" [innerHTML]="getErrores('apellidoPaterno', 'Apellido Paterno')" ></ion-note>
+              }
+            </div>
+
+            <div class="col-span-12">
+              <ion-input label="Apellido Materno" formControlName='apellidoMaterno' label-placement="floating" fill="outline"></ion-input>
+              @if (esValido('apellidoMaterno')) {
+                <ion-note class="campoErrorTexto" [innerHTML]="getErrores('apellidoMaterno', 'Apellido Materno')" ></ion-note>
+              }
+            </div>
+
+            <div class="col-span-12 date-input-container">
+              <ion-item
+                [ngClass]="{
+                  'ng-valid': formulario.controls['fechaNacimiento'].valid,
+                  'ng-invalid': formulario.controls['fechaNacimiento'].invalid,
+                  'ng-touched': formulario.controls['fechaNacimiento'].touched,
+                  'custom-date-item': true
+                }"
+                class="custom-date-item"
+                lines="none"
+              >
+                <ion-label>Fecha de Nacimiento</ion-label>
+                <ion-datetime-button datetime="datetimeFC" backdropDismiss="false" ></ion-datetime-button><br>
+              </ion-item>
+              @if (fechaValida) {
+                <ion-note class="campoErrorTexto" [innerHTML]="getErrores('fechaNacimiento', 'Fecha de Nacimiento')" ></ion-note>
+              }
+            </div>
+            <div class="col-span-12 ">
+              <div class="selects-search-validation-container"
+                [ngClass]="{
+                    'ng-valid': formulario.controls['estado'].valid,
+                    'ng-invalid': formulario.controls['estado'].invalid,
+                    'ng-touched': formulario.controls['estado'].touched
+                }"
+              >
+                <ion-list class="no-border-list">
+                  <ion-item [button]="true" [detail]="false" class="no-border-list" id="select-estado" lines="none">
+                    <ion-label>Estado</ion-label>
+                    <div slot="end" id="selected-estado">{{ selectedEstadoNombre }}</div>
+                  </ion-item>
+                </ion-list>
+              </div>
+              @if (estadoValido) {
+                <ion-note class="campoErrorTexto" [innerHTML]="getErrores('estado', 'Estado')" ></ion-note>
+              }
+            </div>
+            <div class="col-span-12 ">
+              <div class="selects-search-outline-group"
+                [ngClass]="{
+                    'ng-valid': formulario.controls['estado'].valid,
+                    'ng-invalid': formulario.controls['estado'].invalid,
+                    'ng-touched': formulario.controls['estado'].touched
+                }"
+              >
+                <ion-list class="no-border-list">
+                  <ion-item [button]="true" [detail]="false" class="no-border-list" id="select-municipio" lines="none" [disabled]="selectedEstadoId == '' || selectedEstadoId == undefined">
+                    <ion-label>Municipio</ion-label>
+                    <div slot="end" id="select-municipio">{{ selectedMunicipioNombre }}</div>
+                  </ion-item>
+                </ion-list>
+              </div>
+              @if (municipioValido) {
+                <ion-note class="campoErrorTexto" [innerHTML]="getErrores('municipio', 'Municipio')" ></ion-note>
+              }
+            </div>
+          </div>
+
+        </ion-card-content>
+      </ion-card>
+
+    </form>
+  </div>
+
+  <app-footer></app-footer>
+</ion-content>
+
+<ion-modal [keepContentsMounted]="true" backdropDismiss="false">
+  <ng-template>
+    <ion-datetime
+      #datetimeFC
+      id="datetimeFC"
+      [max]="hoyFormatoISO"
+      presentation="date"
+      showDefaultButtons="true"
+      doneText="Confirmar"
+      cancelText="Cancelar"
+      (ionChange)="onChangeCalendar($event)"
+      (ionBlur)="onClosesCalendar('blur')"
+      (ionCancel)="onClosesCalendar('cancel')"
+      >
+      <span slot="title">Selecciona tu Fecha de Nacimiento</span>
+    </ion-datetime>
+  </ng-template>
+</ion-modal>
+
+<ion-modal trigger="select-estado" #modalEstados cssClass="custom-modal-selects-search" backdropDismiss="false">
+  <ng-template>
+    <app-select-list-search
+      class="ion-page"
+      title="Estados"
+      [items]="allEstados"
+      [selectedItem]="selectedEstadoId"
+      (selectionChange)="estadoSelectionChanged($event)"
+      (selectionCancel)="estadoCancel()"
+    ></app-select-list-search>
+  </ng-template>
+</ion-modal>
+
+<ion-modal trigger="select-municipio" #modalMunicipios cssClass="custom-modal-selects-search" backdropDismiss="false" >
+  <ng-template>
+    <app-select-list-search
+      class="ion-page"
+      title="Municipio"
+      [items]="allMunicipios"
+      [selectedItem]="selectedMunicipioId"
+      (selectionChange)="municipioSelectionChanged($event)"
+      (selectionCancel)="modalMunicipio.dismiss()"
+    ></app-select-list-search>
+  </ng-template>
+</ion-modal>

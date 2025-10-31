@@ -61,6 +61,23 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'registro',
+    title: 'Registro | HoopLink',
+    loadComponent: () => import('./layouts/public-layout/public-portal-layout/public-portal-layout.page').then( m => m.PublicPortalLayoutPage),
+    children: [
+      {
+        path: '',
+        redirectTo: 'formulario-registro',
+        pathMatch: 'full'
+      },
+      {
+        path: 'formulario-registro',
+        title: 'Formulario Registro | HoopLink',
+        loadComponent: () => import('./features/registro/pages/formulario-registro/formulario-registro.page').then( m => m.FormularioRegistroPage)
+      },
+    ]
+  },
+  {
     path: '',
     redirectTo: '/portal',
     pathMatch: 'full',
