@@ -1,21 +1,13 @@
 <ion-content [fullscreen]="true">
   <app-header></app-header>
 
-  <div class="flex justify-center px-4 py-8">
-    <div class="loader"></div>
+  <div class="flex justify-center px-4 py-22">
+    @if (muestraLoader) {
+      <div class="loader"></div>
+    } @else {
+      <h1 class="align-center components-font !text-3xl" [innerHTML]="error"></h1>
+    }
   </div>
-
-  <!-- <div class="grid m-0 p-0 lg:ml-5 lg:mr-5 mt-8">
-    <div class="col-12 mt-4 mb-4">
-      <div class="flex justify-content-center align-items-center">
-
-        @if (muestraLoader) {
-        } @else {
-         <p>otra cosa</p>
-        }
-      </div>
-    </div>
-  </div> -->
 
   <app-footer></app-footer>
 </ion-content>

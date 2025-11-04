@@ -266,6 +266,19 @@ body {
   --border-radius: 10px; /* Bordes redondeados */
 }
 
+.custom-modal-token-valido {
+  /* Por defecto, ocupa casi toda la pantalla en móvil */
+  --width: 90vw;
+  --max-width: 95vw;
+  --max-height: 90vh; /* Permite que crezca hasta el 90% del viewport */
+  --min-height: 50vh; /* Se mantiene este mínimo para que se vea bien */
+
+  /* Asegura que la alineación no lo empuje hacia arriba o abajo */
+  --justify-content: center;
+  --align-items: center;
+  --border-radius: 10px; /* Bordes redondeados */
+}
+
 .custom-modal-selects-search {
   /* Por defecto, ocupa casi toda la pantalla en móvil */
   --width: 90vw;

@@ -1,0 +1,49 @@
+<ion-content [fullscreen]="true">
+  <app-header></app-header>
+
+  <div class="flex justify-center px-4 py-20">
+    <form [formGroup]="formulario" (submit)="enviar()" autocomplete="off">
+      <ion-card class="shadow-2xl">
+        <ion-card-content>
+          <h1 class="flex justify-center align-center components-font !text-5xl">Iniciar Sesión</h1>
+
+          <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-12 ">
+              <ion-input label="Correo" type="email" formControlName='correo' label-placement="floating" fill="outline"></ion-input>
+              @if (esValido('correo')) {
+                <ion-note class="campoErrorTexto" [innerHTML]="getErrores('correo', 'Correo')" ></ion-note>
+              }
+            </div>
+            <div class="col-span-12 ">
+              <ion-input type="password" label="Password" label-placement="floating" fill="outline" formControlName='contrasena'>
+                <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+              </ion-input>
+              @if (esValido('contrasena')) {
+                <ion-note class="campoErrorTexto" [innerHTML]="getErrores('contrasena', 'Contraseña')" ></ion-note>
+              }
+            </div>
+            <div class="col-span-12">
+              <div class="mb-2">
+                <ion-button label="Entrar" class="w-full capitalize" type="submit" [disabled]="formulario.invalid">
+                  Entrar
+                </ion-button>
+              </div>
+              <div class="mb-2">
+                <ion-button label="Registrarme" (click)="registrarme()" class="w-full capitalize" type="button" [style]="{'--background': '#f47621', '--border-color': '#f47621'}" >
+                  Registrarme
+                </ion-button>
+              </div>
+              <div class="mb-2">
+                <ion-button label="Olvide-mi-contraseña" (click)="muestraRecuperaContrasena()" class="w-full capitalize" type="button" [style]="{'background-color': '#6c757d', 'border-color': '#6c757d'}"  >
+                  Olvide mi contraseña
+                </ion-button>
+              </div>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </form>
+  </div>
+
+  <app-footer></app-footer>
+</ion-content>

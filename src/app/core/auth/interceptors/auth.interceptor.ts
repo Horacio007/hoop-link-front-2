@@ -39,12 +39,15 @@ export const authInterceptor: HttpInterceptorFn = (
     logger.log(LogLevel.Debug, 'AuthInterceptor', `Token agregado a petición`, { url: req.url });
   }
 
+  const isValidationTokenEndpoint = req.url.includes('/api/usuario/valida-token');
+
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
+
       // Log de error inicial
       logger.log(LogLevel.Error, 'AuthInterceptor', `Error HTTP detectado en ${req.url}`, error);
 
-      if (error.status === 401 && !req.url.includes('/auth/login') && !req.url.includes('/auth/refresh')) {
+      if (error.status === 401 && !req.url.includes('/auth/login') && !req.url.includes('/auth/refresh') && !isValidationTokenEndpoint) {
         logger.log(LogLevel.Warn, 'AuthInterceptor', '401 recibido, intentando refresh token');
 
         if (!isRefreshing) {

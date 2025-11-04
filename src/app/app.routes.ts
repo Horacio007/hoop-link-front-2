@@ -83,6 +83,18 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'login',
+    title: 'Login | HoopLink',
+    loadComponent: () => import('./layouts/public-layout/public-portal-layout/public-portal-layout.page').then( m => m.PublicPortalLayoutPage),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () => import('./features/login/pages/login/login.page').then( m => m.LoginPage)
+      }
+    ]
+  },
+  {
     path: '',
     redirectTo: '/portal',
     pathMatch: 'full',

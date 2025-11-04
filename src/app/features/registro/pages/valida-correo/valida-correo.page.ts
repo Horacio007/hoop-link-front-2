@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
@@ -39,6 +39,7 @@ export class ValidaCorreoPage implements OnInit, AfterViewInit, OnDestroy, ViewW
     private readonly toastService: ToastService,
     private readonly router:Router,
     private readonly _logger: LoggerService,
+    private _cdr: ChangeDetectorRef
   ) { }
 //#endregion
 
@@ -54,11 +55,11 @@ export class ValidaCorreoPage implements OnInit, AfterViewInit, OnDestroy, ViewW
 
   ngAfterViewInit(): void {
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngAfterViewInit`, 'Componente despues de inicializado.');
-    this.validaToken();
   }
 
   ionViewWillEnter(): void {
     this._logger.log(LogLevel.Info, `${this._contextLog} >> ionViewWillEnter`, 'La vista está a punto de entrar (cargando datos).');
+    this.validaToken();
   }
 
   ngOnDestroy(): void {
@@ -79,12 +80,18 @@ export class ValidaCorreoPage implements OnInit, AfterViewInit, OnDestroy, ViewW
         this._logger.log(LogLevel.Debug, `${this._contextLog} >> validaToken`, 'Toekn válido.', response);
         this.toastService.showMessage(SeverityMessageType.Success, 'Excelente', response.mensaje);
         this.usuarioService.usuarioTokenValidado = true;
-        setTimeout(() => this.router.navigateByUrl('/login'), 500);
+        setTimeout(() => this.router.navigateByUrl('/login'), 1500);
       },
       error: (error:IResponseError) => {
         this._logger.log(LogLevel.Error, `${this._contextLog} >> validaToken`, 'Error al validar token', error);
-        this.muestraLoader = false;
-        this.error = error.error.message;
+        // 🚨 ENVOLVER LA ACTUALIZACIÓN EN setTimeout(0)
+        setTimeout(() => {
+          this.muestraLoader = false;
+          this.error = error.error.message;
+
+          // Mantenemos detectChanges para doble seguridad
+          this._cdr.detectChanges();
+        }, 0);
       }
     });
   }
