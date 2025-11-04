@@ -267,16 +267,24 @@ body {
 }
 
 .custom-modal-token-valido {
-  /* Por defecto, ocupa casi toda la pantalla en móvil */
+  // /* Por defecto, ocupa casi toda la pantalla en móvil */
   --width: 90vw;
   --max-width: 95vw;
-  --max-height: 90vh; /* Permite que crezca hasta el 90% del viewport */
-  --min-height: 50vh; /* Se mantiene este mínimo para que se vea bien */
+  --max-height: 32vh; /* Permite que crezca hasta el 90% del viewport */
+  --min-height: 10vh; /* Se mantiene este mínimo para que se vea bien */
 
   /* Asegura que la alineación no lo empuje hacia arriba o abajo */
   --justify-content: center;
   --align-items: center;
   --border-radius: 10px; /* Bordes redondeados */
+}
+
+/* --- Media Query para PANTALLAS MEDIANAS y GRANDES ( >= 768px ) --- */
+@media (min-width: 768px) {
+  .custom-modal-token-valido {
+    --width: 35vw; /* 👈 En pantallas más grandes, ocupa el 35% */
+    --max-width: 35vw; /* Asegura que no exceda el 50% */
+  }
 }
 
 .custom-modal-selects-search {

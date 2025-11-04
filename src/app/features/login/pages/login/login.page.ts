@@ -80,6 +80,9 @@ export class LoginPage implements OnInit, OnDestroy, ViewWillEnter {
 
   private muestraEsTokenValido() {
     this.esVisibleDialog = this.usuarioService.usuarioTokenValidado;
+    if (this.esVisibleDialog) {
+      this.presentModal();
+    }
   }
 
   public async enviar(): Promise<void>  {
@@ -136,7 +139,7 @@ export class LoginPage implements OnInit, OnDestroy, ViewWillEnter {
     await modal.present();
 
     const { data } = await modal.onWillDismiss();
-    console.log(data);
+    this.esVisibleDialog = data;
   }
 
 //#endregion Metodos
