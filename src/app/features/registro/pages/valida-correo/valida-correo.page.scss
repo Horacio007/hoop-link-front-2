@@ -1,0 +1,110 @@
+/* CSS */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.court {
+  position: relative;
+  width: 10vmin; /* 10% del viewport más pequeño (ancho o alto) */
+  height: 15vmin; /* 15% del viewport más pequeño */
+}
+
+.ball {
+  width: 4vmin; /* Aproximadamente 40px en pantallas medianas */
+  height: 4vmin;
+  background: radial-gradient(circle at 30% 30%, #ff6a00, #d35400);
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  left: 3vmin; /* 3vmin equivale a 30px */
+  animation: bounce 1s infinite ease-in-out;
+  box-shadow: inset -0.2vmin -0.2vmin 0 #0005, inset 0.2vmin 0.2vmin 0 #fff2; /* Escalar sombra */
+}
+
+/* Línea de piso */
+.court::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #fff5;
+}
+
+/* Animación de rebote (ajustar el rebote a la nueva escala) */
+@keyframes bounce {
+  0%, 100% {
+    bottom: 0;
+    transform: scaleY(1) scaleX(1);
+  }
+  30% {
+    transform: scaleY(1.2) scaleX(0.9);
+  }
+  50% {
+    /* 🚨 Ajustar la altura máxima del rebote (antes 80px) */
+    bottom: 8vmin;
+    transform: scaleY(0.9) scaleX(1.1);
+  }
+  70% {
+    transform: scaleY(1.1) scaleX(0.9);
+  }
+}
+
+/* ------------------------------------------------------------ */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 100px;
+  background:linear-gradient(90deg,#f47621 50%,#0000 0) right/200% 100%;
+  animation: l21 2s infinite linear;
+}
+.loader::before {
+  content :"Validando...";
+  color: #0000;
+  padding: 0 5px;
+  background: inherit;
+  background-image: linear-gradient(90deg,#fff 50%,#f47621 0);
+  -webkit-background-clip:text;
+          background-clip:text;
+}
+
+/* 🚨 Ajuste para Móviles (ej: < 600px) */
+@media (max-width: 600px) {
+    .loader {
+        font-size: 60px; /* Reducir el tamaño de la fuente para que quepa mejor */
+    }
+}
+/* 🚨 Ajuste para pantallas Ultra-Grandes (ej: > 1600px) */
+@media (min-width: 1600px) {
+    .loader {
+        font-size: 140px; /* Aumentar el tamaño para una mejor visibilidad */
+    }
+}
+
+@keyframes l21{
+  100%{background-position: left}
+}
+/* ------------------------------------------------------ */
+.contenedor {
+  display: flex;
+  justify-content: center; /* Centra horizontal */
+  align-items: center;     /* Centra vertical */
+  /* height: 100vh; */        /*  Para ocupar toda la pantalla */
+}
+
+/* contenido interno */
+/* .centrado {
+
+} */

@@ -75,6 +75,11 @@ export const routes: Routes = [
         title: 'Formulario Registro | HoopLink',
         loadComponent: () => import('./features/registro/pages/formulario-registro/formulario-registro.page').then( m => m.FormularioRegistroPage)
       },
+      {
+        path: 'valida-correo',
+        title: 'Valida Correo | HoopLink',
+        loadComponent: () => import('./features/registro/pages/valida-correo/valida-correo.page').then( m => m.ValidaCorreoPage)
+      },
     ]
   },
   {
