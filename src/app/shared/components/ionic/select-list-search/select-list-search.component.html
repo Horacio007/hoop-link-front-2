@@ -17,11 +17,12 @@
   <ion-list id="modal-list" [inset]="true">
     @for (item of filteredItems; track item.id) {
     <ion-item
+      class="text-capitalize"
       [color]="isSelected(item.id) ? 'primary' : ''"
       (click)="selectItem(item.id)"
       button
     >
-        {{ item.nombre }}
+        {{ item.nombre | titlecase }}
     </ion-item>
     }
   </ion-list>

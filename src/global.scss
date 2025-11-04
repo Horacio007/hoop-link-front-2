@@ -238,6 +238,19 @@ body {
   color: #dc2626;
 }
 
+/* En tu archivo .scss del componente */
+.requisito-valido {
+  color: #10dc60;
+  /* Opcional: añadir un icono de check */
+}
+
+/* En tu archivo .scss del componente */
+.requisito-invalido {
+  color: #dc2626;
+  /* Opcional: añadir un icono de check */
+}
+
+
 /* ========================> Estilos modales <======================== */
 
 .custom-modal-registro {
@@ -264,6 +277,14 @@ body {
   --justify-content: center;
   --align-items: center;
   --border-radius: 10px; /* Bordes redondeados */
+}
+
+/* --- Media Query para PANTALLAS MEDIANAS y GRANDES ( >= 768px ) --- */
+@media (min-width: 768px) {
+  .custom-modal-selects-search {
+    --width: 35vw; /* 👈 En pantallas más grandes, ocupa el 35% */
+    --max-width: 35vw; /* Asegura que no exceda el 50% */
+  }
 }
 
 /* Estilos para el texto en negrita (reemplazo de fontBoldSpam) */
@@ -531,5 +552,130 @@ ion-item.custom-date-item {
     &:focus-within, &:hover {
         border-color: var(--ion-color-primary, #3880ff);
     }
+}
+
+/* ========================> Estilos para el toast <======================== */
+
+/* Ahora solo definimos las variables de color y borde en el host */
+ion-toast.custom-toast-danger {
+  --background: #fdc7c7;
+  --color: #333;
+  --width: 90%;
+  --max-width: 400px;
+  --border-radius: 8px;
+}
+
+ion-toast.custom-toast-danger::part(container) {
+  border: 2.5px solid #ff8a8a;
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.2); /* blanco con 60% opacidad */
+}
+
+ion-toast.custom-toast-danger::part(header) {
+  font-style: italic;
+  color: red;
+  font-size: large;
+}
+
+ion-toast.custom-toast-danger::part(message) {
+  font-style: italic;
+}
+
+ion-toast.custom-toast-danger::part(button) {
+  color: #030207;
+  font-size: 15px;
+}
+
+ion-toast.custom-toast-success {
+  --background: #c7fdc7;
+  --color: #333;
+  --width: 90%;
+  --max-width: 400px;
+  --border-radius: 8px;
+}
+
+ion-toast.custom-toast-success::part(container) {
+  border: 2.5px solid #95f895;
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.2); /* blanco con 60% opacidad */
+}
+
+ion-toast.custom-toast-success::part(header) {
+  font-style: italic;
+  color: green;
+  font-size: large;
+}
+
+
+ion-toast.custom-toast-success::part(message) {
+  font-style: italic;
+}
+
+ion-toast.custom-toast-success::part(button) {
+  color: #030207;
+  font-size: 15px;
+}
+
+ion-toast.custom-toast-warning {
+  --background: #f9fdc7;
+  --color: #333;
+  --width: 90%;
+  --max-width: 400px;
+  --border-radius: 8px;
+
+}
+
+ion-toast.custom-toast-warning::part(container) {
+  border: 2.5px solid #f3ff45;
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.2); /* blanco con 60% opacidad */
+}
+
+ion-toast.custom-toast-warning::part(header) {
+  font-style: italic;
+  color: rgb(204, 204, 28);
+  font-size: large;
+}
+
+ion-toast.custom-toast-warning::part(message) {
+  font-style: italic;
+}
+
+ion-toast.custom-toast-warning::part(button) {
+  color: #030207;
+  font-size: 15px;
+}
+
+ion-toast.custom-toast-primary {
+  --background: #c7e9fd;
+  --color: #333;
+  --width: 90%;
+  --max-width: 400px;
+  --border-radius: 8px; // Controla el borde definido en ::part(container)
+}
+
+ion-toast.custom-toast-primary::part(container) {
+  border: 2.5px solid #67c6fd;
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.2); /* blanco con 60% opacidad */
+}
+
+ion-toast.custom-toast-primary::part(header) {
+  font-style: italic;
+  color: rgb(57, 57, 255);
+  font-size: large;
+}
+
+ion-toast.custom-toast-primary::part(message) {
+  font-style: italic;
+}
+
+ion-toast.custom-toast-primary::part(button) {
+  color: #030207;
+  font-size: 15px;
 }
 

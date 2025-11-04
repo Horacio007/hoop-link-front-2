@@ -2,7 +2,7 @@
   <app-header></app-header>
 
   <div class="flex justify-center px-4 py-8">
-    <form [formGroup]="formulario" (ngSubmit)="guardar()" autocomplete="off">
+    <form [formGroup]="formulario" (submit)="guardar()" autocomplete="off">
 
       <ion-card class="shadow-2xl">
         <ion-card-content>
@@ -68,11 +68,11 @@
               }
             </div>
             <div class="col-span-12 ">
-              <div class="selects-search-outline-group"
+              <div class="selects-search-validation-container"
                 [ngClass]="{
-                    'ng-valid': formulario.controls['estado'].valid,
-                    'ng-invalid': formulario.controls['estado'].invalid,
-                    'ng-touched': formulario.controls['estado'].touched
+                    'ng-valid': formulario.controls['municipio'].valid,
+                    'ng-invalid': formulario.controls['municipio'].invalid,
+                    'ng-touched': formulario.controls['municipio'].touched
                 }"
               >
                 <ion-list class="no-border-list">
@@ -86,8 +86,135 @@
                 <ion-note class="campoErrorTexto" [innerHTML]="getErrores('municipio', 'Municipio')" ></ion-note>
               }
             </div>
-          </div>
+            <div class="col-span-12 ">
+              <ion-input label="Lugar de Residencia" formControlName='residencia' label-placement="floating" fill="outline"></ion-input>
+              @if (esValido('residencia')) {
+                <ion-note class="campoErrorTexto" [innerHTML]="getErrores('residencia', 'Lugar de Residencia')" ></ion-note>
+              }
+            </div>
+            <div class="col-span-12 ">
+              <ion-input label="Correo" type="email" formControlName='correo' label-placement="floating" fill="outline"></ion-input>
+              @if (esValido('correo')) {
+                <ion-note class="campoErrorTexto" [innerHTML]="getErrores('correo', 'Correo')" ></ion-note>
+              }
+            </div>
+            <div class="col-span-12 ">
+              <ion-input label="Telefono" [maskito]="phoneMask" [maskitoElement]="maskPredicate" formControlName='telefono' placeholder="888-888-8888" label-placement="floating" fill="outline"></ion-input>
+              @if (esValido('telefono')) {
+                <ion-note class="campoErrorTexto" [innerHTML]="getErrores('telefono', 'Telefono')" ></ion-note>
+              }
+            </div>
+            <div class="col-span-12 ">
+              <div class="selects-search-validation-container"
+                [ngClass]="{
+                    'ng-valid': formulario.controls['tipoUsuario'].valid,
+                    'ng-invalid': formulario.controls['tipoUsuario'].invalid,
+                    'ng-touched': formulario.controls['tipoUsuario'].touched
+                }"
+              >
+                <ion-list class="no-border-list">
+                  <ion-item [button]="true" [detail]="false" class="no-border-list" id="select-tipo-usuario" lines="none">
+                    <ion-label>Tipo Usuario</ion-label>
+                    <div slot="end" id="select-tipo-usuario" class="capitalize">{{ selectedTipoUsuarioNombre  }}</div>
+                  </ion-item>
+                </ion-list>
+              </div>
+              @if (tipoUsuarioValido || formulario.errors?.['edadInsuficiente']) {
+                <ion-note class="campoErrorTexto" [innerHTML]="getErrores('tipoUsuario', 'Tipo Usuario')" ></ion-note>
+              }
+            </div>
+            <div class="col-span-12">
+             <ion-input
+                type="password"
+                label="Contraseña"
+                formControlName="contrasena"
+                label-placement="floating"
+                fill="outline"
+                placeholder="••••••••"
+                clear-on-edit="false"
+                (ionFocus)="onPasswordFocus()"
+                (ionBlur)="onPasswordBlur()"
+              ></ion-input>
+              @if (mostrarRequisitos) {
+                <div class="password-hints">
+                  <div class="ion-padding-start ion-padding-top">
+                    <div class="font-semibold text-sm">Elige una contraseña.</div>
 
+                    <ion-progress-bar
+                      [value]="progressValue"
+                      [color]="strengthColor"
+                      class="ion-margin-bottom-xs"
+                    ></ion-progress-bar>
+
+                    <ion-note class="ion-margin-top ion-padding-bottom">
+                      <ul class="list-disc">
+                        <li [ngClass]="{
+                          'requisito-valido': formulario.get('contrasena')?.hasError('letraMinuscula') === false,
+                          'requisito-invalido': formulario.get('contrasena')?.hasError('letraMinuscula')
+                        }">
+                          Por lo menos una letra minuscula.
+                        </li>
+                        <li [ngClass]="{
+                          'requisito-valido': formulario.get('contrasena')?.hasError('letraMayuscula') === false,
+                          'requisito-invalido': formulario.get('contrasena')?.hasError('letraMayuscula')
+                          }">
+                          Por lo menos una letra mayuscula.
+                        </li>
+                        <li [ngClass]="{
+                          'requisito-valido': formulario.get('contrasena')?.hasError('unNumero') === false,
+                          'requisito-invalido': formulario.get('contrasena')?.hasError('unNumero')
+                          }">
+                          Por lo menos un numero.
+                        </li>
+                        <li [ngClass]="{
+                          'requisito-valido': formulario.get('contrasena')?.hasError('minimoOchoCaracteres') === false,
+                          'requisito-invalido': formulario.get('contrasena')?.hasError('minimoOchoCaracteres')
+                          }">
+                          Mínimo 8 caracteres.
+                        </li>
+                      </ul>
+
+                    </ion-note>
+                  </div>
+                </div>
+              }
+              @if (formulario.get('contrasena')?.invalid && (formulario.get('contrasena')?.dirty || formulario.get('contrasena')?.touched)) {
+                <ion-label class="requisito-invalido">
+                  * El campo Contraseña no tiene un formato válido.
+                </ion-label>
+              }
+            </div>
+            <div class="col-span-12">
+              <ion-item lines="none" class="ion-no-padding">
+                <ion-checkbox
+                  slot="start"
+                  formControlName='aceptaTerminos'
+                  labelPlacement="end"
+                  aria-label="Aceptar Terminos y Condiciones"
+                  class="ion-margin-end"
+
+                ></ion-checkbox>
+
+                <ion-label>
+                  <a routerLink="/portal/terminos-condiciones" target="_blank" class="flex enlace-color underline">
+                    Aceptar Terminos y Condiciones
+                  </a>
+                </ion-label>
+
+              </ion-item>
+
+              @if (esValido('aceptaTerminos')) {
+                <ion-note color="danger" [innerHTML]="getErrores('aceptaTerminos', 'Terminos y Condiciones')" ></ion-note>
+              }
+            </div>
+            <div class="col-span-12">
+              <div class="flex gap-4 mt-1">
+                <ion-button label="Guardar" class="w-full" type="submit" [disabled]="formulario.invalid">
+                  Guardar
+                </ion-button>
+              </div>
+            </div>
+          </div>
         </ion-card-content>
       </ion-card>
 
@@ -137,7 +264,21 @@
       [items]="allMunicipios"
       [selectedItem]="selectedMunicipioId"
       (selectionChange)="municipioSelectionChanged($event)"
-      (selectionCancel)="modalMunicipio.dismiss()"
+      (selectionCancel)="municipioCancel()"
     ></app-select-list-search>
   </ng-template>
 </ion-modal>
+
+<ion-modal trigger="select-tipo-usuario" #modalTipoUsuario cssClass="custom-modal-selects-search" backdropDismiss="false" >
+  <ng-template>
+    <app-select-list-search
+      class="ion-page"
+      title="Tipo Usuario"
+      [items]="allTipoUsuario"
+      [selectedItem]="selectedTipoUsuarioId"
+      (selectionChange)="tipoUsuarioSelectionChanged($event)"
+      (selectionCancel)="tipoUsuarioCancel()"
+    ></app-select-list-search>
+  </ng-template>
+</ion-modal>
+

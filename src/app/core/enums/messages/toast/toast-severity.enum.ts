@@ -1,7 +1,7 @@
 export enum SeverityMessageType {
   Success = 'success',
   Info = 'info',
-  Warn = 'warn',
+  Warning = 'warning',
   Error = 'error',
   Contrast = 'contrast',
   Secondary = 'secondary',

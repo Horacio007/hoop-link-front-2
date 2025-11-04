@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 // Importaciones de Ionic
 import { IonHeader, IonToolbar, IonButtons, IonButton, IonSearchbar, IonList, IonContent, IonItem, IonTitle } from '@ionic/angular/standalone';
@@ -17,8 +18,9 @@ import { ICatalogo } from 'src/app/shared/interfaces/catalogo/catalogo.interface
     IonSearchbar,
     IonTitle,
     IonToolbar,
+    CommonModule
   ],
-})
+  })
 export class SelectListSearchComponent implements OnInit {
 
   @Input() items: ICatalogo[] = [];
