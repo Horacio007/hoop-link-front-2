@@ -1,3 +1,41 @@
-<p>
-  modal-recupera-contrasena works!
-</p>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="light">
+
+    <ion-title class="text-center font-bold text-base block sm:text-base md:text-lg">
+      Recupera contraseña 🔐.
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="onDidDismiss()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="flex justify-center">
+    <form [formGroup]="formulario" (submit)="enviar()" autocomplete="off" class="w-full max-w-sm">
+      <ion-card class="shadow-2xl">
+        <ion-card-content>
+          <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-12 ">
+              <ion-input label="Correo" type="email" formControlName='correo' label-placement="floating" fill="outline"></ion-input>
+              @if (esValido('correo')) {
+                <ion-note class="campoErrorTexto" [innerHTML]="getErrores('correo', 'Correo')" ></ion-note>
+              }
+            </div>
+            <div class="col-span-12">
+              <div class="mb-2">
+                <ion-button label="Recuperar" class="w-full capitalize" type="submit" [disabled]="formulario.invalid">
+                  Recuperar
+                </ion-button>
+              </div>
+             </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </form>
+  </div>
+</ion-content>

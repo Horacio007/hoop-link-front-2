@@ -287,6 +287,29 @@ body {
   }
 }
 
+.custom-modal-recupera-contrasena {
+  // /* Por defecto, ocupa casi toda la pantalla en móvil */
+  --width: 90vw;
+  --max-width: 95vw;
+  --max-height: 55vh; /* Permite que crezca hasta el 90% del viewport */
+  --min-height: 30vh; /* Se mantiene este mínimo para que se vea bien */
+
+  /* Asegura que la alineación no lo empuje hacia arriba o abajo */
+  --justify-content: center;
+  --align-items: center;
+  --border-radius: 10px; /* Bordes redondeados */
+  --overflow-y: hidden !important;
+}
+
+/* --- Media Query para PANTALLAS MEDIANAS y GRANDES ( >= 768px ) --- */
+@media (min-width: 768px) {
+  .custom-modal-recupera-contrasena {
+    --width: 25vw; /* 👈 En pantallas más grandes, ocupa el 25% */
+    --max-width: 25vw; /* Asegura que no exceda el 40% */
+    --max-height: 42vh;
+  }
+}
+
 .custom-modal-selects-search {
   /* Por defecto, ocupa casi toda la pantalla en móvil */
   --width: 90vw;

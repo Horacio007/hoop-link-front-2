@@ -17,6 +17,7 @@ import { correoElectronicoValidator } from 'src/app/shared/validators';
 import { ViewWillEnter } from '@ionic/angular';
 import { BlockUiService } from 'src/app/core/services/blockUI/block-ui.service';
 import { ModalTokenValidoComponent } from '../../components/modal-token-valido/modal-token-valido.component';
+import { ModalRecuperaContrasenaComponent } from '../../components/modal-recupera-contrasena/modal-recupera-contrasena.component';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,6 @@ export class LoginPage implements OnInit, OnDestroy, ViewWillEnter {
 //#region Propiedades
   public esVisibleDialog:boolean = false;
   public formulario: FormGroup;
-  public esVisibleRecuperaContrasenaDialog:boolean = false;
 
   private readonly _contextLog = 'LoginPageComponent';
   private _destroy$ = new Subject<void>();
@@ -79,8 +79,7 @@ export class LoginPage implements OnInit, OnDestroy, ViewWillEnter {
   }
 
   private muestraEsTokenValido() {
-    this.esVisibleDialog = this.usuarioService.usuarioTokenValidado;
-    if (this.esVisibleDialog) {
+    if (this.usuarioService.usuarioTokenValidado) {
       this.presentModal();
     }
   }
@@ -128,7 +127,7 @@ export class LoginPage implements OnInit, OnDestroy, ViewWillEnter {
   }
 
   public muestraRecuperaContrasena() {
-    this.esVisibleRecuperaContrasenaDialog = true;
+    this.presentModalOlvide();
   }
 
   async presentModal() {
@@ -139,7 +138,16 @@ export class LoginPage implements OnInit, OnDestroy, ViewWillEnter {
     await modal.present();
 
     const { data } = await modal.onWillDismiss();
-    this.esVisibleDialog = data;
+  }
+
+  async presentModalOlvide() {
+    const modal = await this.modalCtrl.create({
+      component: ModalRecuperaContrasenaComponent,
+      cssClass: 'custom-modal-recupera-contrasena'
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
   }
 
 //#endregion Metodos
