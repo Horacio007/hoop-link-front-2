@@ -1,0 +1,37 @@
+/* header-component.scss o page-name.scss */
+
+/* 1. Ajuste del Logo */
+.header-logo-container {
+    /* Dar espacio al lado del logo */
+    padding-right: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.header-logo {
+    /* Tamaño fijo para que sea visible pero no intrusivo */
+    height: 30px;
+    width: auto;
+}
+
+/* 2. Ajuste del Contenido Central (ion-title) */
+.header-center-content {
+    /* Mantenemos tus estilos generales */
+    text-align: center;
+    height: auto !important;
+
+    /* 1. Usamos ::part(text) para acceder al Shadow DOM interno */
+    ::part(text) {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        // Asegura que el texto use todo el espacio disponible
+        width: 100%;
+    }
+}
+
+/* 3. Asegurar que los botones no se separen demasiado */
+ion-toolbar {
+    /* Añade espacio si es necesario */
+    --padding-end: 8px;
+}

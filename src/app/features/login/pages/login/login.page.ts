@@ -104,6 +104,7 @@ export class LoginPage implements OnInit, OnDestroy, ViewWillEnter {
         error: (error) => {
           this._logger.log(LogLevel.Error, `${this._contextLog} >> enviar`, 'Error en login.', error);
           this.toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, error.error.message);
+          this.blockUIService.hide();
         },
         complete: () => {
           this.blockUIService.hide();

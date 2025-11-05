@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/auth/guards/auth.guard';
+import { roleGuard } from './core/auth/guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -95,8 +97,44 @@ export const routes: Routes = [
     ]
   },
   {
+    canLoad: [authGuard],
+    canActivate: [authGuard],
+    path: 'desktop',
+    title: 'Desktop | HoopLink',
+    loadComponent: () => import('./layouts/authenticated-layout/authenticated-layout/authenticated-layout.page').then( m => m.AuthenticatedLayoutPage),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () => import('./features/desktop/pages/desktop/desktop.page').then( m => m.DesktopPage)
+      },
+      {
+        path: 'jugador',
+        canActivate: [roleGuard],
+        canLoad: [roleGuard],
+        data: { role: 'jugador' },
+        title: 'Dashboard | HoopLink',
+        loadComponent: () => import('./features/jugador/pages/jugador-dashboard/jugador-dashboard.page').then(l => l.JugadorDashboardPage),
+        children: [
+          {
+            // 2. Ruta Hija Index (Carga el Contenido REAL del Dashboard)
+            path: '',
+            pathMatch: 'full',
+            loadComponent: () => import('./features/jugador/pages/jugador-dashboard-index/jugador-dashboard-index.page').then(m => m.JugadorDashboardIndexPage)
+          },
+          {
+            path: 'informacion-personal', // URL: /desktop/jugador/informacion-personal
+            title: 'Información personal | HoopLink',
+            loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-informacion-personal.page').then(m => m.JugadorInformacionPersonalPage)
+          },
+        ]
+      },
+    ]
+  },
+  {
     path: '',
     redirectTo: '/portal',
     pathMatch: 'full',
   },
+
 ];

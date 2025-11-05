@@ -1,0 +1,41 @@
+/* authenticated-layout.component.scss */
+
+/* Asegura que el ítem tenga un espaciado consistente */
+ion-item {
+  --padding-start: 16px; /* Espaciado inicial del ítem */
+}
+
+/* 1. Controla el espaciado entre el ícono y el texto */
+/* El 'slot="start"' envuelve el ícono */
+ion-item ion-icon[slot="start"] {
+  /* Añade un margen a la derecha del ícono para separarlo del texto */
+  margin-right: 16px;
+
+  /* Opcional: Ajusta el tamaño del ícono si lo quieres más grande o más pequeño */
+  font-size: 24px;
+}
+
+/* 2. Alineación Vertical (Suele ser automático, pero esto fuerza la consistencia) */
+ion-item ion-label {
+  /* Asegura que el texto y el ícono estén centrados verticalmente */
+  align-self: center;
+}
+
+/* Color del ítem activo en el menú */
+.menu-item-activo {
+    /* 1. Fondo de resaltado (Gris muy claro) */
+    --background: #F5F5F5; /* O un blanco roto (#FAFAFA) */
+
+    /* Opcional: Asegura que el color principal del texto del ítem sea el naranja */
+    --color: #FF6B00;
+}
+
+/* Color Naranja Brillante para Texto e Ícono */
+.menu-item-activo ion-label,
+.menu-item-activo ion-icon {
+    /* 2. Color principal (Naranja Brillante) */
+    color: #FF6B00 !important; /* Sobrescribe cualquier estilo */
+    --color: #FF6B00; /* Para compatibilidad con variables Ionic */
+
+    font-weight: bold;
+}

@@ -1,0 +1,38 @@
+<ion-menu contentId="main-content" side="start">
+  <ion-header>
+    <ion-toolbar class="px-2">
+      <ion-title class="capitalize">{{ user?.nombre }}</ion-title>
+
+      <ion-buttons slot="end">
+        <ion-menu-button color="blue" autoHide="true">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      @if (user?.rol === 'jugador') {
+        <ion-item lines="none" button routerLink="/desktop/jugador" routerDirection="forward" routerLinkActive="menu-item-activo" [routerLinkActiveOptions]="{exact: true}">
+          <ion-icon slot="start" name="bar-chart-outline"></ion-icon>
+          <ion-label>Dashboard</ion-label>
+        </ion-item>
+
+        <ion-item lines="none" button routerLink="/desktop/jugador/informacion-personal" routerDirection="forward" routerLinkActive="menu-item-activo" [routerLinkActiveOptions]="{exact: true}">
+          <ion-icon slot="start" name="person-outline"></ion-icon>
+          <ion-label>Info. Personal</ion-label>
+        </ion-item>
+      }
+
+      <ion-item lines="none" button (click)="logout()">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        <ion-label>Cerrar Sesión</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-router-outlet></ion-router-outlet>
+</div>
