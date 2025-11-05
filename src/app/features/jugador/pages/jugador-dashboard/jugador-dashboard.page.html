@@ -1,7 +1,38 @@
 <ion-content [fullscreen]="true">
   <app-header-authenticated [pageTitle]="pageTitle"></app-header-authenticated>
 
-  <router-outlet></router-outlet>
+  <!-- Contenedor principal: Limita el ancho (max-w-screen-xl) y centra horizontalmente (mx-auto) -->
+    <div class="max-w-screen mx-auto px-4 md:px-2">
+
+        <!-- GRID DE TRES COLUMNAS (2 - 8 - 2) para el layout tipo revista/decoración lateral -->
+        <div class="grid grid-cols-12 gap-x-4 min-h-screen">
+
+            <!-- 1. Columna Izquierda (Marco/Banner Decorativo) -->
+            <!-- Lo ocultamos en móvil (hidden) y mostramos en grande (lg:block) -->
+            <div class="hidden lg:block lg:col-span-2">
+                <app-banner-space></app-banner-space>
+            </div>
+
+            <!-- 2. Columna Central (Contenido Principal) -->
+            <!-- Ocupa todo el ancho en móvil (col-span-12) y 8 columnas en desktop (lg:col-span-8) -->
+            <div class="col-span-12 lg:col-span-8 p-4">
+
+                <app-news-bar class="mb-4"></app-news-bar>
+                <app-info-cards class="mb-4"></app-info-cards>
+                <router-outlet></router-outlet>
+
+            </div>
+
+            <!-- 3. Columna Derecha (Marco/Banner Decorativo) -->
+            <!-- Lo ocultamos en móvil (hidden) y mostramos en grande (lg:block) -->
+            <div class="hidden lg:block lg:col-span-2">
+                <app-banner-space></app-banner-space>
+            </div>
+
+        </div>
+
+    </div>
+
 
   <app-footer></app-footer>
 </ion-content>

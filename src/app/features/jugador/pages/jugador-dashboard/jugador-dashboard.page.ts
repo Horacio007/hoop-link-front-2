@@ -10,13 +10,16 @@ import { ActivatedRoute, Data, NavigationEnd, Router, RouterModule, RouterOutlet
 import { filter, map, Subscription } from 'rxjs';
 import { LoggerService } from 'src/app/core/services/logger/logger.service'; // 🚨 Importar LoggerService y LogLevel
 import { LogLevel } from 'src/app/core/enums';
+import { BannerSpaceComponent } from 'src/app/layouts/authenticated-layout/components/banner-space/banner-space.component';
+import { NewsBarComponent } from 'src/app/layouts/authenticated-layout/components/news-bar/news-bar.component';
+import { InfoCardsComponent } from 'src/app/layouts/authenticated-layout/components/info-cards/info-cards.component';
 
 @Component({
  selector: 'app-jugador-dashboard',
  templateUrl: './jugador-dashboard.page.html',
  styleUrls: ['./jugador-dashboard.page.scss'],
  standalone: true,
- imports: [IonContent, CommonModule, FormsModule, FooterComponent, HeaderAuthenticatedComponent, RouterOutlet, RouterModule]
+ imports: [IonContent, CommonModule, FormsModule, FooterComponent, HeaderAuthenticatedComponent, RouterOutlet, RouterModule, BannerSpaceComponent, NewsBarComponent, InfoCardsComponent]
 })
 export class JugadorDashboardPage implements OnInit, OnDestroy {
 

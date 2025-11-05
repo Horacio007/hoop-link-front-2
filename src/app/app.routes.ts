@@ -124,7 +124,7 @@ export const routes: Routes = [
           },
           {
             path: 'informacion-personal', // URL: /desktop/jugador/informacion-personal
-            title: 'Información personal | HoopLink',
+            title: 'Información Personal | HoopLink',
             loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-informacion-personal.page').then(m => m.JugadorInformacionPersonalPage)
           },
         ]

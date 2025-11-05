@@ -16,12 +16,12 @@
       @if (user?.rol === 'jugador') {
         <ion-item lines="none" button routerLink="/desktop/jugador" routerDirection="forward" routerLinkActive="menu-item-activo" [routerLinkActiveOptions]="{exact: true}">
           <ion-icon slot="start" name="bar-chart-outline"></ion-icon>
-          <ion-label>Dashboard</ion-label>
+          <ion-label (click)="closeMenu()">Dashboard</ion-label>
         </ion-item>
 
         <ion-item lines="none" button routerLink="/desktop/jugador/informacion-personal" routerDirection="forward" routerLinkActive="menu-item-activo" [routerLinkActiveOptions]="{exact: true}">
           <ion-icon slot="start" name="person-outline"></ion-icon>
-          <ion-label>Info. Personal</ion-label>
+          <ion-label (click)="closeMenu()">Info. Personal</ion-label>
         </ion-item>
       }
 

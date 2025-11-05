@@ -1,0 +1,40 @@
+<div class="flex flex-wrap justify-center align-center">
+  <div class="hidden md:flex gap-3">
+    @for (label of tabLabels; track $index) {
+      <button
+        type="button"
+        #tabButton
+        (click)="selectTab($index)"
+        class="tab-button"
+        [class.tab-active]="activeTabIndex === $index">
+        @if (label.icon) {
+          <i [class]="label.icon" style="color: #708090"></i>&nbsp;
+        }
+        {{ label.tabName }}
+      </button>
+    } @empty {
+      <p>No hay pestañas disponibles.</p>
+    }
+  </div>
+
+  <select
+    class="mobile-tab-select md:hidden lg:hidden m-2 rounded-2xl w-full text-xl"
+    [(ngModel)]="activeTabIndex"
+    (ngModelChange)="selectTab($event)"
+    id="seccion">
+
+    @for (label of tabLabels; track $index) {
+      <option class="option-select" [value]="$index">
+        {{ label.tabName }}
+      </option>
+    } @empty {
+      <option value="" disabled>No hay opciones</option>
+    }
+
+  </select>
+</div>
+
+<!-- Aquí se renderiza el contenido dinámico del tab activo -->
+<div class="mt-4">
+  <ng-container *ngTemplateOutlet="activeTemplate"></ng-container>
+</div>

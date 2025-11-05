@@ -1,7 +1,7 @@
 import { Component, effect, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonRouterOutlet, IonTitle, IonToolbar, IonHeader, IonMenu, IonIcon, IonButtons, IonMenuButton, IonLabel, IonList, IonItem } from '@ionic/angular/standalone';
+import { IonContent, IonRouterOutlet, IonTitle, IonToolbar, IonHeader, IonMenu, IonIcon, IonButtons, IonMenuButton, IonLabel, IonList, IonItem, MenuController } from '@ionic/angular/standalone';
 import { LogLevel } from 'src/app/core/enums';
 import { LoggerService } from 'src/app/core/services/logger/logger.service';
 import { ViewWillEnter } from '@ionic/angular';
@@ -28,7 +28,10 @@ export class AuthenticatedLayoutPage implements OnInit, OnDestroy, ViewWillEnter
 //#endregion
 
 //#region Constructor
-  constructor(private readonly _logger: LoggerService, private readonly _authService: AuthService,  private readonly _router: Router) {
+  constructor(
+    private readonly _logger: LoggerService, private readonly _authService: AuthService,
+    private readonly _router: Router, private readonly _menuController: MenuController
+  ) {
     effect(() => {
       this.user = this._authService.user();
 
@@ -78,8 +81,9 @@ export class AuthenticatedLayoutPage implements OnInit, OnDestroy, ViewWillEnter
     this._authService.logout()
     .pipe(takeUntil(this._destroy$))
     .subscribe({
-      next: () => {
+      next: async () => {
         this._logger.log(LogLevel.Info, `${this._contextLog} >> logout`, 'Sesión cerrada correctamente.');
+        await this._menuController.close();
         this._router.navigate(['/login']); // redirige a login
       },
       error: (error) => {
@@ -87,6 +91,10 @@ export class AuthenticatedLayoutPage implements OnInit, OnDestroy, ViewWillEnter
         this._logger.log(LogLevel.Error, `${this._contextLog} >> logout`, 'Error al cerrar sesión.', error);
       }
     })
+  }
+
+  public async closeMenu() {
+    await this._menuController.close();
   }
 //#endregion
 
