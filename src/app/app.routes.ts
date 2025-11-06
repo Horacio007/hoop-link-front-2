@@ -136,5 +136,9 @@ export const routes: Routes = [
     redirectTo: '/portal',
     pathMatch: 'full',
   },
+  {
+    path: 'jugador-perfil',
+    loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-perfil/jugador-perfil.page').then( m => m.JugadorPerfilPage)
+  },
 
 ];

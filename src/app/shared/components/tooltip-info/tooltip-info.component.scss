@@ -1,0 +1,48 @@
+.custom-tooltip {
+  position: relative; /* muy importante */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%; /* aparece arriba del icono */
+    left: 50%;
+    transform: translateX(-50%) scale(0.95);
+    background: #1e293b;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.16s ease, transform 0.16s ease;
+    z-index: 9999;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 115%;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg) scale(0.95);
+    width: 10px;
+    height: 10px;
+    background: #1e293b;
+    opacity: 0;
+    transition: opacity 0.16s ease, transform 0.16s ease;
+    z-index: 9998;
+  }
+
+  &:hover::after,
+  &:hover::before,
+  &:focus::after,
+  &:focus::before {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}

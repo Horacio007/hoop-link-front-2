@@ -1,0 +1,13 @@
+@switch (type) {
+  @case ('circle') {
+    <ion-thumbnail>
+      <ion-skeleton-text animated [style]="style"></ion-skeleton-text>
+    </ion-thumbnail>
+  }
+  @case ('rectangle') {
+    <ion-skeleton-text animated [style]="style"></ion-skeleton-text>
+  }
+  @default {
+    <ion-skeleton-text animated [style]="style"></ion-skeleton-text>
+  }
+}

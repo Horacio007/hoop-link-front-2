@@ -1,0 +1,53 @@
+<div class="flex flex-col items-center space-y-4">
+  <!-- Imagen de perfil -->
+  <div class="relative w-32 h-32">
+    <img
+      [src]="imageUrlPreview || imageUrl || 'assets/images/generales/sin-foto.png'"
+      alt="Foto Perfil"
+      class="w-full h-full object-cover rounded-full border border-gray-300 shadow-sm cursor-pointer"
+      (click)="openPreview()"
+    />
+
+    <!-- Botón flotante para cambiar -->
+    <label
+      for="fileInput"
+      class="absolute bottom-0 right-0 bg-[#f47621] hover:bg-orange-600 text-white text-xs px-3 py-1 rounded-full cursor-pointer shadow"
+    >
+      Cambiar
+    </label>
+  </div>
+
+  <!-- Input oculto -->
+  <input
+    id="fileInput"
+    type="file"
+    accept="image/*"
+    class="hidden"
+    (change)="onFileSelected($event)"
+  />
+</div>
+
+<!-- Vista previa en modal -->
+ @if (isPreviewOpen) {
+   <div class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50" (click)="closePreview()">
+
+    <!-- Botón de cerrar -->
+    <button
+      (click)="closePreview()"
+      class="absolute top-4 right-4 text-white text-3xl font-bold hover:text-red-400 focus:outline-none"
+    >
+      ✕
+    </button>
+
+     <img
+       [src]="imageUrlPreview || imageUrl || 'assets/images/generales/sin-foto.png'"
+       class="max-w-[90%] max-h-[90%] rounded-lg shadow-2xl transition-transform duration-300 scale-100 hover:scale-105"
+       alt="Preview"
+       (click)="$event.stopPropagation()"
+     />
+   </div>
+ }
+
+
+
+

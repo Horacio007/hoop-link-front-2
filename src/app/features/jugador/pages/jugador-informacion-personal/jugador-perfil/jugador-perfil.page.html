@@ -1,0 +1,62 @@
+<div [formGroup]="form" class="my-4">
+  @if (cargandoData) {
+    <div class="grid grid-cols-12 gap-4">
+      <div class="col-span-12 lg:col-span-3 flex items-center justify-center">
+        <app-skeleton type="circle" style="width: 8rem; height: 8rem;" ></app-skeleton>
+      </div>
+      <div class="col-span-12 lg:col-span-9 space-y-4">
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <app-skeleton style="height: 3rem;" ></app-skeleton>
+          </div>
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <app-skeleton style="height: 3rem;" ></app-skeleton>
+          </div>
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <app-skeleton style="height: 3rem;" ></app-skeleton>
+          </div>
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <app-skeleton style="height: 3rem;" ></app-skeleton>
+          </div>
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <app-skeleton style="height: 3rem;" ></app-skeleton>
+          </div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-full">
+            <app-skeleton style="height: 3rem;" ></app-skeleton>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="grid grid-cols-12 gap-4">
+      <div class="col-span-12 lg:col-span-3 flex items-center justify-center">
+        <app-profile-image
+          [imageUrl]="fotoPreviewUrl || form.get('fotoPerfil')?.value"
+          (imageSelected)="onFileSelected($event)"
+          (fileTooLarge)="handleFileTooLarge($event)"></app-profile-image>
+      </div>
+      <div class="col-span-12 lg:col-span-9 space-y-4">
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <ion-input
+              label="Altura"
+              inputId="on_label_altura"
+              formControlName='altura'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 1.85"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> mts</span>
+            </ion-input>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>
