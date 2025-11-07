@@ -6,7 +6,7 @@
 <form class="my-4" [formGroup]="formularioPrincipal" (submit)="onSubmit()">
   <app-responsive-tabs [tabLabels]="tabs">
     <ng-template #tab>
-      <app-jugador-perfil [form]="perfil" [cargandoData]="cargandoData"></app-jugador-perfil>
+      <app-jugador-perfil [form]="perfil" [cargandoData]="cargandoData" [allEstatusJugador]="estatusJugadorCatalogo || []" ></app-jugador-perfil>
     </ng-template>
 
     <ng-template #tab>

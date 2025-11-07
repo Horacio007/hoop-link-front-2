@@ -6,7 +6,7 @@ import { CommonMessages, LogLevel, SeverityMessageType } from 'src/app/core/enum
 import { LoggerService } from 'src/app/core/services/logger/logger.service';
 import { ITab } from 'src/app/shared/components/responsive-tabs/interfaces/responsive-tabs.interface';
 import { ResponsiveTabsComponent } from 'src/app/shared/components/responsive-tabs/responsive-tabs.component';
-import { finalize, Subject, takeUntil } from 'rxjs';
+import { finalize, forkJoin, Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/services/auth.service';
 import { InformacionPersonalService } from 'src/app/core/services/informacion-personal/informacion-personal.service';
 import { ToastService } from 'src/app/core/services/messages/toast.service';
@@ -18,17 +18,19 @@ import { IVideosInformacionPersonal } from 'src/app/shared/interfaces/informacio
 import { InfoPersonalSummary, InfoPersonalDetail } from '../../constants';
 import { JugadorConstants } from '../../constants/general/general.constants';
 import { JugadorPerfilPage } from "./jugador-perfil/jugador-perfil.page";
-import { IonIcon, IonCard, IonLabel, IonItem } from "@ionic/angular/standalone";
+import { IonIcon } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
 import { informationCircleOutline } from 'ionicons/icons';
 import { TooltipInfoComponent } from "src/app/shared/components/tooltip-info/tooltip-info.component";
+import { CatalogoService } from '../../../../shared/services/catalogo/catalogo.service';
+import { ICatalogo } from 'src/app/shared/interfaces/catalogo/catalogo.interface';
 
 @Component({
   selector: 'app-jugador-informacion-personal',
   templateUrl: './jugador-informacion-personal.page.html',
   styleUrls: ['./jugador-informacion-personal.page.scss'],
   standalone: true,
-  imports: [IonItem, IonLabel, IonCard, IonIcon, CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, TooltipInfoComponent]
+  imports: [IonIcon, CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, TooltipInfoComponent]
 })
 export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWillEnter {
 
@@ -70,6 +72,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
     },
   ];
   public cargandoData = true;
+  public estatusJugadorCatalogo: ICatalogo[] | undefined;
   private readonly _destroy$ = new Subject<void>();
 //#endregion
 
@@ -78,7 +81,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
     private readonly _fb: FormBuilder, private readonly _toastService: ToastService,
     private readonly _blockUserIService:BlockUiService, private readonly _formularioService:FormularioUtilsService,
     private readonly _informacionPersonalService:InformacionPersonalService, private readonly _authService:AuthService,
-    private readonly _logger: LoggerService
+    private readonly _logger: LoggerService, private readonly _catalogoService: CatalogoService,
   ) {
 
     addIcons({
@@ -189,32 +192,52 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
   private cargaDatos() {
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaDatos`, 'Obteniendo información personal...');
 
-    this._informacionPersonalService.getInformacionPersonal()
-      .pipe(
-        takeUntil(this._destroy$),
-        finalize(() => this.cargandoData = false) // desactiva cuando termina
-      ).subscribe({
-        next: (response: IResponse<IInformacinPersonal>) => {
-          this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos`, 'Datos recibidos', response.data);
-          const { data } = response;
-          console.log(data);
+    // 1. Definir los Observables a esperar
+    const dataPrincipal$ = this._informacionPersonalService.getInformacionPersonal().pipe(
+      takeUntil(this._destroy$)
+    );
 
-          // preparo la informacion
-          const { perfil, fuerzaResistencia, basketball, experiencia, vision, videos, redes } = this.preparaSeccionesToSetEnFormulario(data);
+    // Asumo que tienes un _catalogoService inyectado
+    const catalogoEstatus$ = this._catalogoService.getAllEstatusBusquedaJugador().pipe(
+      takeUntil(this._destroy$)
+    );
 
-          // actualizo la informacion
-          this.setPerfilEnFormulario(perfil);
-          this.setFuerzaResistenciaEnFormulario(fuerzaResistencia);
-          this.setBasketballEnFormulario(basketball);
-          this.setExperienciaEnFormulario(experiencia);
-          this.setVisionEnFormulario(vision);
-          this.setVideosEnFormulario(videos);
-          this.setRedesEnFormulario(redes);
-        },
-        error: (error) => {
-          this._logger.log(LogLevel.Error, `${this._contextLog} >> cargaDatos`, 'Error al obtener información personal', error);
-          this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar la información personal.');
-        }
+    // 2. Usar forkJoin para esperar ambos
+    forkJoin({
+      dataPrincipal: dataPrincipal$,
+      catalogoEstatus: catalogoEstatus$
+    })
+    .pipe(
+      // El finalize se ejecuta SOLO después de que forkJoin termine (éxito o error)
+      finalize(() => {
+          this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaDatos`, 'Finalizada la carga CRÍTICA. Ocultando Skeleton.');
+          this.cargandoData = false;
+      })
+    ).subscribe({
+      next: (results: { dataPrincipal: IResponse<IInformacinPersonal>, catalogoEstatus: ICatalogo[] }) => {
+        this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos`, 'Datos recibidos', results);
+
+        this.estatusJugadorCatalogo = results.catalogoEstatus;
+
+
+        const { data } = results.dataPrincipal;
+
+        // preparo la informacion
+        const { perfil, fuerzaResistencia, basketball, experiencia, vision, videos, redes } = this.preparaSeccionesToSetEnFormulario(data);
+
+        // actualizo la informacion
+        this.setPerfilEnFormulario(perfil);
+        this.setFuerzaResistenciaEnFormulario(fuerzaResistencia);
+        this.setBasketballEnFormulario(basketball);
+        this.setExperienciaEnFormulario(experiencia);
+        this.setVisionEnFormulario(vision);
+        this.setVideosEnFormulario(videos);
+        this.setRedesEnFormulario(redes);
+      },
+      error: (error) => {
+        this._logger.log(LogLevel.Error, `${this._contextLog} >> cargaDatos`, 'Error al obtener información personal', error);
+        this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar la información personal.');
+      }
     });
   }
 

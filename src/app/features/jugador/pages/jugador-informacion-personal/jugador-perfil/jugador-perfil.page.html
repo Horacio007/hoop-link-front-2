@@ -51,8 +51,84 @@
               label-placement="floating"
               fill="outline"
             >
-              <span slot="end" class="text-gray-500"> mts</span>
+              <span slot="end" class="text-gray-500"> cm</span>
             </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <ion-input
+              label="Peso"
+              inputId="on_label_peso"
+              formControlName='peso'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 78"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> kg</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <div class="selects-search-validation-container"
+              [ngClass]="{
+                  'ng-valid': form.controls['estatusBusquedaJugador'].valid,
+                  'ng-invalid': form.controls['estatusBusquedaJugador'].invalid,
+                  'ng-touched': form.controls['estatusBusquedaJugador'].touched
+              }"
+            >
+              <ion-list class="no-border-list">
+                <ion-item [button]="true" [detail]="false" (click)="openEstatusModal()" class="no-border-list" id="select-estatus-jugador" lines="none">
+                  <ion-label>Estatus Jugador</ion-label>
+                  <div slot="end" id="selected-estatus-jugador">{{ selectedEstatusJugadorNombre }}</div>
+                </ion-item>
+              </ion-list>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <ion-input
+              label="Medida Mano"
+              inputId="on_label_medida_mano"
+              formControlName='medidaMano'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 20"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> cm</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <ion-input
+              label="Largo Brazo"
+              inputId="on_label_largo_brazo"
+              formControlName='largoBrazo'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 80"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> cm</span>
+            </ion-input>
+          </div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12">
+            <ion-textarea
+              label="¿Quien Eres?"
+              inputId="on_label_quien_eres"
+              formControlName='quienEres'
+              autocomplete="off"
+              placeholder="Ej: Entusiaste de los tiros de 3..."
+              label-placement="floating"
+              fill="outline"
+              [autoGrow]="true"
+            >
+            </ion-textarea>
           </div>
         </div>
       </div>
@@ -60,3 +136,16 @@
   }
 
 </div>
+
+<ion-modal #modalEstatusJugador [isOpen]="false" cssClass="custom-modal-selects-search" backdropDismiss="false">
+  <ng-template>
+    <app-select-list-search
+      class="ion-page"
+      title="Estatus Jugador"
+      [items]="allEstatusJugador"
+      [selectedItem]="selectedEstatusJugadorId"
+      (selectionChange)="estatusJugadorSelectionChanged($event)"
+      (selectionCancel)="estatusJugadorCancel()"
+    ></app-select-list-search>
+  </ng-template>
+</ion-modal>
