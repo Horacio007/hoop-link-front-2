@@ -43,8 +43,8 @@ export class JugadorPerfilPage implements OnInit {
 //#region Constructor
   constructor(
     private readonly _formularioUtils: FormularioUtilsService, private readonly _catalagoService: CatalogoService,
-    private readonly _blockUserIService:BlockUiService, private readonly _toastService: ToastService,
-    private readonly _logger: LoggerService,  ) { }
+    private readonly _toastService: ToastService, private readonly _logger: LoggerService,
+  ) { }
 //#endregion
 
 //#region Ng
@@ -56,6 +56,9 @@ export class JugadorPerfilPage implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
+  }
 //#endregion
 
 //#region Generales

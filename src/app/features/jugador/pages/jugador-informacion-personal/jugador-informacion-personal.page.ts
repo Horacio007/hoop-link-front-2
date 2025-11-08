@@ -24,13 +24,14 @@ import { informationCircleOutline } from 'ionicons/icons';
 import { TooltipInfoComponent } from "src/app/shared/components/tooltip-info/tooltip-info.component";
 import { CatalogoService } from '../../../../shared/services/catalogo/catalogo.service';
 import { ICatalogo } from 'src/app/shared/interfaces/catalogo/catalogo.interface';
+import { JugadorFuerzaResistenciaPage } from "./jugador-fuerza-resistencia/jugador-fuerza-resistencia.page";
 
 @Component({
   selector: 'app-jugador-informacion-personal',
   templateUrl: './jugador-informacion-personal.page.html',
   styleUrls: ['./jugador-informacion-personal.page.scss'],
   standalone: true,
-  imports: [IonIcon, CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, TooltipInfoComponent]
+  imports: [IonIcon, CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, TooltipInfoComponent, JugadorFuerzaResistenciaPage]
 })
 export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWillEnter {
 

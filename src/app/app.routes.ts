@@ -140,5 +140,9 @@ export const routes: Routes = [
     path: 'jugador-perfil',
     loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-perfil/jugador-perfil.page').then( m => m.JugadorPerfilPage)
   },
+  {
+    path: 'jugador-fuerza-resistencia',
+    loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-fuerza-resistencia/jugador-fuerza-resistencia.page').then( m => m.JugadorFuerzaResistenciaPage)
+  },
 
 ];
