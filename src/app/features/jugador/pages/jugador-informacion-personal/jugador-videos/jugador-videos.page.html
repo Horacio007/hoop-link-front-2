@@ -1,0 +1,54 @@
+<div [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  @if (cargandoData) {
+    <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
+    <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
+    <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
+    <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
+    <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
+  } @else {
+    <app-video-uploader
+      label="Botando"
+      [errorMessage]="videoErrors['videoBotando']"
+      (videoSelected)="form.get('videos.videoBotando')?.setValue($event)"
+      (fileError)="handleVideoError('videoBotando', $event)"
+      [videoUrl]="videoBotandoUrl"
+      id="Botando"
+    ></app-video-uploader>
+
+    <app-video-uploader
+      label="Tirando"
+      [errorMessage]="videoErrors['videoTirando']"
+      (videoSelected)="form.get('videos.videoTirando')?.setValue($event)"
+      (fileError)="handleVideoError('videoTirando', $event)"
+      [videoUrl]="videoTirandoUrl"
+      id="Tirando"
+    ></app-video-uploader>
+
+    <app-video-uploader
+      label="Colada"
+      [errorMessage]="videoErrors['videoColada']"
+      (videoSelected)="form.get('videos.videoColada')?.setValue($event)"
+      (fileError)="handleVideoError('videoColada', $event)"
+      [videoUrl]="videoColadaUrl"
+      id="Colada"
+    ></app-video-uploader>
+
+    <app-video-uploader
+      label="Entrenando"
+      [errorMessage]="videoErrors['videoEntrenando']"
+      (videoSelected)="form.get('videos.videoEntrenando')?.setValue($event)"
+      (fileError)="handleVideoError('videoEntrenando', $event)"
+      [videoUrl]="videoEntrenandoUrl"
+      id="Entrenando"
+    ></app-video-uploader>
+
+    <app-video-uploader
+      label="Jugando"
+      [errorMessage]="videoErrors['videoJugando']"
+      (videoSelected)="form.get('videos.videoJugando')?.setValue($event)"
+      (fileError)="handleVideoError('videoJugando', $event)"
+      [videoUrl]="videoJugandoUrl"
+      id="Jugando"
+    ></app-video-uploader>
+  }
+</div>

@@ -143,6 +143,14 @@ export const routes: Routes = [
                 path: 'jugador-experiencia',
                 loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-experiencia/jugador-experiencia.page').then( m => m.JugadorExperienciaPage)
               },
+              {
+                path: 'jugador-vision',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-vision/jugador-vision.page').then( m => m.JugadorVisionPage)
+              },
+              {
+                path: 'jugador-test',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-test/jugador-test.page').then( m => m.JugadorTestPage)
+              },
             ]
           },
         ]
@@ -153,6 +161,10 @@ export const routes: Routes = [
     path: '',
     redirectTo: '/portal',
     pathMatch: 'full',
+  },
+  {
+    path: 'jugador-videos',
+    loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-videos/jugador-videos.page').then( m => m.JugadorVideosPage)
   },
 
 ];

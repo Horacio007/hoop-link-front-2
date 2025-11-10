@@ -27,13 +27,16 @@ import { ICatalogo } from 'src/app/shared/interfaces/catalogo/catalogo.interface
 import { JugadorFuerzaResistenciaPage } from "./jugador-fuerza-resistencia/jugador-fuerza-resistencia.page";
 import { JugadorBasketballPage } from "./jugador-basketball/jugador-basketball.page";
 import { JugadorExperienciaPage } from "./jugador-experiencia/jugador-experiencia.page";
+import { JugadorVisionPage } from "./jugador-vision/jugador-vision.page";
+import { JugadorTestPage } from "./jugador-test/jugador-test.page";
+import { JugadorVideosPage } from "./jugador-videos/jugador-videos.page";
 
 @Component({
   selector: 'app-jugador-informacion-personal',
   templateUrl: './jugador-informacion-personal.page.html',
   styleUrls: ['./jugador-informacion-personal.page.scss'],
   standalone: true,
-  imports: [IonIcon, CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, TooltipInfoComponent, JugadorFuerzaResistenciaPage, JugadorBasketballPage, JugadorExperienciaPage]
+  imports: [IonIcon, CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, TooltipInfoComponent, JugadorFuerzaResistenciaPage, JugadorBasketballPage, JugadorExperienciaPage, JugadorVisionPage, JugadorTestPage, JugadorVideosPage]
 })
 export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWillEnter {
 

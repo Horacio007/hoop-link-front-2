@@ -1,0 +1,40 @@
+<div class="flex flex-col items-center space-y-2">
+  <div class="relative w-full">
+    @if (previewUrl) {
+      <video
+        [src]="previewUrl"
+        controls
+        class="w-full h-48 rounded shadow-md object-cover"
+      ></video>
+    }
+
+    @if (!previewUrl) {
+      <div class="w-full h-48 bg-gray-800 flex items-center justify-center rounded">
+        <span class="text-gray-400">Sin video</span>
+      </div>
+    }
+
+    <!-- Error -->
+     @if (errorMessage) {
+       <div class="text-red-500 text-sm mt-1 text-left">
+         * {{ errorMessage }}
+       </div>
+     }
+
+    <!-- Botón personalizado -->
+    <label
+      class="absolute bottom-2 right-2 bg-[#f47621] hover:bg-orange-600 text-white text-xs px-3 py-1 rounded-full cursor-pointer shadow"
+      [for]="'fileInput_'+id"
+    >
+      {{ label }}
+    </label>
+
+    <input
+      [id]="'fileInput_'+id"
+      type="file"
+      accept="video/*"
+      class="hidden"
+      (change)="onFileSelected($event)"
+    />
+  </div>
+</div>
