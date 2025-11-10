@@ -125,7 +125,25 @@ export const routes: Routes = [
           {
             path: 'informacion-personal', // URL: /desktop/jugador/informacion-personal
             title: 'Información Personal | HoopLink',
-            loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-informacion-personal.page').then(m => m.JugadorInformacionPersonalPage)
+            loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-informacion-personal.page').then(m => m.JugadorInformacionPersonalPage),
+            children: [
+              {
+                path: 'jugador-perfil',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-perfil/jugador-perfil.page').then( m => m.JugadorPerfilPage)
+              },
+              {
+                path: 'jugador-fuerza-resistencia',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-fuerza-resistencia/jugador-fuerza-resistencia.page').then( m => m.JugadorFuerzaResistenciaPage)
+              },
+              {
+                path: 'jugador-basketball',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-basketball/jugador-basketball.page').then( m => m.JugadorBasketballPage)
+              },
+              {
+                path: 'jugador-experiencia',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-experiencia/jugador-experiencia.page').then( m => m.JugadorExperienciaPage)
+              },
+            ]
           },
         ]
       },
@@ -135,18 +153,6 @@ export const routes: Routes = [
     path: '',
     redirectTo: '/portal',
     pathMatch: 'full',
-  },
-  {
-    path: 'jugador-perfil',
-    loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-perfil/jugador-perfil.page').then( m => m.JugadorPerfilPage)
-  },
-  {
-    path: 'jugador-fuerza-resistencia',
-    loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-fuerza-resistencia/jugador-fuerza-resistencia.page').then( m => m.JugadorFuerzaResistenciaPage)
-  },
-  {
-    path: 'jugador-basketball',
-    loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-basketball/jugador-basketball.page').then( m => m.JugadorBasketballPage)
   },
 
 ];
