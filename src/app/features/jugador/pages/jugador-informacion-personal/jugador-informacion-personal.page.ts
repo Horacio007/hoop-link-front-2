@@ -6,7 +6,7 @@ import { CommonMessages, LogLevel, SeverityMessageType } from 'src/app/core/enum
 import { LoggerService } from 'src/app/core/services/logger/logger.service';
 import { ITab } from 'src/app/shared/components/responsive-tabs/interfaces/responsive-tabs.interface';
 import { ResponsiveTabsComponent } from 'src/app/shared/components/responsive-tabs/responsive-tabs.component';
-import { finalize, forkJoin, Subject, takeUntil } from 'rxjs';
+import { finalize, forkJoin, Subject, take, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/services/auth.service';
 import { InformacionPersonalService } from 'src/app/core/services/informacion-personal/informacion-personal.service';
 import { ToastService } from 'src/app/core/services/messages/toast.service';
@@ -25,13 +25,14 @@ import { TooltipInfoComponent } from "src/app/shared/components/tooltip-info/too
 import { CatalogoService } from '../../../../shared/services/catalogo/catalogo.service';
 import { ICatalogo } from 'src/app/shared/interfaces/catalogo/catalogo.interface';
 import { JugadorFuerzaResistenciaPage } from "./jugador-fuerza-resistencia/jugador-fuerza-resistencia.page";
+import { JugadorBasketballPage } from "./jugador-basketball/jugador-basketball.page";
 
 @Component({
   selector: 'app-jugador-informacion-personal',
   templateUrl: './jugador-informacion-personal.page.html',
   styleUrls: ['./jugador-informacion-personal.page.scss'],
   standalone: true,
-  imports: [IonIcon, CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, TooltipInfoComponent, JugadorFuerzaResistenciaPage]
+  imports: [IonIcon, CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, TooltipInfoComponent, JugadorFuerzaResistenciaPage, JugadorBasketballPage]
 })
 export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWillEnter {
 
@@ -74,7 +75,10 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
   ];
   public cargandoData = true;
   public estatusJugadorCatalogo: ICatalogo[] | undefined;
+  public posicionJugadorCatalogo: ICatalogo[] | undefined;
   private readonly _destroy$ = new Subject<void>();
+
+  private catalogosCargados: { [key: string]: boolean } = {};
 //#endregion
 
 //#region Constructor
@@ -490,6 +494,40 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
 
   get redes(): FormGroup {
     return this.formularioPrincipal.get('redes') as FormGroup;
+  }
+
+  public onTabChange(tab: string) {
+    console.warn('entro al tab')
+    if (tab === 'Basketball' && this.catalogosCargados['basketball'] === undefined) {
+      this.cargarCatalogosBasketball();
+    } else {
+      console.warn(tab === 'Basketball' && !this.catalogosCargados['basketball'], this.catalogosCargados['basketball'])
+    }
+  }
+
+  private cargarCatalogosBasketball() {
+    this.catalogosCargados['Basketball'] = true;
+
+    this._catalogoService.getAllPosicionJugador() // Asume un servicio que trae el catálogo
+    .pipe(
+      take(1),
+      // Usa finalize para asegurar que el loader se oculte
+      finalize(() => {
+        // Opcional: this._blockUserIService.hide();
+      })
+    )
+    .subscribe({
+      next: (catalogo) => {
+        this.posicionJugadorCatalogo = catalogo;
+        this._logger.log(LogLevel.Info, `${this._contextLog} >> Basketball`, 'Catálogo de posiciones cargado.');
+
+        // 🚨 IMPORTANTE: Aquí puedes setear una bandera LOCAL en el hijo si no usas [allPosicionJugador] en el HTML del hijo para manejar el Skeleton.
+      },
+      error: (error) => {
+        this.catalogosCargados['Basketball'] = false; // Permite reintentar si falla
+        this._logger.log(LogLevel.Error, `${this._contextLog} >> Basketball`, 'Error al cargar catálogos', error);
+      }
+    });
   }
 
   private validaPerfil() {

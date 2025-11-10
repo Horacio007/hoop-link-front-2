@@ -1,0 +1,17 @@
+/* jugador-perfil.page.scss */
+
+// Contenedor del ítem para asegurar la especificidad
+.selects-search-validation-container {
+    ion-item {
+        // Seleccionamos el ion-label dentro del ion-item
+        ion-label {
+            // Estilos necesarios para el truncamiento (ellipsis)
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            // Forzar que tome el espacio disponible si es necesario:
+            max-width: 100%;
+        }
+    }
+}

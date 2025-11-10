@@ -40,6 +40,7 @@ export class ResponsiveTabsComponent implements OnInit, AfterContentInit, OnDest
   @ViewChildren('tabButton') tabButtons!: QueryList<ElementRef>;
 
   @Output() informacionAlPadre = new EventEmitter<any>();
+  @Output() tabChange = new EventEmitter<string>();
 
   activeTabIndex = 0;
   isMobileView = false;
@@ -91,6 +92,8 @@ export class ResponsiveTabsComponent implements OnInit, AfterContentInit, OnDest
       }
 
     }
+    const tabName = this.tabLabels[index].tabName; // Asume que ITab tiene una propiedad 'label' o 'name'
+    this.tabChange.emit(tabName);
     // No necesitamos llamar a checkScreenWidth aquí, el cambio de vista se detecta en onResize
     // y el estilo activo se actualiza automáticamente con la condición en el template.
   }

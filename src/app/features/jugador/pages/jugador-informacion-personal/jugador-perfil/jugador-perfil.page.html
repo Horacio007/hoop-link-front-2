@@ -77,9 +77,9 @@
                   'ng-touched': form.controls['estatusBusquedaJugador'].touched
               }"
             >
-              <ion-list class="no-border-list">
+              <ion-list class="no-border-list w-full">
                 <ion-item [button]="true" [detail]="false" (click)="openEstatusModal()" class="no-border-list" id="select-estatus-jugador" lines="none">
-                  <ion-label>Estatus Jugador</ion-label>
+                  <ion-label class="whitespace-normal w-full" >Estatus Jugador</ion-label>
                   <div slot="end" id="selected-estatus-jugador">{{ selectedEstatusJugadorNombre }}</div>
                 </ion-item>
               </ion-list>

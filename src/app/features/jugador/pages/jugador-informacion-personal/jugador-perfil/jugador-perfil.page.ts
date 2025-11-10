@@ -21,7 +21,7 @@ import { SelectListSearchComponent } from "src/app/shared/components/ionic/selec
   templateUrl: './jugador-perfil.page.html',
   styleUrls: ['./jugador-perfil.page.scss'],
   standalone: true,
-  imports: [IonTextarea ,IonModal, IonList, IonItem, IonLabel, IonNote, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, ProfileImageComponent, IonInput, SelectListSearchComponent]
+  imports: [IonTextarea ,IonModal, IonList, IonItem, IonLabel, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, ProfileImageComponent, IonInput, SelectListSearchComponent]
 })
 export class JugadorPerfilPage implements OnInit {
 

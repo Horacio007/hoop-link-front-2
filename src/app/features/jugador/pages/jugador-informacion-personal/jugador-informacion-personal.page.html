@@ -4,7 +4,7 @@
   </app-tooltip-info>
 </div>
 <form class="my-4" [formGroup]="formularioPrincipal" (submit)="onSubmit()">
-  <app-responsive-tabs [tabLabels]="tabs">
+  <app-responsive-tabs [tabLabels]="tabs" (tabChange)="onTabChange($event)" >
     <ng-template #tab>
       <app-jugador-perfil [form]="perfil" [cargandoData]="cargandoData" [allEstatusJugador]="estatusJugadorCatalogo || []" ></app-jugador-perfil>
     </ng-template>
@@ -14,7 +14,7 @@
     </ng-template>
 
     <ng-template #tab>
-      <!-- <app-jugador-basketball [form]="basketball" [cargandoData]="cargandoData"></app-jugador-basketball> -->
+      <app-jugador-basketball [form]="basketball" [cargandoData]="cargandoData" [allPosicionJugador]="posicionJugadorCatalogo || undefined" ></app-jugador-basketball>
     </ng-template>
 
     <ng-template #tab>

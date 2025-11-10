@@ -144,5 +144,9 @@ export const routes: Routes = [
     path: 'jugador-fuerza-resistencia',
     loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-fuerza-resistencia/jugador-fuerza-resistencia.page').then( m => m.JugadorFuerzaResistenciaPage)
   },
+  {
+    path: 'jugador-basketball',
+    loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-basketball/jugador-basketball.page').then( m => m.JugadorBasketballPage)
+  },
 
 ];
