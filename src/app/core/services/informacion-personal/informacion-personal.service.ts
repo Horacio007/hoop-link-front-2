@@ -40,12 +40,12 @@ export class InformacionPersonalService {
     );
   }
 
-  public getInformacionPersonal(): Observable<IResponse<IInformacinPersonal>> {
+  public getInformacionPersonal(): Observable<IResponse<IInformacinPersonal | undefined>> {
     const url: string = WebApiConstants.informacion_personal.getInformacion
 
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> getInformacionPersonal`, 'Solicitando información personal.', { endpoint: url });
 
-    return this._webApiService.get<IResponse<IInformacinPersonal>>(url, true).pipe(
+    return this._webApiService.get<IResponse<IInformacinPersonal | undefined>>(url, true).pipe(
       catchError(error => {
         return throwError(() => error);
       })

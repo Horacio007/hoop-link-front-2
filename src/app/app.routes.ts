@@ -151,6 +151,14 @@ export const routes: Routes = [
                 path: 'jugador-test',
                 loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-test/jugador-test.page').then( m => m.JugadorTestPage)
               },
+              {
+                path: 'jugador-videos',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-videos/jugador-videos.page').then( m => m.JugadorVideosPage)
+              },
+              {
+                path: 'jugador-redes-sociales',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-redes-sociales/jugador-redes-sociales.page').then( m => m.JugadorRedesSocialesPage)
+              },
             ]
           },
         ]
@@ -163,8 +171,8 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'jugador-videos',
-    loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-videos/jugador-videos.page').then( m => m.JugadorVideosPage)
-  },
+    path: '**',
+    redirectTo: '/portal',
+  }
 
 ];

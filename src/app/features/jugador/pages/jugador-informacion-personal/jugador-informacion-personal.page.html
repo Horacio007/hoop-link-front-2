@@ -26,7 +26,7 @@
     </ng-template>
 
     <ng-template #tab>
-      <app-jugador-test></app-jugador-test> -->
+      <app-jugador-test></app-jugador-test>
     </ng-template>
 
     <ng-template #tab>
@@ -34,8 +34,19 @@
     </ng-template>
 
     <ng-template #tab>
-      <!-- <app-jugador-redes-sociales [form]="redes" [cargandoData]="cargandoData"></app-jugador-redes-sociales> -->
+      <app-jugador-redes-sociales [form]="redes" [cargandoData]="cargandoData"></app-jugador-redes-sociales>
     </ng-template>
 
   </app-responsive-tabs>
+  <div class="flex justify-end mx-2 my-4">
+    <div class="flex align-center justify-center">
+      @if (cargandoData) {
+        <app-skeleton style="width: 5rem; height: 2.5rem;"></app-skeleton>
+      } @else {
+        <ion-button class="w-full" type="submit" [style]="{'--background': '#f47621', '--border-color': '#f47621'}">
+          Guardar
+        </ion-button>
+      }
+    </div>
+  </div>
 </form>

@@ -18,7 +18,7 @@ import { IVideosInformacionPersonal } from 'src/app/shared/interfaces/informacio
 import { InfoPersonalSummary, InfoPersonalDetail } from '../../constants';
 import { JugadorConstants } from '../../constants/general/general.constants';
 import { JugadorPerfilPage } from "./jugador-perfil/jugador-perfil.page";
-import { IonIcon } from "@ionic/angular/standalone";
+import { IonIcon, IonButton } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
 import { informationCircleOutline } from 'ionicons/icons';
 import { TooltipInfoComponent } from "src/app/shared/components/tooltip-info/tooltip-info.component";
@@ -30,13 +30,15 @@ import { JugadorExperienciaPage } from "./jugador-experiencia/jugador-experienci
 import { JugadorVisionPage } from "./jugador-vision/jugador-vision.page";
 import { JugadorTestPage } from "./jugador-test/jugador-test.page";
 import { JugadorVideosPage } from "./jugador-videos/jugador-videos.page";
+import { JugadorRedesSocialesPage } from "./jugador-redes-sociales/jugador-redes-sociales.page";
+import { SkeletonComponent } from 'src/app/shared/components/ionic/skeleton/skeleton.component';
 
 @Component({
   selector: 'app-jugador-informacion-personal',
   templateUrl: './jugador-informacion-personal.page.html',
   styleUrls: ['./jugador-informacion-personal.page.scss'],
   standalone: true,
-  imports: [IonIcon, CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, TooltipInfoComponent, JugadorFuerzaResistenciaPage, JugadorBasketballPage, JugadorExperienciaPage, JugadorVisionPage, JugadorTestPage, JugadorVideosPage]
+  imports: [IonIcon, CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, TooltipInfoComponent, JugadorFuerzaResistenciaPage, JugadorBasketballPage, JugadorExperienciaPage, JugadorVisionPage, JugadorTestPage, JugadorVideosPage, JugadorRedesSocialesPage, SkeletonComponent, IonButton]
 })
 export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWillEnter {
 
@@ -223,7 +225,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
           this.cargandoData = false;
       })
     ).subscribe({
-      next: (results: { dataPrincipal: IResponse<IInformacinPersonal>, catalogoEstatus: ICatalogo[] }) => {
+      next: (results: { dataPrincipal: IResponse<IInformacinPersonal | undefined>, catalogoEstatus: ICatalogo[] }) => {
         this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos`, 'Datos recibidos', results);
 
         this.estatusJugadorCatalogo = results.catalogoEstatus;
@@ -231,17 +233,20 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
 
         const { data } = results.dataPrincipal;
 
-        // preparo la informacion
-        const { perfil, fuerzaResistencia, basketball, experiencia, vision, videos, redes } = this.preparaSeccionesToSetEnFormulario(data);
+        if (data) {
+          // preparo la informacion
+          const { perfil, fuerzaResistencia, basketball, experiencia, vision, videos, redes } = this.preparaSeccionesToSetEnFormulario(data);
 
-        // actualizo la informacion
-        this.setPerfilEnFormulario(perfil);
-        this.setFuerzaResistenciaEnFormulario(fuerzaResistencia);
-        this.setBasketballEnFormulario(basketball);
-        this.setExperienciaEnFormulario(experiencia);
-        this.setVisionEnFormulario(vision);
-        this.setVideosEnFormulario(videos);
-        this.setRedesEnFormulario(redes);
+          // actualizo la informacion
+          this.setPerfilEnFormulario(perfil);
+          this.setFuerzaResistenciaEnFormulario(fuerzaResistencia);
+          this.setBasketballEnFormulario(basketball);
+          this.setExperienciaEnFormulario(experiencia);
+          this.setVisionEnFormulario(vision);
+          this.setVideosEnFormulario(videos);
+          this.setRedesEnFormulario(redes);
+        }
+
       },
       error: (error) => {
         this._logger.log(LogLevel.Error, `${this._contextLog} >> cargaDatos`, 'Error al obtener información personal', error);
@@ -609,46 +614,48 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
       return formData;
     }
 
-    if (this.formularioPrincipal.invalid) {
-      this.formularioPrincipal.markAllAsTouched();
-      this.validaErrores();
-      this._logger.log(LogLevel.Warn, `${this._contextLog} >> onSubmit`, 'Formulario inválido al intentar guardar.');
-    } else {
+    // if (this.formularioPrincipal.invalid) {
+    //   this.formularioPrincipal.markAllAsTouched();
+    //   this.validaErrores();
+    //   this._logger.log(LogLevel.Warn, `${this._contextLog} >> onSubmit`, 'Formulario inválido al intentar guardar.');
+    // } else {
+      // aqui iva la informacion si le pongo otra vez lo de validar todo
 
-      this._blockUserIService.show(JugadorConstants.APLICANDO_CAMBIOS);
-      this._logger.log(LogLevel.Debug, `${this._contextLog} >> onSubmit`, 'Enviando datos al servidor.');
+    // }
 
-      const raw = this.formularioPrincipal.getRawValue();
+    this._blockUserIService.show(JugadorConstants.APLICANDO_CAMBIOS);
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> onSubmit`, 'Enviando datos al servidor.');
 
-      let formCompleto: IRegistraInformacionPersonal;
-      formCompleto = {
-        perfil: raw.perfil,
-        fuerzaResistencia: raw.fuerzaResistencia,
-        basketball: raw.basketball,
-        experiencia: raw.experiencia,
-        vision: raw.vision,
-        videos: raw.videos,
-        redes: raw.redes,
-      }
-      const formData = dtoToFormData(formCompleto, this.formularioPrincipal);
+    const raw = this.formularioPrincipal.getRawValue();
 
-      this._informacionPersonalService.save(formData).pipe(
-        takeUntil(this._destroy$),
-        finalize(() => this._blockUserIService.hide())
-      ).subscribe({
-        next: (response: any) => {
-          this._logger.log(LogLevel.Info, `${this._contextLog} >> onSubmit`, 'Información guardada correctamente', response);
-          this._toastService.showMessage(SeverityMessageType.Success, 'Genial', response.mensaje, 5000);
-          this.cargaDatos();
-        },
-        error: (error: any) => {
-          // Aquí puedes mostrar un toast, modal o mensaje en pantalla
-          this._logger.log(LogLevel.Error, `${this._contextLog} >> onSubmit`, 'Error guardando información', error);
-          this._toastService.showMessage(SeverityMessageType.Error, 'Error al guardar', error.error.message || 'Algo salió mal');
-          this._blockUserIService.hide();
-        }
-      });
+    let formCompleto: IRegistraInformacionPersonal;
+    formCompleto = {
+      perfil: raw.perfil,
+      fuerzaResistencia: raw.fuerzaResistencia,
+      basketball: raw.basketball,
+      experiencia: raw.experiencia,
+      vision: raw.vision,
+      videos: raw.videos,
+      redes: raw.redes,
     }
+    const formData = dtoToFormData(formCompleto, this.formularioPrincipal);
+
+    this._informacionPersonalService.save(formData).pipe(
+      takeUntil(this._destroy$),
+      finalize(() => this._blockUserIService.hide())
+    ).subscribe({
+      next: (response: any) => {
+        this._logger.log(LogLevel.Info, `${this._contextLog} >> onSubmit`, 'Información guardada correctamente', response);
+        this._toastService.showMessage(SeverityMessageType.Success, 'Genial', response.mensaje, 5000);
+        this.cargaDatos();
+      },
+      error: (error: any) => {
+        // Aquí puedes mostrar un toast, modal o mensaje en pantalla
+        this._logger.log(LogLevel.Error, `${this._contextLog} >> onSubmit`, 'Error guardando información', error);
+        this._toastService.showMessage(SeverityMessageType.Error, 'Error al guardar', error.error.message || 'Algo salió mal');
+        this._blockUserIService.hide();
+      }
+    });
   }
 //#endregion
 
