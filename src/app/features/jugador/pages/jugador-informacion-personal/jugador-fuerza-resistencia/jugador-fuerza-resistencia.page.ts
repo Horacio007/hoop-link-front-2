@@ -66,7 +66,7 @@ export class JugadorFuerzaResistenciaPage implements OnInit, OnDestroy {
     this.modalPotencia.dismiss();
   }
 
-   public openModalFuerza() {
+  public openModalFuerza() {
     this.modalFuerza.present();
   }
 
@@ -74,7 +74,7 @@ export class JugadorFuerzaResistenciaPage implements OnInit, OnDestroy {
     this.modalFuerza.dismiss();
   }
 
-   public openModalResistencia() {
+  public openModalResistencia() {
     this.modalResistencia.present();
   }
 

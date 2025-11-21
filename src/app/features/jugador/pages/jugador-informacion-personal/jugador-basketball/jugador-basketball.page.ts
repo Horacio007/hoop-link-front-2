@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonModal, IonLabel, IonDatetimeButton, IonDatetime, IonSegment, IonSegmentButton, IonList, IonItem, IonRadio, IonToggle, IonInput } from '@ionic/angular/standalone';
+import { IonModal, IonLabel, IonDatetimeButton, IonDatetime, IonSegment, IonSegmentButton, IonList, IonItem, IonRadio, IonToggle, IonInput, IonCardSubtitle, IonCardHeader, IonCardTitle, IonCard, IonContent, IonIcon, IonCardContent, IonHeader, IonToolbar, IonButton, IonButtons, IonText } from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
 import { LogLevel } from 'src/app/core/enums';
 import { LoggerService } from 'src/app/core/services/logger/logger.service';
@@ -15,7 +15,7 @@ import { SelectListSearchComponent } from "src/app/shared/components/ionic/selec
   templateUrl: './jugador-basketball.page.html',
   styleUrls: ['./jugador-basketball.page.scss'],
   standalone: true,
-  imports: [ IonInput, IonToggle, IonItem, IonList, IonDatetime, IonDatetimeButton, IonLabel, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonModal, SelectListSearchComponent]
+  imports: [IonText, IonButtons, IonButton, IonToolbar, IonHeader, IonCardContent, IonIcon, IonContent, IonCard, IonCardTitle, IonCardHeader, IonInput, IonToggle, IonItem, IonList, IonDatetime, IonDatetimeButton, IonLabel, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonModal, SelectListSearchComponent]
 })
 export class JugadorBasketballPage implements OnInit, OnDestroy, AfterViewInit {
 
@@ -43,6 +43,10 @@ export class JugadorBasketballPage implements OnInit, OnDestroy, AfterViewInit {
   public selectedPosicionDosNombre: string = 'Selecciona Posición Dos';
   public selectedPosicionDosId: string | undefined = undefined;
   public posicionDosValido: boolean = false;
+
+  @ViewChild('modalDatosGenerales', { static: true }) modalDatosGenerales!: IonModal;
+  @ViewChild('modalEstadisticas', { static: true }) modalEstadisticas!: IonModal;
+  @ViewChild('modalEficiencia', { static: true }) modalEficiencia!: IonModal;
 //#endregion
 
 //#region Constructor
@@ -258,6 +262,30 @@ export class JugadorBasketballPage implements OnInit, OnDestroy, AfterViewInit {
     this.form.get('posicionJuegoDos')?.markAsTouched();
 
     this.modalPosicionDos.dismiss();
+  }
+
+  public openModalDatosGenerales() {
+    this.modalDatosGenerales.present();
+  }
+
+  public closeModalDatosGenerales() {
+    this.modalDatosGenerales.dismiss();
+  }
+
+  public openModalEstadisticas() {
+    this.modalEstadisticas.present();
+  }
+
+  public closeModalEstadisticas() {
+    this.modalEstadisticas.dismiss();
+  }
+
+  public openModalEficiencia() {
+    this.modalEficiencia.present();
+  }
+
+  public closeModalEficiencia() {
+    this.modalEficiencia.dismiss();
   }
 //#endregion
 
