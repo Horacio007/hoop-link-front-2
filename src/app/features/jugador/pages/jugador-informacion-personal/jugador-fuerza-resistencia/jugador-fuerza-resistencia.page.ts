@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonInput } from '@ionic/angular/standalone';
+import { IonInput, IonCard, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCardContent, IonIcon } from '@ionic/angular/standalone';
 import { LogLevel } from 'src/app/core/enums';
 import { LoggerService } from 'src/app/core/services/logger/logger.service';
 import { FormularioUtilsService } from 'src/app/shared/utils/form/formulario-utils.service';
@@ -12,7 +12,7 @@ import { SkeletonComponent } from 'src/app/shared/components/ionic/skeleton/skel
   templateUrl: './jugador-fuerza-resistencia.page.html',
   styleUrls: ['./jugador-fuerza-resistencia.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonInput]
+  imports: [IonIcon, IonCardContent, IonCardHeader, IonCardTitle, IonCard, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonInput]
 })
 export class JugadorFuerzaResistenciaPage implements OnInit, OnDestroy {
 
