@@ -8,7 +8,10 @@
         class="tab-button"
         [class.tab-active]="activeTabIndex === $index">
         @if (label.icon) {
-          <i [class]="label.icon" style="color: #708090"></i>&nbsp;
+          <i [class]="label.icon"
+            [class.tab-active-icon]="activeTabIndex === $index"
+            >
+          </i>&nbsp;
         }
         {{ label.tabName }}
       </button>
@@ -32,6 +35,10 @@
     }
 
   </select>
+</div>
+
+<div class="mt-4">
+  <ng-content select="[header]"></ng-content>
 </div>
 
 <!-- Aquí se renderiza el contenido dinámico del tab activo -->
