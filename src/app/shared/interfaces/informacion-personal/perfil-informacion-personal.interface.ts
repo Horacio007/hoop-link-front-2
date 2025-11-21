@@ -4,6 +4,7 @@ export interface IPerfilInformacionPersonal {
   informacionPersonalId?: number,
   usuarioId?: number,
   fotoPerfil?: string | File,
+  alias?: string,
   altura?: number,
   peso?: number,
   estatusBusquedaJugador?: ICatalogo,

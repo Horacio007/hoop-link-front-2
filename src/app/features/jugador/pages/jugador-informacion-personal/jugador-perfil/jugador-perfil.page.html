@@ -1,45 +1,81 @@
 <div [formGroup]="form" class="my-4">
   @if (cargandoData) {
-    <div class="grid grid-cols-12 gap-4">
-      <div class="col-span-12 lg:col-span-3 flex items-center justify-center">
-        <app-skeleton type="circle" style="width: 8rem; height: 8rem;" ></app-skeleton>
+    <div class="grid grid-cols-12 gap-4 mb-4 flex items-center justify-center">
+      <div class="col-span-12 lg:col-span-6 flex items-center justify-center">
+        <app-skeleton type="circle" style="width: 10rem; height: 10rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 lg:col-span-9 space-y-4">
-        <div class="grid grid-cols-12 gap-4 mb-4">
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <app-skeleton style="height: 3rem;" ></app-skeleton>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <app-skeleton style="height: 3rem;" ></app-skeleton>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <app-skeleton style="height: 3rem;" ></app-skeleton>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <app-skeleton style="height: 3rem;" ></app-skeleton>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <app-skeleton style="height: 3rem;" ></app-skeleton>
-          </div>
-        </div>
-        <div class="grid grid-cols-12 gap-4 mb-4">
-          <div class="col-span-full">
-            <app-skeleton style="height: 3rem;" ></app-skeleton>
-          </div>
-        </div>
+      <div class="col-span-12 lg:col-span-6">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
+      </div>
+    </div>
+    <div class="grid grid-cols-12 gap-4 mb-4">
+      <div class="col-span-12 md:col-span-6 ">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
+      </div>
+      <div class="col-span-12 md:col-span-6 ">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
+      </div>
+      <div class="col-span-12 md:col-span-6 ">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
+      </div>
+      <div class="col-span-12 md:col-span-6 ">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
+      </div>
+      <div class="col-span-12 md:col-span-6 ">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
     </div>
   } @else {
-    <div class="grid grid-cols-12 gap-4">
-      <div class="col-span-12 lg:col-span-3 flex items-center justify-center">
-        <app-profile-image
-          [imageUrl]="fotoPreviewUrl || form.get('fotoPerfil')?.value"
-          (imageSelected)="onFileSelected($event)"
-          (fileTooLarge)="handleFileTooLarge($event)"></app-profile-image>
+  <div class="grid grid-cols-12 gap-4 mb-4">
+      <div class="col-span-12 md:col-span-6 flex items-center justify-center">
+          <app-profile-image
+              [imageUrl]="fotoPreviewUrl || form.get('fotoPerfil')?.value"
+              (imageSelected)="onFileSelected($event)"
+              (fileTooLarge)="handleFileTooLarge($event)">
+          </app-profile-image>
       </div>
-      <div class="col-span-12 lg:col-span-9 space-y-4">
+
+      <div class="col-span-12 md:col-span-6 w-full flex items-end">
+          <ion-card class="w-full">
+            <ion-card-content>
+                <ion-input
+                  label="Alias"
+                  inputId="on_label_alias"
+                  formControlName='alias'
+                  autocomplete="off"
+                  placeholder="Ej: Scrappy"
+                  label-placement="floating"
+                  fill="outline"
+                >
+                </ion-input>
+                <br>
+                <ion-textarea
+                    label="Hablame de ti"
+                    formControlName='quienEres'
+                    label-placement="floating"
+                    fill="outline"
+                    [autoGrow]="true"
+                    placeholder="Ej: Base con un letal tiro de tres puntos. Apasionado del gimnasio y líder de equipo."
+                    style="min-height: 100px;">
+                </ion-textarea>
+            </ion-card-content>
+          </ion-card>
+      </div>
+  </div>
+
+  <ion-card class="mb-6">
+    <ion-card-header class="m-4">
+      <div class="flex justify-between  w-full">
+        <ion-card-title class="text-3xl">
+          Atributos Físicos
+        </ion-card-title>
+
+        <ion-icon (click)="openModalAttr()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+      </div>
+    </ion-card-header>
+      <ion-card-content>
         <div class="grid grid-cols-12 gap-4 mb-4">
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <div class="col-span-12 md:col-span-6 ">
             <ion-input
               label="Altura"
               inputId="on_label_altura"
@@ -51,10 +87,10 @@
               label-placement="floating"
               fill="outline"
             >
-              <span slot="end" class="text-gray-500"> cm</span>
+              <span slot="end" class="text-gray-500"> mts</span>
             </ion-input>
           </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <div class="col-span-12 md:col-span-6 ">
             <ion-input
               label="Peso"
               inputId="on_label_peso"
@@ -69,7 +105,51 @@
               <span slot="end" class="text-gray-500"> kg</span>
             </ion-input>
           </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <div class="col-span-12 md:col-span-6 ">
+            <ion-input
+              label="Medida Mano"
+              inputId="on_label_medida_mano"
+              formControlName='medidaMano'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 20"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> mts</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6 ">
+            <ion-input
+              label="Largo Brazo"
+              inputId="on_label_largo_brazo"
+              formControlName='largoBrazo'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 80"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> mts</span>
+            </ion-input>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header class="m-4">
+        <div class="flex justify-between  w-full">
+          <ion-card-title class="text-3xl">¿Qué estas buscando?</ion-card-title>
+
+          <ion-icon class="animate-bounce text-5xl" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 ">
             <div class="selects-search-validation-container"
               [ngClass]="{
                   'ng-valid': form.controls['estatusBusquedaJugador'].valid,
@@ -85,54 +165,9 @@
               </ion-list>
             </div>
           </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <ion-input
-              label="Medida Mano"
-              inputId="on_label_medida_mano"
-              formControlName='medidaMano'
-              autocomplete="off"
-              type="number"
-              step="0.01"
-              placeholder="Ej: 20"
-              label-placement="floating"
-              fill="outline"
-            >
-              <span slot="end" class="text-gray-500"> cm</span>
-            </ion-input>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <ion-input
-              label="Largo Brazo"
-              inputId="on_label_largo_brazo"
-              formControlName='largoBrazo'
-              autocomplete="off"
-              type="number"
-              step="0.01"
-              placeholder="Ej: 80"
-              label-placement="floating"
-              fill="outline"
-            >
-              <span slot="end" class="text-gray-500"> cm</span>
-            </ion-input>
-          </div>
         </div>
-        <div class="grid grid-cols-12 gap-4 mb-4">
-          <div class="col-span-12">
-            <ion-textarea
-              label="¿Quien Eres?"
-              inputId="on_label_quien_eres"
-              formControlName='quienEres'
-              autocomplete="off"
-              placeholder="Ej: Entusiaste de los tiros de 3..."
-              label-placement="floating"
-              fill="outline"
-              [autoGrow]="true"
-            >
-            </ion-textarea>
-          </div>
-        </div>
-      </div>
-    </div>
+      </ion-card-content>
+    </ion-card>
   }
 
 </div>
@@ -147,5 +182,25 @@
       (selectionChange)="estatusJugadorSelectionChanged($event)"
       (selectionCancel)="estatusJugadorCancel()"
     ></app-select-list-search>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalAttr [isOpen]="false" cssClass="custom-modal-info-buttons">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="mx-2">
+        <h1>Instrucciones.</h1>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModalAttr()">
+            <ion-icon class="text-3xl" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-text>
+        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
+      </ion-text>
+    </ion-content>
   </ng-template>
 </ion-modal>
