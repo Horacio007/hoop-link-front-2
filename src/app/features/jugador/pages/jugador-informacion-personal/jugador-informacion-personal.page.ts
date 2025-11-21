@@ -40,7 +40,7 @@ import { NewsBarComponent } from "src/app/layouts/authenticated-layout/component
   templateUrl: './jugador-informacion-personal.page.html',
   styleUrls: ['./jugador-informacion-personal.page.scss'],
   standalone: true,
-  imports: [IonIcon, CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, TooltipInfoComponent, JugadorFuerzaResistenciaPage, JugadorBasketballPage, JugadorExperienciaPage, JugadorVisionPage, JugadorTestPage, JugadorVideosPage, JugadorRedesSocialesPage, SkeletonComponent, IonButton, InfoCardsComponent, NewsBarComponent]
+  imports: [CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, JugadorFuerzaResistenciaPage, JugadorBasketballPage, JugadorExperienciaPage, JugadorVisionPage, JugadorTestPage, JugadorVideosPage, JugadorRedesSocialesPage, SkeletonComponent, IonButton, NewsBarComponent]
 })
 export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWillEnter {
 
