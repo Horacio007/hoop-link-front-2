@@ -187,6 +187,14 @@ export class JugadorPerfilPage implements OnInit, ViewWillEnter {
     this.modalAttr.dismiss();
   }
 
+  public openModalBuscas() {
+    this.modalBuscas.present();
+  }
+
+  public closeModalBuscas() {
+    this.modalBuscas.dismiss();
+  }
+
 //#endregion
 
 
