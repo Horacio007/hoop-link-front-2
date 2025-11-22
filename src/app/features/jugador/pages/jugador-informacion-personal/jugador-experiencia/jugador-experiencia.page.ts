@@ -6,7 +6,7 @@ import { LoggerService } from 'src/app/core/services/logger/logger.service';
 import { FormularioUtilsService } from 'src/app/shared/utils/form/formulario-utils.service';
 import { v4 as uuidv4 } from 'uuid';
 import { SkeletonComponent } from "src/app/shared/components/ionic/skeleton/skeleton.component";
-import { IonLabel, IonDatetimeButton, IonDatetime, IonModal, IonInput, IonItem, IonToggle, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonLabel, IonDatetimeButton, IonDatetime, IonModal, IonInput, IonItem, IonToggle, IonButton, IonIcon, IonCardSubtitle, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonHeader, IonToolbar, IonButtons, IonContent, IonText } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addCircleOutline, trash } from 'ionicons/icons';
 
@@ -15,7 +15,7 @@ import { addCircleOutline, trash } from 'ionicons/icons';
   templateUrl: './jugador-experiencia.page.html',
   styleUrls: ['./jugador-experiencia.page.scss'],
   standalone: true,
-  imports: [IonIcon, IonToggle, IonItem, IonInput, IonModal, IonDatetime, IonDatetimeButton, IonLabel, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonButton]
+  imports: [IonText, IonContent, IonButtons, IonToolbar, IonHeader, IonCardTitle, IonCardContent, IonCardHeader, IonCard, IonIcon, IonToggle, IonItem, IonInput, IonModal, IonDatetime, IonDatetimeButton, IonLabel, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonButton]
 })
 export class JugadorExperienciaPage implements OnInit, OnDestroy, AfterViewInit {
 
@@ -29,6 +29,10 @@ export class JugadorExperienciaPage implements OnInit, OnDestroy, AfterViewInit 
   public hoyFormatoISO: string = this.hoy.toISOString();
 
   private readonly _contextLog = 'JugadorExperienciaPage';
+
+  @ViewChild('modalGenerales', { static: true }) modalGenerales!: IonModal;
+  @ViewChild('modalTrayectoria', { static: true }) modalTrayectoria!: IonModal;
+  @ViewChild('modalLogros', { static: true }) modalLogros!: IonModal;
 //#endregion
 
 //#region Constructor
@@ -217,6 +221,30 @@ export class JugadorExperienciaPage implements OnInit, OnDestroy, AfterViewInit 
     this.Logros.removeAt(index);
   }
 
+
+  public openModalGenerales() {
+    this.modalGenerales.present();
+  }
+
+  public closeModalGenerales() {
+    this.modalGenerales.dismiss();
+  }
+
+  public openModalTrayectoria() {
+    this.modalTrayectoria.present();
+  }
+
+  public closeModalTrayectoria() {
+    this.modalTrayectoria.dismiss();
+  }
+
+  public openModalLogros() {
+    this.modalLogros.present();
+  }
+
+  public closeModalLogros() {
+    this.modalLogros.dismiss();
+  }
 //#endregion
 
 }

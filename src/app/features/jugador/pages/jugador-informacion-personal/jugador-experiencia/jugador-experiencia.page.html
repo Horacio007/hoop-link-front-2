@@ -1,35 +1,16 @@
 <div [formGroup]="form" class="my-4">
   @if (cargandoData) {
     <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <app-skeleton style="height: 3rem;" ></app-skeleton>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <app-skeleton style="height: 3rem;" ></app-skeleton>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <app-skeleton style="height: 3rem;" ></app-skeleton>
-      </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <app-skeleton style="height: 3rem;" ></app-skeleton>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <app-skeleton style="height: 3rem;" ></app-skeleton>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
     </div>
@@ -45,206 +26,233 @@
       </div>
     </div>
   } @else {
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="date-input-container col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-item
-          [ngClass]="{
-            'custom-date-item': true
-          }"
-          class="custom-date-item"
-          lines="none"
-        >
-          <ion-label>Desde cuando juegas</ion-label>
-          <ion-datetime-button datetime="datetimeFC" backdropDismiss="false" ></ion-datetime-button><br>
-        </ion-item>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Horas de entrenamiento por semana"
-          inputId="on_label_hrs_entr_sem"
-          formControlName='horasEntrenamientoSemana'
-          autocomplete="off"
-          type="number"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> hrs</span>
-        </ion-input>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Horas de gym por semana"
-          inputId="on_label_hrs_gym_sem"
-          formControlName='horasGymSemana'
-          autocomplete="off"
-          type="number"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> hrs</span>
-        </ion-input>
-      </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <!-- El ion-item envuelve y da el estilo de tarjeta y padding -->
-        <ion-item
-            class="border border-gray-300 rounded-xl overflow-hidden shadow-md bg-white p-0"
-            lines="none"
-        >
-          <!-- Título/Label principal a la izquierda -->
-          <ion-label class="text-base text-gray-700">Perteneces a un club?</ion-label>
+    <ion-card class="mb-6">
+      <ion-card-header class="m-4">
+        <div class="flex justify-between  w-full">
+          <ion-card-title class="text-3xl">General</ion-card-title>
 
-          <!-- Contenedor del Toggle a la derecha (slot="end") -->
-          <div slot="end" class="flex items-center gap-2 p-1">
-
-            <!-- Etiqueta Izquierda (sin formControlName) -->
-            <span class="text-sm font-medium text-gray-500">Nel</span>
-
-            <!-- EL formControlName DEBE IR EN EL ION-TOGGLE -->
-            <ion-toggle
-              [formControlName]="'pertenecesClub'"
-              mode="md"
-              justify="start"
-              class="scale-90"
-            ></ion-toggle>
-
-            <!-- Etiqueta Derecha (sin formControlName) -->
-            <span class="text-sm font-medium text-gray-700">Simon</span>
+          <ion-icon (click)="openModalGenerales()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="date-input-container col-span-12 md:col-span-6">
+            <ion-item
+              [ngClass]="{
+                'custom-date-item': true
+              }"
+              class="custom-date-item"
+              lines="none"
+            >
+              <ion-label>Desde cuando juegas</ion-label>
+              <ion-datetime-button datetime="datetimeFC" backdropDismiss="false" ></ion-datetime-button><br>
+            </ion-item>
           </div>
-        </ion-item>
-        <br>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        @if (form.get('pertenecesClub')?.value) {
-          <ion-input
-            label="Nombre Club"
-            inputId="on_label_nombre_club"
-            formControlName='nombreClub'
-            autocomplete="off"
-            placeholder="Ej: Harlem Globetrotters"
-            label-placement="floating"
-            fill="outline"
-          >
-          </ion-input>
-        }
-      </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 mb-4">
-    <div class="col-span-12 md:col-span-6 lg:col-span-4">
-      <div class="flex justify-start">
-        <h1 class="text-3xl">Historial de Equipos</h1>
-      </div>
-      <div class="flex justify-start mb-8">
-        <ion-button color="success" shape="round" fill="clear" (click)="onAgregaEquipo()" severity="success">
-          <ion-icon class="text-4xl" name="add-circle-outline"></ion-icon>
-        </ion-button>
-      </div>
-      @if (Equipo.controls.length > 0) {
-        <div formArrayName="historialEquipos">
-          @for (control of Equipo.controls; track control.get('id')!.value ) {
-            <div [formGroupName]="$index">
-              <div class="flex justify-end mb-4">
-                <ion-button color="danger" fill="clear" shape="round" (click)="onEliminaEquipo($index)">
-                  <ion-icon class="text-3xl" name="trash"></ion-icon>
-                </ion-button>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Horas de entrenamiento por semana"
+              inputId="on_label_hrs_entr_sem"
+              formControlName='horasEntrenamientoSemana'
+              autocomplete="off"
+              type="number"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> hrs</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Horas de gym por semana"
+              inputId="on_label_hrs_gym_sem"
+              formControlName='horasGymSemana'
+              autocomplete="off"
+              type="number"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> hrs</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <!-- El ion-item envuelve y da el estilo de tarjeta y padding -->
+            <ion-item
+                class="border border-gray-300 rounded-xl overflow-hidden shadow-md bg-white p-0"
+                lines="none"
+            >
+              <!-- Título/Label principal a la izquierda -->
+              <ion-label class="text-base text-gray-700">Perteneces a un club?</ion-label>
+
+              <!-- Contenedor del Toggle a la derecha (slot="end") -->
+              <div slot="end" class="flex items-center gap-2 p-1">
+
+                <!-- Etiqueta Izquierda (sin formControlName) -->
+                <span class="text-sm font-medium text-gray-500">Nel</span>
+
+                <!-- EL formControlName DEBE IR EN EL ION-TOGGLE -->
+                <ion-toggle
+                  [formControlName]="'pertenecesClub'"
+                  mode="md"
+                  justify="start"
+                  class="scale-90"
+                ></ion-toggle>
+
+                <!-- Etiqueta Derecha (sin formControlName) -->
+                <span class="text-sm font-medium text-gray-700">Simon</span>
               </div>
-              <div class="grid grid-cols-12 gap-4 mb-4">
-                <div class="col-span-12">
-                  <ion-input
-                    label="Nombre equipo"
-                    inputId="on_label_nombre_club"
-                    formControlName='nombre'
-                    autocomplete="off"
-                    placeholder="Ej: Harlem Globetrotters"
-                    label-placement="floating"
-                    fill="outline"
-                  >
-                  </ion-input>
-                </div>
-              </div>
+            </ion-item>
+            <br>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            @if (form.get('pertenecesClub')?.value) {
+              <ion-input
+                label="Nombre Club"
+                inputId="on_label_nombre_club"
+                formControlName='nombreClub'
+                autocomplete="off"
+                placeholder="Ej: Harlem Globetrotters"
+                label-placement="floating"
+                fill="outline"
+              >
+              </ion-input>
+            }
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="mb-6">
+      <ion-card-header class="m-4">
+        <div class="flex justify-between  w-full">
+          <ion-card-title class="text-3xl">Trayectoria</ion-card-title>
+
+          <ion-icon (click)="openModalTrayectoria()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 md:col-span-6">
+            <div class="flex justify-between mb-4">
+              <h1 class="text-3xl">Historial de Equipos</h1>
+              <ion-button color="success" shape="round" fill="clear" (click)="onAgregaEquipo()" severity="success">
+                <ion-icon class="text-4xl" name="add-circle-outline"></ion-icon>
+              </ion-button>
             </div>
-          }
-        </div>
-      }
-    </div>
-    <div class="col-span-12 md:col-span-6 lg:col-span-4">
-      <div class="flex justify-start">
-        <h1 class="text-3xl">Historial de Entrenadores</h1>
-      </div>
-      <div class="flex justify-start mb-8">
-        <ion-button color="success" fill="clear" shape="round" (click)="onAgregaEntrenadores()" severity="success">
-          <ion-icon class="text-4xl" name="add-circle-outline"></ion-icon>
-        </ion-button>
-      </div>
-      @if (Entrenadores.controls.length > 0) {
-        <div formArrayName="historialEntrenadores">
-          @for (control of Entrenadores.controls; track control.get('id')!.value ) {
-            <div [formGroupName]="$index">
-              <div class="flex justify-end mb-4">
-                <ion-button color="danger" fill="clear" shape="round" (click)="onEliminaEntrenadores($index)">
-                  <ion-icon class="text-3xl" name="trash"></ion-icon>
-                </ion-button>
-              </div>
-              <div class="grid grid-cols-12 gap-4 mb-4">
-                <div class="col-span-12">
-                  <ion-input
-                    label="Nombre entrenador"
-                    inputId="on_label_nombre_club"
-                    formControlName='nombre'
-                    autocomplete="off"
-                    placeholder="Ej: Harlem Globetrotters"
-                    label-placement="floating"
-                    fill="outline"
-                  >
-                  </ion-input>
-                </div>
-              </div>
-            </div>
-          }
-        </div>
-      }
-    </div>
-    <div class="col-span-12 md:col-span-6 lg:col-span-4">
-      <div class="flex justify-start">
-          <h1 class="text-3xl">Logros clave</h1>
-        </div>
-        <div class="flex justify-start mb-8">
-          <ion-button color="success" fill="clear" shape="round" (click)="onAgregaLogros()">
-            <ion-icon class="text-4xl" name="add-circle-outline"></ion-icon>
-          </ion-button>
-        </div>
-        @if (Logros.controls.length > 0) {
-          <div formArrayName="logrosClave">
-            @for (control of Logros.controls; track control.get('id')!.value ) {
-              <div [formGroupName]="$index">
-                <div class="flex justify-end mb-4">
-                  <ion-button color="danger" fill="clear" shape="round" (click)="onEliminaLogros($index)">
-                    <ion-icon class="text-3xl" name="trash"></ion-icon>
-                  </ion-button>
-                </div>
-                <div class="grid grid-cols-12 gap-4 mb-4">
-                  <div class="col-span-12">
-                    <ion-input
-                      label="Logros"
-                      inputId="on_label_nombre_club"
-                      formControlName='nombre'
-                      autocomplete="off"
-                      placeholder="Ej: Harlem Globetrotters"
-                      label-placement="floating"
-                      fill="outline"
-                    >
-                    </ion-input>
+            @if (Equipo.controls.length > 0) {
+              <div formArrayName="historialEquipos">
+                @for (control of Equipo.controls; track control.get('id')!.value ) {
+                  <div [formGroupName]="$index">
+                    <div class="flex justify-end mb-4">
+                      <ion-button color="danger" fill="clear" shape="round" (click)="onEliminaEquipo($index)">
+                        <ion-icon class="text-3xl" name="trash"></ion-icon>
+                      </ion-button>
+                    </div>
+                    <div class="grid grid-cols-12 gap-4 mb-4">
+                      <div class="col-span-12">
+                        <ion-input
+                          label="Nombre equipo"
+                          inputId="on_label_nombre_club"
+                          formControlName='nombre'
+                          autocomplete="off"
+                          placeholder="Ej: Harlem Globetrotters"
+                          label-placement="floating"
+                          fill="outline"
+                        >
+                        </ion-input>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                }
               </div>
             }
           </div>
-        }
-    </div>
-  </div>
+          <div class="col-span-12 md:col-span-6">
+            <div class="flex justify-between mb-4">
+              <h1 class="text-3xl">Historial de Entrenadores</h1>
+              <ion-button color="success" fill="clear" shape="round" (click)="onAgregaEntrenadores()" severity="success">
+                <ion-icon class="text-4xl" name="add-circle-outline"></ion-icon>
+              </ion-button>
+            </div>
+            @if (Entrenadores.controls.length > 0) {
+              <div formArrayName="historialEntrenadores">
+                @for (control of Entrenadores.controls; track control.get('id')!.value ) {
+                  <div [formGroupName]="$index">
+                    <div class="flex justify-end mb-4">
+                      <ion-button color="danger" fill="clear" shape="round" (click)="onEliminaEntrenadores($index)">
+                        <ion-icon class="text-3xl" name="trash"></ion-icon>
+                      </ion-button>
+                    </div>
+                    <div class="grid grid-cols-12 gap-4 mb-4">
+                      <div class="col-span-12">
+                        <ion-input
+                          label="Nombre entrenador"
+                          inputId="on_label_nombre_club"
+                          formControlName='nombre'
+                          autocomplete="off"
+                          placeholder="Ej: Harlem Globetrotters"
+                          label-placement="floating"
+                          fill="outline"
+                        >
+                        </ion-input>
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="mb-6">
+      <ion-card-header class="m-4">
+        <div class="flex justify-between  w-full">
+          <ion-card-title class="text-3xl">Logros</ion-card-title>
+
+          <ion-icon (click)="openModalLogros()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 md:col-span-6">
+            <div class="flex justify-between mb-4">
+                <h1 class="text-3xl">Logros clave</h1>
+                <ion-button color="success" fill="clear" shape="round" (click)="onAgregaLogros()">
+                  <ion-icon class="text-4xl" name="add-circle-outline"></ion-icon>
+                </ion-button>
+              </div>
+              @if (Logros.controls.length > 0) {
+                <div formArrayName="logrosClave">
+                  @for (control of Logros.controls; track control.get('id')!.value ) {
+                    <div [formGroupName]="$index">
+                      <div class="flex justify-end mb-4">
+                        <ion-button color="danger" fill="clear" shape="round" (click)="onEliminaLogros($index)">
+                          <ion-icon class="text-3xl" name="trash"></ion-icon>
+                        </ion-button>
+                      </div>
+                      <div class="grid grid-cols-12 gap-4 mb-4">
+                        <div class="col-span-12">
+                          <ion-input
+                            label="Logros"
+                            inputId="on_label_nombre_club"
+                            formControlName='nombre'
+                            autocomplete="off"
+                            placeholder="Ej: Harlem Globetrotters"
+                            label-placement="floating"
+                            fill="outline"
+                          >
+                          </ion-input>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
   }
 </div>
 
@@ -264,5 +272,65 @@
       >
       <span slot="title">Selecciona desde cuando juegas</span>
     </ion-datetime>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalGenerales [isOpen]="false" cssClass="custom-modal-info-buttons">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="mx-2">
+        <h1>Instrucciones.</h1>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModalGenerales()">
+            <ion-icon class="text-3xl" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-text>
+        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
+      </ion-text>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalTrayectoria [isOpen]="false" cssClass="custom-modal-info-buttons">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="mx-2">
+        <h1>Instrucciones.</h1>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModalTrayectoria()">
+            <ion-icon class="text-3xl" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-text>
+        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
+      </ion-text>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalLogros [isOpen]="false" cssClass="custom-modal-info-buttons">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="mx-2">
+        <h1>Instrucciones.</h1>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModalLogros()">
+            <ion-icon class="text-3xl" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-text>
+        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
+      </ion-text>
+    </ion-content>
   </ng-template>
 </ion-modal>
