@@ -1,54 +1,85 @@
-<div [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  @if (cargandoData) {
-    <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
-    <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
-    <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
-    <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
-    <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
-  } @else {
-    <app-video-uploader
-      label="Botando"
-      [errorMessage]="videoErrors['videoBotando']"
-      (videoSelected)="form.get('videos.videoBotando')?.setValue($event)"
-      (fileError)="handleVideoError('videoBotando', $event)"
-      [videoUrl]="videoBotandoUrl"
-      id="Botando"
-    ></app-video-uploader>
+<ion-card class="mb-6">
+  <ion-card-header class="m-4">
+    <div class="flex justify-between  w-full">
+      <ion-card-title class="text-3xl">Demostración</ion-card-title>
 
-    <app-video-uploader
-      label="Tirando"
-      [errorMessage]="videoErrors['videoTirando']"
-      (videoSelected)="form.get('videos.videoTirando')?.setValue($event)"
-      (fileError)="handleVideoError('videoTirando', $event)"
-      [videoUrl]="videoTirandoUrl"
-      id="Tirando"
-    ></app-video-uploader>
+      <ion-icon (click)="openModalDemostracion()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+    </div>
+  </ion-card-header>
+  <ion-card-content>
+    <div [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @if (cargandoData) {
+        <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
+        <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
+        <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
+        <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
+        <app-skeleton style="height: 7rem; width: 100%;" ></app-skeleton>
+      } @else {
+        <app-video-uploader
+            label="Botando"
+            [errorMessage]="videoErrors['videoBotando']"
+            (videoSelected)="form.get('videos.videoBotando')?.setValue($event)"
+            (fileError)="handleVideoError('videoBotando', $event)"
+            [videoUrl]="videoBotandoUrl"
+            id="Botando"
+        ></app-video-uploader>
 
-    <app-video-uploader
-      label="Colada"
-      [errorMessage]="videoErrors['videoColada']"
-      (videoSelected)="form.get('videos.videoColada')?.setValue($event)"
-      (fileError)="handleVideoError('videoColada', $event)"
-      [videoUrl]="videoColadaUrl"
-      id="Colada"
-    ></app-video-uploader>
+        <app-video-uploader
+          label="Tirando"
+          [errorMessage]="videoErrors['videoTirando']"
+          (videoSelected)="form.get('videos.videoTirando')?.setValue($event)"
+          (fileError)="handleVideoError('videoTirando', $event)"
+          [videoUrl]="videoTirandoUrl"
+          id="Tirando"
+        ></app-video-uploader>
 
-    <app-video-uploader
-      label="Entrenando"
-      [errorMessage]="videoErrors['videoEntrenando']"
-      (videoSelected)="form.get('videos.videoEntrenando')?.setValue($event)"
-      (fileError)="handleVideoError('videoEntrenando', $event)"
-      [videoUrl]="videoEntrenandoUrl"
-      id="Entrenando"
-    ></app-video-uploader>
+        <app-video-uploader
+          label="Colada"
+          [errorMessage]="videoErrors['videoColada']"
+          (videoSelected)="form.get('videos.videoColada')?.setValue($event)"
+          (fileError)="handleVideoError('videoColada', $event)"
+          [videoUrl]="videoColadaUrl"
+          id="Colada"
+        ></app-video-uploader>
 
-    <app-video-uploader
-      label="Jugando"
-      [errorMessage]="videoErrors['videoJugando']"
-      (videoSelected)="form.get('videos.videoJugando')?.setValue($event)"
-      (fileError)="handleVideoError('videoJugando', $event)"
-      [videoUrl]="videoJugandoUrl"
-      id="Jugando"
-    ></app-video-uploader>
-  }
-</div>
+        <app-video-uploader
+          label="Entrenando"
+          [errorMessage]="videoErrors['videoEntrenando']"
+          (videoSelected)="form.get('videos.videoEntrenando')?.setValue($event)"
+          (fileError)="handleVideoError('videoEntrenando', $event)"
+          [videoUrl]="videoEntrenandoUrl"
+          id="Entrenando"
+        ></app-video-uploader>
+
+        <app-video-uploader
+          label="Jugando"
+          [errorMessage]="videoErrors['videoJugando']"
+          (videoSelected)="form.get('videos.videoJugando')?.setValue($event)"
+          (fileError)="handleVideoError('videoJugando', $event)"
+          [videoUrl]="videoJugandoUrl"
+          id="Jugando"
+        ></app-video-uploader>
+      }
+    </div>
+  </ion-card-content>
+</ion-card>
+
+<ion-modal #modalDemostracion [isOpen]="false" cssClass="custom-modal-info-buttons">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="mx-2">
+        <h1>Instrucciones.</h1>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModalDemostracion()">
+            <ion-icon class="text-3xl" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-text>
+        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
+      </ion-text>
+    </ion-content>
+  </ng-template>
+</ion-modal>
