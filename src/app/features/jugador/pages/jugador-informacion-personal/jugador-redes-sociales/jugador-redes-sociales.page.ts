@@ -1,7 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonInput, IonCardSubtitle, IonCard, IonCardHeader, IonCardTitle, IonIcon, IonCardContent, IonModal, IonText, IonButtons, IonButton } from '@ionic/angular/standalone';
 import { LogLevel } from 'src/app/core/enums';
 import { LoggerService } from 'src/app/core/services/logger/logger.service';
 import { FormularioUtilsService } from 'src/app/shared/utils/form/formulario-utils.service';
@@ -12,7 +12,7 @@ import { SkeletonComponent } from "src/app/shared/components/ionic/skeleton/skel
   templateUrl: './jugador-redes-sociales.page.html',
   styleUrls: ['./jugador-redes-sociales.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonInput]
+  imports: [IonContent, IonToolbar, IonModal, IonButton, IonButtons, IonText, IonCardContent, IonIcon, IonCardTitle, IonCardHeader, IonCard, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonInput, IonHeader]
 })
 export class JugadorRedesSocialesPage implements OnInit, OnDestroy {
 
@@ -21,6 +21,8 @@ export class JugadorRedesSocialesPage implements OnInit, OnDestroy {
   @Input({required: true}) cargandoData: boolean = true;
 
   private readonly _contextLog = 'JugadorRedesSocialesComponent';
+
+  @ViewChild('modalPresencia', { static: true }) modalPresencia!: IonModal;
 //#endregion
 
 //#region Constructor
@@ -54,6 +56,14 @@ export class JugadorRedesSocialesPage implements OnInit, OnDestroy {
   public getErrores(campo: string, nombreMostrar:string):string | null {
     const errores = this._formularioUtils.getCampoError(this.form, campo, nombreMostrar);
     return errores;
+  }
+
+  public openModalPresencia() {
+    this.modalPresencia.present();
+  }
+
+  public closeModalPresencia() {
+    this.modalPresencia.dismiss();
   }
 //#endregion
 

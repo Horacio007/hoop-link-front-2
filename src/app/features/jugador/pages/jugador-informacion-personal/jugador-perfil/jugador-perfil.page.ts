@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonInput, IonNote, IonModal, IonLabel, IonItem, IonList, IonTextarea  } from '@ionic/angular/standalone';
+import { IonInput, IonNote, IonModal, IonLabel, IonItem, IonList, IonTextarea, IonCardSubtitle, IonCardTitle, IonCard, IonCardHeader, IonCardContent, IonButtons, IonButton, IonIcon, IonHeader, IonToolbar, IonTitle, IonContent, IonText } from '@ionic/angular/standalone';
 import { Subject, takeUntil } from 'rxjs';
 import { ICatalogo } from 'src/app/shared/interfaces/catalogo/catalogo.interface';
 import { LoggerService } from 'src/app/core/services/logger/logger.service';
@@ -15,15 +15,17 @@ import { LogLevel, SeverityMessageType, CommonMessages } from 'src/app/core/enum
 import { ErrorImagenPerfil } from 'src/app/shared/components/profile-image/enums/error-profile-image.enum';
 import { CatalogoConstants } from 'src/app/shared/constants/catalogo/catalogo.constants';
 import { SelectListSearchComponent } from "src/app/shared/components/ionic/select-list-search/select-list-search.component";
+import { TooltipInfoComponent } from "src/app/shared/components/tooltip-info/tooltip-info.component";
+import { ViewWillEnter } from '@ionic/angular';
 
 @Component({
   selector: 'app-jugador-perfil',
   templateUrl: './jugador-perfil.page.html',
   styleUrls: ['./jugador-perfil.page.scss'],
   standalone: true,
-  imports: [IonTextarea ,IonModal, IonList, IonItem, IonLabel, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, ProfileImageComponent, IonInput, SelectListSearchComponent]
+  imports: [IonText, IonContent, IonButton, IonButtons, IonToolbar, IonHeader, IonIcon, IonCardContent, IonCardHeader, IonCard, IonCardTitle, IonTextarea, IonModal, IonList, IonItem, IonLabel, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, ProfileImageComponent, IonInput, SelectListSearchComponent]
 })
-export class JugadorPerfilPage implements OnInit {
+export class JugadorPerfilPage implements OnInit, ViewWillEnter {
 
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
@@ -31,6 +33,7 @@ export class JugadorPerfilPage implements OnInit {
   @Input({ required: true }) allEstatusJugador!: ICatalogo[];
 
   public fotoPreviewUrl: string | null = null;
+  public nuevoArchivoFoto: File | null = null;
 
   private readonly _contextLog = 'JugadorPerfilPage';
 
@@ -38,6 +41,9 @@ export class JugadorPerfilPage implements OnInit {
   public selectedEstatusJugadorNombre: string = 'Selecciona El Estatus Jugador';
   public selectedEstatusJugadorId: string | undefined = undefined;
   public estatusJugadorValido: boolean = false;
+
+  @ViewChild('modalAttr', { static: true }) modalAttr!: IonModal;
+  @ViewChild('modalBuscas', { static: true }) modalBuscas!: IonModal;
 //#endregion
 
 //#region Constructor
@@ -54,6 +60,11 @@ export class JugadorPerfilPage implements OnInit {
       this.cargaFotoPerfil();
       this.setValoresCatalogoEstatusJugador(this.form.get('estatusBusquedaJugador')?.value);
     });
+    this.cargaFotoPerfil();
+  }
+
+  ionViewWillEnter(): void {
+    this.cargaFotoPerfil();
   }
 
   ngOnDestroy(): void {
@@ -69,7 +80,11 @@ export class JugadorPerfilPage implements OnInit {
   }
 
   private cargaFotoPerfil() {
-    this.fotoPreviewUrl = this.form.get('fotoPerfil')?.value;
+    const valorForm = this.form.get('fotoPerfil')?.value;
+
+    if (typeof valorForm === 'string') {
+        this.fotoPreviewUrl = valorForm;
+    }
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaFotoPerfil`, 'Actualizando vista previa de foto de perfil', this.fotoPreviewUrl);
   }
 
@@ -88,12 +103,18 @@ export class JugadorPerfilPage implements OnInit {
 
   public onFileSelected(file: File): void {
     this._logger.log(LogLevel.Info, `${this._contextLog} >> onFileSelected`, 'Archivo seleccionado', file.name);
-    this.form.get('fotoPerfil')?.setValue(file);
+    // this.form.get('fotoPerfil')?.setValue(file);
+    this.form.get('fotoPerfilFile')?.setValue(file);
+    this.nuevoArchivoFoto = file;
 
     const reader = new FileReader();
     reader.onload = () => {
       if (typeof reader.result === 'string') {
-        this.fotoPreviewUrl = reader.result;
+        const previewUrl = reader.result;
+
+        this.form.get('fotoPerfil')?.setValue(previewUrl);
+
+        this.fotoPreviewUrl = previewUrl;
         this._logger.log(LogLevel.Debug, `${this._contextLog} >> onFileSelected`, 'Vista previa generada');
       }
     };
@@ -156,6 +177,22 @@ export class JugadorPerfilPage implements OnInit {
     }
 
     this.modalEstatusJugador.dismiss();
+  }
+
+  public openModalAttr() {
+    this.modalAttr.present();
+  }
+
+  public closeModalAttr() {
+    this.modalAttr.dismiss();
+  }
+
+  public openModalBuscas() {
+    this.modalBuscas.present();
+  }
+
+  public closeModalBuscas() {
+    this.modalBuscas.dismiss();
   }
 
 //#endregion

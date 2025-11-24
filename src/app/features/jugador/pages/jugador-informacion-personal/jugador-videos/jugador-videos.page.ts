@@ -1,7 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCardSubtitle, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonModal, IonButton, IonButtons, IonText, IonIcon } from '@ionic/angular/standalone';
 import { LogLevel } from 'src/app/core/enums';
 import { LoggerService } from 'src/app/core/services/logger/logger.service';
 import { SkeletonComponent } from "src/app/shared/components/ionic/skeleton/skeleton.component";
@@ -12,7 +12,7 @@ import { VideoUploaderComponent } from '../../../components/video-uploader/video
   templateUrl: './jugador-videos.page.html',
   styleUrls: ['./jugador-videos.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, VideoUploaderComponent]
+  imports: [IonIcon, IonToolbar, IonContent ,IonModal, IonText, IonButtons, IonButton, IonCardTitle, IonCardContent, IonCardHeader, IonCard, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, VideoUploaderComponent, IonHeader]
 })
 export class JugadorVideosPage implements OnInit, OnDestroy {
 //#region Propiedades
@@ -41,6 +41,8 @@ export class JugadorVideosPage implements OnInit, OnDestroy {
   public videoJugandoUrl: string = '';
 
   private readonly _contextLog = 'JugadorVideosPage';
+
+  @ViewChild('modalDemostracion', { static: true }) modalDemostracion!: IonModal;
 //#endregion
 
 //#region Constructor
@@ -79,6 +81,12 @@ export class JugadorVideosPage implements OnInit, OnDestroy {
     this._logger.log(LogLevel.Warn, `${this._contextLog} >> handleVideoError`, `Error en video de la categoría "${key}"`, message);
   }
 
+  public openModalDemostracion() {
+    this.modalDemostracion.present();
+  }
 
+  public closeModalDemostracion() {
+    this.modalDemostracion.dismiss();
+  }
 //#endregion
 }

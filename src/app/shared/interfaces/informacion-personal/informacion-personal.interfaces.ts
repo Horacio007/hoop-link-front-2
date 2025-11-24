@@ -6,6 +6,7 @@ import { ILogrosClaveInformacionPersonal } from "./logros-clave-informacion.pers
 export interface IInformacinPersonal {
   informacionPersonalId: number,
   fotoPerfilId?: number,
+  alias?: string,
   altura?: number,
   peso?: number,
   estatusBusquedaJugador?: ICatalogo,

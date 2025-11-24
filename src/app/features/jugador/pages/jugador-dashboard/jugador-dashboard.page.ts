@@ -19,7 +19,7 @@ import { InfoCardsComponent } from 'src/app/layouts/authenticated-layout/compone
  templateUrl: './jugador-dashboard.page.html',
  styleUrls: ['./jugador-dashboard.page.scss'],
  standalone: true,
- imports: [IonContent, CommonModule, FormsModule, FooterComponent, HeaderAuthenticatedComponent, RouterOutlet, RouterModule, BannerSpaceComponent, NewsBarComponent, InfoCardsComponent]
+ imports: [IonContent, CommonModule, FormsModule, FooterComponent, HeaderAuthenticatedComponent, RouterOutlet, RouterModule]
 })
 export class JugadorDashboardPage implements OnInit, OnDestroy {
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
@@ -20,7 +20,7 @@ import { JugadorConstants } from '../../constants/general/general.constants';
 import { JugadorPerfilPage } from "./jugador-perfil/jugador-perfil.page";
 import { IonIcon, IonButton } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
-import { informationCircleOutline } from 'ionicons/icons';
+import { close, informationCircleOutline } from 'ionicons/icons';
 import { TooltipInfoComponent } from "src/app/shared/components/tooltip-info/tooltip-info.component";
 import { CatalogoService } from '../../../../shared/services/catalogo/catalogo.service';
 import { ICatalogo } from 'src/app/shared/interfaces/catalogo/catalogo.interface';
@@ -32,13 +32,15 @@ import { JugadorTestPage } from "./jugador-test/jugador-test.page";
 import { JugadorVideosPage } from "./jugador-videos/jugador-videos.page";
 import { JugadorRedesSocialesPage } from "./jugador-redes-sociales/jugador-redes-sociales.page";
 import { SkeletonComponent } from 'src/app/shared/components/ionic/skeleton/skeleton.component';
+import { InfoCardsComponent } from "src/app/layouts/authenticated-layout/components/info-cards/info-cards.component";
+import { NewsBarComponent } from "src/app/layouts/authenticated-layout/components/news-bar/news-bar.component";
 
 @Component({
   selector: 'app-jugador-informacion-personal',
   templateUrl: './jugador-informacion-personal.page.html',
   styleUrls: ['./jugador-informacion-personal.page.scss'],
   standalone: true,
-  imports: [IonIcon, CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, TooltipInfoComponent, JugadorFuerzaResistenciaPage, JugadorBasketballPage, JugadorExperienciaPage, JugadorVisionPage, JugadorTestPage, JugadorVideosPage, JugadorRedesSocialesPage, SkeletonComponent, IonButton]
+  imports: [CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, JugadorFuerzaResistenciaPage, JugadorBasketballPage, JugadorExperienciaPage, JugadorVisionPage, JugadorTestPage, JugadorVideosPage, JugadorRedesSocialesPage, SkeletonComponent, IonButton, NewsBarComponent]
 })
 export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWillEnter {
 
@@ -85,6 +87,8 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
   private readonly _destroy$ = new Subject<void>();
 
   private catalogosCargados: { [key: string]: boolean } = {};
+
+  @ViewChild('perfilTab') jugadorPerfilComponent!: JugadorPerfilPage;
 //#endregion
 
 //#region Constructor
@@ -96,7 +100,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
   ) {
 
     addIcons({
-      informationCircleOutline
+      informationCircleOutline, close
     });
 
   }
@@ -133,6 +137,8 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
         informacionPersonalId: new FormControl(null),
         usuarioId: new FormControl(null),
         fotoPerfil: new FormControl(null),
+        fotoPerfilFile: [null],
+        alias: new FormControl(null, Validators.required),
         altura: new FormControl(null, Validators.required),
         peso: new FormControl(null, Validators.required),
         estatusBusquedaJugador: new FormControl('', Validators.required),
@@ -257,6 +263,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
 
   private preparaSeccionesToSetEnFormulario(infoPersonal?: IInformacinPersonal): IRegistraInformacionPersonal {
     const perfil: IPerfilInformacionPersonal = {
+      alias: infoPersonal?.alias,
       altura: infoPersonal?.altura,
       peso: infoPersonal?.peso,
       estatusBusquedaJugador: infoPersonal?.estatusBusquedaJugador ?? { id: '', nombre: ''},
@@ -466,6 +473,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
     this.perfil.patchValue({
       informacionPersonalId: perfil.informacionPersonalId,
       fotoPerfil: perfil.fotoPerfil,
+      alias: perfil.alias,
       altura: perfil.altura,
       peso: perfil.peso,
       estatusBusquedaJugador: perfil.estatusBusquedaJugador,
@@ -592,11 +600,12 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
   }
 
   public onSubmit(): void {
-    function dtoToFormData(dto: IRegistraInformacionPersonal, formularioPrincipal: FormGroup): FormData {
+    function dtoToFormData(dto: IRegistraInformacionPersonal, formularioPrincipal: FormGroup, jugadorPerfilComponent:JugadorPerfilPage): FormData {
       const formData = new FormData();
 
       // Guardamos la referencia a fotoPerfil y luego la borramos para no duplicar en JSON
-      const fotoPerfil = dto.perfil?.fotoPerfil;
+      const fotoPerfilFileControl = formularioPrincipal.get('perfil')?.get('fotoPerfilFile');
+      const fileToSend = fotoPerfilFileControl?.value;
 
       if (dto.perfil) {
         // Eliminamos fotoPerfil del objeto antes de hacer JSON
@@ -607,8 +616,9 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
       formData.append('datos', JSON.stringify(dto));
 
       // Si fotoPerfil existe y es un File, lo agregamos
-      if (fotoPerfil && fotoPerfil instanceof File) {
-        formData.append('fotoPerfil', fotoPerfil);
+      if (fileToSend && fileToSend instanceof File) {
+        // formData.append('fotoPerfil', fotoPerfil);
+        formData.append('fotoPerfil', fileToSend!, fileToSend!.name);
       }
 
       return formData;
@@ -638,7 +648,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
       videos: raw.videos,
       redes: raw.redes,
     }
-    const formData = dtoToFormData(formCompleto, this.formularioPrincipal);
+    const formData = dtoToFormData(formCompleto, this.formularioPrincipal, this.jugadorPerfilComponent);
 
     this._informacionPersonalService.save(formData).pipe(
       takeUntil(this._destroy$),
@@ -647,6 +657,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
       next: (response: any) => {
         this._logger.log(LogLevel.Info, `${this._contextLog} >> onSubmit`, 'Información guardada correctamente', response);
         this._toastService.showMessage(SeverityMessageType.Success, 'Genial', response.mensaje, 5000);
+        this.perfil.get('fotoPerfilFile')?.setValue(null);
         this.cargaDatos();
       },
       error: (error: any) => {

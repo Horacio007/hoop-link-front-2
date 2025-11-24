@@ -1,230 +1,256 @@
 <div [formGroup]="form" class="my-4">
   @if (cargandoData && !allPosicionJugador) {
     <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <app-skeleton style="height: 3rem;" ></app-skeleton>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
     </div>
   } @else {
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="date-input-container col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-item
-          [ngClass]="{
-            'custom-date-item': true
-          }"
-          class="custom-date-item"
-          lines="none"
-        >
-          <ion-label>Cuando empezaste a jugar</ion-label>
-          <ion-datetime-button datetime="datetimeFC" backdropDismiss="false" ></ion-datetime-button><br>
-        </ion-item>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <!-- El ion-item envuelve y da el estilo de tarjeta y padding -->
-        <ion-item
-            class="border border-gray-300 rounded-xl overflow-hidden shadow-md bg-white p-0"
-            lines="none"
-        >
-          <!-- Título/Label principal a la izquierda -->
-          <ion-label class="text-base text-gray-700">Mano de Juego?</ion-label>
+    <ion-card class="mb-6">
+      <ion-card-header class="m-4">
+         <div class="flex justify-between  w-full">
+          <ion-card-title class="text-3xl">Datos Generales</ion-card-title>
 
-          <!-- Contenedor del Toggle a la derecha (slot="end") -->
-          <div slot="end" class="flex items-center gap-2 p-1">
-
-            <!-- Etiqueta Izquierda (sin formControlName) -->
-            <span class="text-sm font-medium text-gray-500">Izquierda</span>
-
-            <!-- EL formControlName DEBE IR EN EL ION-TOGGLE -->
-            <ion-toggle
-              [formControlName]="'manoJuego'"
-              mode="md"
-              justify="start"
-              class="scale-90"
-            ></ion-toggle>
-
-            <!-- Etiqueta Derecha (sin formControlName) -->
-            <span class="text-sm font-medium text-gray-700">Derecha</span>
-          </div>
-        </ion-item>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <div class="selects-search-validation-container">
-          <ion-list class="no-border-list">
-            <ion-item [button]="true" [detail]="false" (click)="openPosicionUnoModal()" class="no-border-list" id="select-posicion-juego-uno" lines="none">
-              <ion-label>Posición Juego Uno</ion-label>
-              <div slot="end" id="selected-posicion-juego-uno">{{ selectedPosicionUnoNombre }}</div>
+          <ion-icon (click)="openModalDatosGenerales()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+         </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="date-input-container col-span-12 md:col-span-6">
+            <ion-item
+              [ngClass]="{
+                'custom-date-item': true
+              }"
+              class="custom-date-item"
+              lines="none"
+            >
+              <ion-label>Cuando empezaste a jugar</ion-label>
+              <ion-datetime-button datetime="datetimeFC" backdropDismiss="false" ></ion-datetime-button><br>
             </ion-item>
-          </ion-list>
-        </div>
-      </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <div class="selects-search-validation-container">
-          <ion-list class="no-border-list">
-            <ion-item [button]="true" [detail]="false" (click)="openPosicionDosModal()" class="no-border-list" id="select-posicion-juego-dos" lines="none">
-              <ion-label>Posición Juego Dos</ion-label>
-              <div slot="end" id="selected-posicion-juego-dos">{{ selectedPosicionDosNombre }}</div>
-            </ion-item>
-          </ion-list>
-        </div>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <!-- El ion-item envuelve y da el estilo de tarjeta y padding -->
-        <ion-item
-            class="border border-gray-300 rounded-xl overflow-hidden shadow-md bg-white p-0"
-            lines="none"
-        >
-          <!-- Título/Label principal a la izquierda -->
-          <ion-label class="text-base text-gray-700">Clavas?</ion-label>
-
-          <!-- Contenedor del Toggle a la derecha (slot="end") -->
-          <div slot="end" class="flex items-center gap-2 p-1">
-
-            <!-- Etiqueta Izquierda (sin formControlName) -->
-            <span class="text-sm font-medium text-gray-500">Nel</span>
-
-            <!-- EL formControlName DEBE IR EN EL ION-TOGGLE -->
-            <ion-toggle
-              [formControlName]="'clavas'"
-              mode="md"
-              justify="start"
-              class="scale-90"
-            ></ion-toggle>
-
-            <!-- Etiqueta Derecha (sin formControlName) -->
-            <span class="text-sm font-medium text-gray-700">Simon</span>
           </div>
-        </ion-item>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Pts promedio por juego"
-          inputId="on_label_pts_prom_juego"
-          formControlName='puntosPorJuego'
-          autocomplete="off"
-          type="number"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> pts</span>
-        </ion-input>
-      </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Asist. promedio por juego"
-          inputId="on_label_asist_prom_juego"
-          formControlName='asistenciasPorJuego'
-          autocomplete="off"
-          type="number"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> asist</span>
-        </ion-input>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Reb. promedio por juego"
-          inputId="on_label_reb_prom_juego"
-          formControlName='rebotesPorJuego'
-          autocomplete="off"
-          type="number"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> rebote</span>
-        </ion-input>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Porcentaje de tiro de media"
-          inputId="on_label_reb_prom_juego"
-          formControlName='porcentajeTirosMedia'
-          autocomplete="off"
-          type="number"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> %</span>
-        </ion-input>
-      </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Porcentaje de tiro de tres"
-          inputId="on_label_reb_prom_juego"
-          formControlName='porcentajeTirosTres'
-          autocomplete="off"
-          type="number"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> %</span>
-        </ion-input>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Porcentaje de tiro libre"
-          inputId="on_label_reb_prom_juego"
-          formControlName='porcentajeTirosLibres'
-          autocomplete="off"
-          type="number"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> %</span>
-        </ion-input>
-      </div>
-    </div>
+          <div class="col-span-12 md:col-span-6">
+            <!-- El ion-item envuelve y da el estilo de tarjeta y padding -->
+            <ion-item
+                class="border border-gray-300 rounded-xl overflow-hidden shadow-md bg-white p-0"
+                lines="none"
+            >
+              <!-- Título/Label principal a la izquierda -->
+              <ion-label class="text-base text-gray-700">Mano de Juego?</ion-label>
+
+              <!-- Contenedor del Toggle a la derecha (slot="end") -->
+              <div slot="end" class="flex items-center gap-2 p-1">
+
+                <!-- Etiqueta Izquierda (sin formControlName) -->
+                <span class="text-sm font-medium text-gray-500">Izquierda</span>
+
+                <!-- EL formControlName DEBE IR EN EL ION-TOGGLE -->
+                <ion-toggle
+                  [formControlName]="'manoJuego'"
+                  mode="md"
+                  justify="start"
+                  class="scale-90"
+                ></ion-toggle>
+
+                <!-- Etiqueta Derecha (sin formControlName) -->
+                <span class="text-sm font-medium text-gray-700">Derecha</span>
+              </div>
+            </ion-item>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <div class="selects-search-validation-container">
+              <ion-list class="no-border-list">
+                <ion-item [button]="true" [detail]="false" (click)="openPosicionUnoModal()" class="no-border-list" id="select-posicion-juego-uno" lines="none">
+                  <ion-label>Posición Juego Uno</ion-label>
+                  <div slot="end" id="selected-posicion-juego-uno">{{ selectedPosicionUnoNombre }}</div>
+                </ion-item>
+              </ion-list>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <div class="selects-search-validation-container">
+              <ion-list class="no-border-list">
+                <ion-item [button]="true" [detail]="false" (click)="openPosicionDosModal()" class="no-border-list" id="select-posicion-juego-dos" lines="none">
+                  <ion-label>Posición Juego Dos</ion-label>
+                  <div slot="end" id="selected-posicion-juego-dos">{{ selectedPosicionDosNombre }}</div>
+                </ion-item>
+              </ion-list>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <!-- El ion-item envuelve y da el estilo de tarjeta y padding -->
+            <ion-item
+                class="border border-gray-300 rounded-xl overflow-hidden shadow-md bg-white p-0"
+                lines="none"
+            >
+              <!-- Título/Label principal a la izquierda -->
+              <ion-label class="text-base text-gray-700">Clavas?</ion-label>
+
+              <!-- Contenedor del Toggle a la derecha (slot="end") -->
+              <div slot="end" class="flex items-center gap-2 p-1">
+
+                <!-- Etiqueta Izquierda (sin formControlName) -->
+                <span class="text-sm font-medium text-gray-500">Nel</span>
+
+                <!-- EL formControlName DEBE IR EN EL ION-TOGGLE -->
+                <ion-toggle
+                  [formControlName]="'clavas'"
+                  mode="md"
+                  justify="start"
+                  class="scale-90"
+                ></ion-toggle>
+
+                <!-- Etiqueta Derecha (sin formControlName) -->
+                <span class="text-sm font-medium text-gray-700">Simon</span>
+              </div>
+            </ion-item>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="mb-6">
+      <ion-card-header class="m-4">
+         <div class="flex justify-between  w-full">
+          <ion-card-title class="text-3xl">Estadísticas</ion-card-title>
+
+          <ion-icon (click)="openModalEstadisticas()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+         </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Pts promedio por juego"
+              inputId="on_label_pts_prom_juego"
+              formControlName='puntosPorJuego'
+              autocomplete="off"
+              type="number"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> pts</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Asist. promedio por juego"
+              inputId="on_label_asist_prom_juego"
+              formControlName='asistenciasPorJuego'
+              autocomplete="off"
+              type="number"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> asist</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Reb. promedio por juego"
+              inputId="on_label_reb_prom_juego"
+              formControlName='rebotesPorJuego'
+              autocomplete="off"
+              type="number"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> rebote</span>
+            </ion-input>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="mb-6">
+      <ion-card-header class="m-4">
+         <div class="flex justify-between  w-full">
+          <ion-card-title class="text-3xl">Eficiencia</ion-card-title>
+
+          <ion-icon (click)="openModalEficiencia()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+         </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <ion-input
+              label="Porcentaje de tiro de media"
+              inputId="on_label_reb_prom_juego"
+              formControlName='porcentajeTirosMedia'
+              autocomplete="off"
+              type="number"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> %</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <ion-input
+              label="Porcentaje de tiro de tres"
+              inputId="on_label_reb_prom_juego"
+              formControlName='porcentajeTirosTres'
+              autocomplete="off"
+              type="number"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> %</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <ion-input
+              label="Porcentaje de tiro libre"
+              inputId="on_label_reb_prom_juego"
+              formControlName='porcentajeTirosLibres'
+              autocomplete="off"
+              type="number"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> %</span>
+            </ion-input>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
   }
 </div>
 
@@ -270,5 +296,65 @@
       (selectionChange)="posicionDosSelectionChanged($event)"
       (selectionCancel)="posicionDosCancel()"
     ></app-select-list-search>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalDatosGenerales [isOpen]="false" cssClass="custom-modal-info-buttons">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="mx-2">
+        <h1>Instrucciones.</h1>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModalDatosGenerales()">
+            <ion-icon class="text-3xl" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-text>
+        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
+      </ion-text>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalEstadisticas [isOpen]="false" cssClass="custom-modal-info-buttons">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="mx-2">
+        <h1>Instrucciones.</h1>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModalEstadisticas()">
+            <ion-icon class="text-3xl" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-text>
+        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
+      </ion-text>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalEficiencia [isOpen]="false" cssClass="custom-modal-info-buttons">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="mx-2">
+        <h1>Instrucciones.</h1>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModalEficiencia()">
+            <ion-icon class="text-3xl" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-text>
+        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
+      </ion-text>
+    </ion-content>
   </ng-template>
 </ion-modal>

@@ -1,237 +1,326 @@
 <div [formGroup]="form" class="my-4">
   @if (cargandoData) {
     <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <app-skeleton style="height: 3rem;" ></app-skeleton>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
+      </div>
+       <div class="col-span-12 md:col-span-6">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
+      </div>
+      <div class="col-span-12 md:col-span-6">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
+      </div>
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-3">
-        <app-skeleton style="height: 3rem;" ></app-skeleton>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-3">
-        <app-skeleton style="height: 3rem;" ></app-skeleton>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-3">
+      <div class="col-span-12 md:col-span-6">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
     </div>
   } @else {
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Altura Salto Vertical"
-          inputId="on_label_alturaSaltoVertical"
-          formControlName='alturaSaltoVertical'
-          autocomplete="off"
-          type="number"
-          step="0.01"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> cm</span>
-        </ion-input>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Distancia Salto Horizontal"
-          inputId="on_label_distanciaSaltoHorizontal"
-          formControlName='distanciaSaltoHorizontal'
-          autocomplete="off"
-          type="number"
-          step="0.01"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> cm</span>
-        </ion-input>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Peso máximo en bench press"
-          inputId="on_label_pesoBenchPress"
-          formControlName='pesoBenchPress'
-          autocomplete="off"
-          type="number"
-          step="0.01"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> kg</span>
-        </ion-input>
-      </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Peso máximo en squats"
-          inputId="on_label_pesoSquats"
-          formControlName='pesoSquats'
-          autocomplete="off"
-          type="number"
-          step="0.01"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> kg</span>
-        </ion-input>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Peso máximo en press militar"
-          inputId="on_label_pesoPressMilitar"
-          formControlName='pesoPressMilitar'
-          autocomplete="off"
-          type="number"
-          step="0.01"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> kg</span>
-        </ion-input>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Peso máximo en 10 repeticiones de bench press"
-          inputId="on_label_pesoRepeticionBenchPress"
-          formControlName='pesoRepeticionBenchPress'
-          autocomplete="off"
-          type="number"
-          step="0.01"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> kg</span>
-        </ion-input>
-      </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Peso máximo en 10 repeticiones de squats"
-          inputId="on_label_pesoRepeticionSquats"
-          formControlName='pesoRepeticionSquats'
-          autocomplete="off"
-          type="number"
-          step="0.01"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> kg</span>
-        </ion-input>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Peso máximo en 10 repeticiones de press militar"
-          inputId="on_label_pesoRepeticionPressMilitar"
-          formControlName='pesoRepeticionPressMilitar'
-          autocomplete="off"
-          type="number"
-          step="0.01"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> kg</span>
-        </ion-input>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Tiempo en 100 mts"
-          inputId="on_label_tiempoDistanciaCienMts"
-          formControlName='tiempoDistanciaCienMts'
-          autocomplete="off"
-          type="number"
-          step="0.01"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> seg</span>
-        </ion-input>
-      </div>
-    </div>
-    <div class="grid grid-cols-12 gap-4 mb-4">
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Tiempo en un 1 km"
-          inputId="on_label_tiempoDistanciaUnKm"
-          formControlName='tiempoDistanciaUnKm'
-          autocomplete="off"
-          type="number"
-          step="0.01"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> min</span>
-        </ion-input>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Tiempo en 3 km"
-          inputId="on_label_tiempoDistanciaTresKm"
-          formControlName='tiempoDistanciaTresKm'
-          autocomplete="off"
-          type="number"
-          step="0.01"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> min</span>
-        </ion-input>
-      </div>
-      <div class="col-span-12 md:col-span-6 lg:col-span-4">
-        <ion-input
-          label="Tiempo en 5 km"
-          inputId="on_label_tiempoDistanciaCincoKm"
-          formControlName='tiempoDistanciaCincoKm'
-          autocomplete="off"
-          type="number"
-          step="0.01"
-          placeholder="Ej: 185"
-          label-placement="floating"
-          fill="outline"
-        >
-          <span slot="end" class="text-gray-500"> min</span>
-        </ion-input>
-      </div>
-    </div>
+    <ion-card class="mb-6">
+      <ion-card-header class="m-4">
+        <div class="flex justify-between  w-full">
+          <ion-card-title class="text-3xl">Potencia</ion-card-title>
+
+          <ion-icon (click)="openModalPotencia()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Altura Salto Vertical"
+              inputId="on_label_alturaSaltoVertical"
+              formControlName='alturaSaltoVertical'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> cm</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Distancia Salto Horizontal"
+              inputId="on_label_distanciaSaltoHorizontal"
+              formControlName='distanciaSaltoHorizontal'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> cm</span>
+            </ion-input>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="mb-6">
+      <ion-card-header class="m-4">
+        <div class="flex justify-between  w-full">
+          <ion-card-title class="text-3xl">Fuerza</ion-card-title>
+
+          <ion-icon (click)="openModalFuerza()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Peso máximo en bench press"
+              inputId="on_label_pesoBenchPress"
+              formControlName='pesoBenchPress'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> kg</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Peso máximo en squats"
+              inputId="on_label_pesoSquats"
+              formControlName='pesoSquats'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> kg</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Peso máximo en press militar"
+              inputId="on_label_pesoPressMilitar"
+              formControlName='pesoPressMilitar'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> kg</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Peso máximo en 10 repeticiones de bench press"
+              inputId="on_label_pesoRepeticionBenchPress"
+              formControlName='pesoRepeticionBenchPress'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> kg</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Peso máximo en 10 repeticiones de squats"
+              inputId="on_label_pesoRepeticionSquats"
+              formControlName='pesoRepeticionSquats'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> kg</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Peso máximo en 10 repeticiones de press militar"
+              inputId="on_label_pesoRepeticionPressMilitar"
+              formControlName='pesoRepeticionPressMilitar'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> kg</span>
+            </ion-input>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="mb-6">
+      <ion-card-header class="m-4">
+        <div class="flex justify-between  w-full">
+          <ion-card-title class="text-3xl">Resistencia</ion-card-title>
+
+          <ion-icon (click)="openModalResistencia()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Tiempo en 100 mts"
+              inputId="on_label_tiempoDistanciaCienMts"
+              formControlName='tiempoDistanciaCienMts'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> seg</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Tiempo en un 1 km"
+              inputId="on_label_tiempoDistanciaUnKm"
+              formControlName='tiempoDistanciaUnKm'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> min</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Tiempo en 3 km"
+              inputId="on_label_tiempoDistanciaTresKm"
+              formControlName='tiempoDistanciaTresKm'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> min</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Tiempo en 5 km"
+              inputId="on_label_tiempoDistanciaCincoKm"
+              formControlName='tiempoDistanciaCincoKm'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> min</span>
+            </ion-input>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
   }
 </div>
+
+<ion-modal #modalPotencia [isOpen]="false" cssClass="custom-modal-info-buttons">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="mx-2">
+        <h1>Instrucciones.</h1>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModalPotencia()">
+            <ion-icon class="text-3xl" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-text>
+        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
+      </ion-text>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalFuerza [isOpen]="false" cssClass="custom-modal-info-buttons">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="mx-2">
+        <h1>Instrucciones.</h1>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModalFuerza()">
+            <ion-icon class="text-3xl" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-text>
+        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
+      </ion-text>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalResistencia [isOpen]="false" cssClass="custom-modal-info-buttons">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="mx-2">
+        <h1>Instrucciones.</h1>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModalResistencia()">
+            <ion-icon class="text-3xl" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-text>
+        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
+      </ion-text>
+    </ion-content>
+  </ng-template>
+</ion-modal>
