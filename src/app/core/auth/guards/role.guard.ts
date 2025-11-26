@@ -27,7 +27,7 @@ export const roleGuard: CanActivateFn & CanLoadFn = (route: ActivatedRouteSnapsh
   logger.log(LogLevel.Debug, 'RoleGuard', `Guard ejecutado para ruta: ${currentRoute}`);
 
   // Obtén el rol esperado desde data.role (para CanLoad puede ser undefined)
-  const expectedRole = (route as ActivatedRouteSnapshot | Route).data?.['role'] as string | undefined;
+  const expectedRole = (route as ActivatedRouteSnapshot | Route).data?.['role'] as string | undefined | string[];
 
   return combineLatest([authService.user$, authService.authChecked$]).pipe(
     filter(([_, checked]) => checked), // Espera hasta que authChecked sea true
@@ -38,7 +38,16 @@ export const roleGuard: CanActivateFn & CanLoadFn = (route: ActivatedRouteSnapsh
         return router.parseUrl('/login');
       }
 
-      if (expectedRole && user.rol !== expectedRole) {
+      if (expectedRole && !expectedRole.includes(user.rol) && Array.isArray(expectedRole)) {
+        logger.log(
+          LogLevel.Warn,
+          'RoleGuard',
+          `Usuario autenticado pero sin rol correcto. Rol esperado: ${expectedRole}, rol actual: ${user.rol}. Redirigiendo a /access-denied`
+        );
+        return router.parseUrl('/access-denied');
+      }
+
+      if (expectedRole && user.rol !== expectedRole && typeof expectedRole === 'string') {
         logger.log(
           LogLevel.Warn,
           'RoleGuard',

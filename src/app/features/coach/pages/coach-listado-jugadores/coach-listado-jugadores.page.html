@@ -1,0 +1,49 @@
+<div class="mb-4">
+  <app-news-bar></app-news-bar>
+</div>
+
+<div class="max-w-screen-xl mx-auto px-4 mb-4">
+@if (isMobileView) {
+
+<ion-list class="capitalize">
+  @for (jugador of allListadoJugadores; track $index) {
+    <ion-item>
+      <ion-avatar slot="start" class="jugador-avatar">
+        <img [src]="jugador.fotoPerfil || 'assets/images/generales/sin-foto.png'" alt="Foto de Perfil" />
+      </ion-avatar>
+
+      <div class="grid-rows-4 pl-2">
+        <div>
+          {{ `${jugador.nombre} ` }} <strong>{{ `${jugador.alias} ` }}</strong><br>{{ `${jugador.aPaterno} ${jugador.aMaterno}` }}
+        </div>
+        <div class="text-xs">
+          {{ `${jugador.municipio}, ${jugador.estado}` }}
+        </div>
+        <div class="text-xs">
+          <strong>Posición:</strong> {{ `${jugador.posicionJuegoUno} | ${jugador.posicionJuegoDos}` }}
+        </div>
+        <div class="text-xs">
+          <strong>Altura:</strong> {{ `${jugador.altura} mts` }} <strong>Peso:</strong> {{ `${jugador.peso} kg` }}
+        </div>
+        <div>
+          <ion-chip class="p-1 bg-[#ffc9a4]">
+            {{ jugador.estatus }}
+          </ion-chip>
+        </div><br>
+      </div>
+
+      <div slot="end" class="iconos-accion">
+        <!-- <ion-icon name="star-outline"></ion-icon> -->
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </div>
+
+    </ion-item>
+  }
+</ion-list>
+
+} @else {
+<h1>yo no soy movil</h1>
+}
+</div>
+
+<app-news-bar></app-news-bar>

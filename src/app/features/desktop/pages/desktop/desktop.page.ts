@@ -49,6 +49,12 @@ export class DesktopPage implements OnInit, OnDestroy {
         { rol: user.rol, correo: user.correo }
       );
 
+      if (user.rol.includes('coach')) {
+user.rol = 'coach'
+      } else {
+        console.warn('llego al else');
+      }
+
       switch (user.rol) {
         case 'jugador':
           this._logger.log(
@@ -58,6 +64,15 @@ export class DesktopPage implements OnInit, OnDestroy {
           );
 
           this._router.navigate(['/desktop/jugador']);
+          break;
+        case 'coach':
+          this._logger.log(
+            LogLevel.Info,
+            `${this._contextLog} >> constructor`,
+            'Redirigiendo al escritorio de coach.'
+          );
+
+          this._router.navigate(['/desktop/coach']);
           break;
         case 'admin':
           this._logger.log(

@@ -25,6 +25,18 @@
         </ion-item>
       }
 
+      @if (user?.rol === 'escuela coach' ) {
+        <ion-item lines="none" button routerLink="/desktop/coach" routerDirection="forward" routerLinkActive="menu-item-activo" [routerLinkActiveOptions]="{exact: true}">
+          <ion-icon slot="start" name="bar-chart-outline"></ion-icon>
+          <ion-label (click)="closeMenu()">Dashboard</ion-label>
+        </ion-item>
+
+         <ion-item lines="none" button routerLink="/desktop/coach/listado-jugaores" routerDirection="forward" routerLinkActive="menu-item-activo" [routerLinkActiveOptions]="{exact: true}">
+          <ion-icon slot="start" name="accessibility-outline"></ion-icon>
+          <ion-label (click)="closeMenu()">Listado Jugadores</ion-label>
+        </ion-item>
+      }
+
       <ion-item lines="none" button (click)="logout()">
         <ion-icon slot="start" name="log-out-outline"></ion-icon>
         <ion-label>Cerrar Sesión</ion-label>

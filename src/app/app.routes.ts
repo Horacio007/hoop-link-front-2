@@ -163,6 +163,27 @@ export const routes: Routes = [
           },
         ]
       },
+      {
+        path: 'coach',
+        canActivate: [roleGuard],
+        canLoad: [roleGuard],
+        data: { role: ['escuela coach', 'club coach'] },
+        title: 'Dashboard | HoopLink',
+        loadComponent: () => import('./features/coach/pages/coach-index/coach-index.page').then( m => m.CoachIndexPage),
+        children: [
+          {
+            // 2. Ruta Hija Index (Carga el Contenido REAL del Dashboard)
+            path: '',
+            pathMatch: 'full',
+            loadComponent: () => import('./features/coach/pages/coach-dashboard/coach-dashboard.page').then(m => m.CoachDashboardPage)
+          },
+          {
+            path: 'listado-jugaores', // URL: /desktop/jugador/informacion-personal
+            title: 'Listado Jugadores | HoopLink',
+            loadComponent: () => import('./features/coach/pages/coach-listado-jugadores/coach-listado-jugadores.page').then(m => m.CoachListadoJugadoresPage),
+          }
+        ]
+      }
     ]
   },
   {
@@ -173,6 +194,10 @@ export const routes: Routes = [
   {
     path: '**',
     redirectTo: '/portal',
-  }
+  },
+  {
+    path: 'coach-listado-jugadores',
+    loadComponent: () => import('./features/coach/pages/coach-listado-jugadores/coach-listado-jugadores.page').then( m => m.CoachListadoJugadoresPage)
+  },
 
 ];

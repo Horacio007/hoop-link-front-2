@@ -1,0 +1,65 @@
+ion-avatar {
+  // 1. Aumentar el tamaño del contenedor de la avatar
+  // Ajusta estos valores según el tamaño deseado
+  width: 70px;  // Por ejemplo, 70px de ancho
+  height: 70px; // y 70px de alto para un círculo perfecto
+
+  // 2. Asegurar que la imagen ocupe todo el espacio y esté bien centrada/recortada
+  img {
+    object-fit: cover; // Esto es CRUCIAL: Cubre el área del contenedor sin distorsionar la imagen
+    width: 100%;       // Asegura que la imagen ocupe todo el ancho del ion-avatar
+    height: 100%;      // Asegura que la imagen ocupe todo el alto del ion-avatar
+    border-radius: 50%; // Esto forzará una forma circular perfecta a la imagen si el contenedor es cuadrado
+  }
+}
+
+
+// Estilo base para el ion-item
+ion-item {
+  // Asegura que la alineación vertical sea al inicio del item (arriba)
+  --align-items: flex-start;
+  padding: 10px 0;
+}
+
+// 1. Estilo para la Fila 1 (Nombre Principal)
+.nombre-principal {
+  margin-top: 0;
+  margin-bottom: 4px;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--ion-color-dark);
+}
+
+// 2. Diseño de DOS COLUMNAS para los datos secundarios
+.datos-secundarios-grid {
+    display: grid;
+    // Creamos dos columnas de ancho igual (1fr 1fr)
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 12px; // Pequeño espacio vertical y horizontal
+    width: 100%; // Asegura que ocupe todo el ancho disponible en la label
+
+    // Estilos para los datos secundarios
+    span {
+        font-size: 0.85em;
+        line-height: 1.3;
+    }
+}
+
+// 3. Estilos específicos para la Ubicación (para que se note más la división)
+.ubicacion-movil {
+    text-align: right;
+    color: var(--ion-color-medium);
+}
+
+// 4. Estilos para los iconos de acción (slot="end")
+.iconos-accion ion-icon {
+    font-size: 1.2em;
+    margin-left: 8px;
+    color: var(--ion-color-primary);
+}
+
+// 5. Ajuste del tamaño de la avatar (opcional, si quieres que sea más grande)
+.jugador-avatar {
+    --size: 60px; /* Tamaño del avatar */
+    min-width: 60px; /* Evita que el avatar se encoja */
+}

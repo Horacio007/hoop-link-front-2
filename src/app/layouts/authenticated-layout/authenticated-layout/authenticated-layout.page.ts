@@ -10,7 +10,7 @@ import { IAuthUser } from 'src/app/core/auth/interfaces';
 import { Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { addIcons } from 'ionicons';
-import { personOutline, cogOutline, logOutOutline, barChartOutline, closeOutline } from 'ionicons/icons';
+import { personOutline, cogOutline, logOutOutline, barChartOutline, closeOutline, accessibilityOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-authenticated-layout',
@@ -52,7 +52,7 @@ export class AuthenticatedLayoutPage implements OnInit, OnDestroy, ViewWillEnter
     });
 
     addIcons({
-      personOutline, cogOutline, logOutOutline, barChartOutline, closeOutline
+      personOutline, cogOutline, logOutOutline, barChartOutline, closeOutline, accessibilityOutline
     });
   }
 

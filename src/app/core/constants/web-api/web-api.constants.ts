@@ -21,5 +21,8 @@ export const WebApiConstants = {
     refresh: `auth/refresh`,
     logout: `auth/logout`,
     yopli: 'auth/yopli',
+  },
+  coach: {
+    getAllJugadores: `coach/list-all-jugadores`
   }
 }
