@@ -178,7 +178,7 @@ export const routes: Routes = [
             loadComponent: () => import('./features/coach/pages/coach-dashboard/coach-dashboard.page').then(m => m.CoachDashboardPage)
           },
           {
-            path: 'listado-jugaores', // URL: /desktop/jugador/informacion-personal
+            path: 'listado-jugadores', // URL: /desktop/jugador/informacion-personal
             title: 'Listado Jugadores | HoopLink',
             loadComponent: () => import('./features/coach/pages/coach-listado-jugadores/coach-listado-jugadores.page').then(m => m.CoachListadoJugadoresPage),
           }

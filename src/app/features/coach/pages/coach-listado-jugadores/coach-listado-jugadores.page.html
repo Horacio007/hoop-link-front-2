@@ -2,48 +2,212 @@
   <app-news-bar></app-news-bar>
 </div>
 
-<div class="max-w-screen-xl mx-auto px-4 mb-4">
 @if (isMobileView) {
 
-<ion-list class="capitalize">
-  @for (jugador of allListadoJugadores; track $index) {
-    <ion-item>
-      <ion-avatar slot="start" class="jugador-avatar">
-        <img [src]="jugador.fotoPerfil || 'assets/images/generales/sin-foto.png'" alt="Foto de Perfil" />
-      </ion-avatar>
+  <ion-searchbar class="mb-2" style="padding-inline: unset;" placeholder="Busca talento..." (ionInput)="onSearchChange($event)" [debounce]="1000" show-clear-button="always" clear-icon="trash-bin"></ion-searchbar>
 
-      <div class="grid-rows-4 pl-2">
-        <div>
-          {{ `${jugador.nombre} ` }} <strong>{{ `${jugador.alias} ` }}</strong><br>{{ `${jugador.aPaterno} ${jugador.aMaterno}` }}
-        </div>
-        <div class="text-xs">
-          {{ `${jugador.municipio}, ${jugador.estado}` }}
-        </div>
-        <div class="text-xs">
-          <strong>Posición:</strong> {{ `${jugador.posicionJuegoUno} | ${jugador.posicionJuegoDos}` }}
-        </div>
-        <div class="text-xs">
-          <strong>Altura:</strong> {{ `${jugador.altura} mts` }} <strong>Peso:</strong> {{ `${jugador.peso} kg` }}
-        </div>
-        <div>
-          <ion-chip class="p-1 bg-[#ffc9a4]">
-            {{ jugador.estatus }}
-          </ion-chip>
-        </div><br>
-      </div>
+  @for (jugador of allListadoJugadoresParcial; track $index) {
 
-      <div slot="end" class="iconos-accion">
-        <!-- <ion-icon name="star-outline"></ion-icon> -->
-        <ion-icon name="arrow-forward-outline"></ion-icon>
-      </div>
+    <ion-card class="mb-3 capitalize">
+      <ion-card-header class="m-4">
+        <div class="flex justify-between w-full">
+          <div class="flex flex-row">
+            <ion-avatar slot="start" class="jugador-avatar">
+              <img [src]="jugador.fotoPerfil || 'assets/images/generales/sin-foto.png'" alt="Foto de Perfil" />
+            </ion-avatar>
+            <ion-card-title class="pl-2">
+              {{ `${jugador.nombre} ` }} <strong>{{ `${jugador.alias} ` }}</strong><br>{{ `${jugador.aPaterno} ${jugador.aMaterno}` }} <br>
+              <span class="text-xs">{{ `${jugador.municipio}, ${jugador.estado}`}}</span>
+            </ion-card-title>
+          </div>
 
-    </ion-item>
+            <ion-icon class="text-2xl" name="arrow-forward-outline"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-1 mb-4">
+          <div class="col-span-3">
+            <strong>Posición</strong>
+            <br>
+            {{ `${jugador.posicionJuegoUno} | ${jugador.posicionJuegoDos}` }}
+          </div>
+          <div class="col-span-3">
+            <strong>Altura</strong>
+            <br>
+            {{ `${jugador.altura} mts` }}
+          </div>
+          <div class="col-span-3">
+            <strong>Peso</strong>
+            <br>
+            {{ `${jugador.peso} kg` }}
+          </div>
+          <div class="col-span-3">
+            <strong>Estatus</strong>
+            <br>
+            <ion-chip class="p-1" color="success">{{ `${jugador.estatus}` }}</ion-chip>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
   }
-</ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+   <ion-infinite-scroll-content loadingText="Cargando talento..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 } @else {
-<h1>yo no soy movil</h1>
+  <div class="grid grid-cols-12 gap-4 items-center mb-6">
+
+    <!-- Searchbar -->
+    <div class="col-span-6 flex items-center">
+      <ion-searchbar
+        style="padding-inline: unset; padding-top: unset; padding-bottom: unset;"
+        placeholder="Busca talento..."
+        (ionClear)="onResetSeacrh($event)"
+        (ionInput)="onDesktopSearch($event)"
+        [debounce]="1000"
+        show-clear-button="always"
+        clear-icon="trash-bin">
+      </ion-searchbar>
+    </div>
+
+      <!-- Filtros -->
+    <div class="col-span-6 flex items-center">
+      <ion-accordion-group class="w-full">
+        <ion-accordion value="first" class="filtros-acordeon w-full" toggleIcon="filter-circle-outline" toggleIconSlot="end">
+
+          <!-- Header -->
+          <ion-item class="!m-0 !p-0 w-full" slot="header">
+            <ion-label>Filtros</ion-label>
+          </ion-item>
+
+          <!-- Contenido -->
+          <div class="ion-no-padding contenido-filtros w-full" slot="content">
+
+            <div class="grid grid-cols-1 mb-6">
+              <div class="col-span-12 ">
+                <div class="selects-search-container">
+                  <ion-list class="no-border-list">
+                    <ion-item [button]="true" [detail]="false" class="no-border-list" id="select-estado" lines="none" (click)="onPresentEstado()" >
+                      <ion-label>Estado</ion-label>
+                      <div slot="end" id="selected-estado">{{ selectedEstadoNombre }}</div>
+                    </ion-item>
+                  </ion-list>
+                </div>
+              </div>
+              <div class="col-span-12 ">
+              <div class="selects-search-container">
+                <ion-list class="no-border-list">
+                  <ion-item [button]="true" [detail]="false" class="no-border-list" id="select-municipio" lines="none" (click)="onPresentMunicipio()" [disabled]="selectedEstadoId == '' || selectedEstadoId == undefined">
+                    <ion-label>Municipio</ion-label>
+                    <div slot="end" id="select-municipio">{{ selectedMunicipioNombre }}</div>
+                  </ion-item>
+                </ion-list>
+              </div>
+            </div>
+            </div>
+          </div>
+
+        </ion-accordion>
+      </ion-accordion-group>
+    </div>
+
+  </div>
+
+
+  <div class="grid grid-cols-12 mb-2 text-xl font-bold" matSort (matSortChange)="onSortMaterial($event)">
+    <div class="col-span-4 hover:cursor-pointer" mat-sort-header="jugador">
+      <ion-label (click)="sortBy('jugador')" >Jugador</ion-label>
+    </div>
+    <div class="col-span-2 hover:cursor-pointer" mat-sort-header="posicion">
+      <ion-label (click)="sortBy('posicion')">Posición</ion-label>
+    </div>
+    <div class="col-span-2 hover:cursor-pointer" mat-sort-header="altura">
+      <ion-label (click)="sortBy('altura')">Altura</ion-label>
+    </div>
+    <div class="col-span-2 hover:cursor-pointer" mat-sort-header="peso">
+      <ion-label (click)="sortBy('peso')">Peso</ion-label>
+    </div>
+    <div class="col-span-2 hover:cursor-pointer" mat-sort-header="estatus">
+      <ion-label (click)="sortBy('estatus')">Estatus</ion-label>
+    </div>
+  </div>
+
+  @for (jugador of jugadoresDesktopPaginados; track jugador.informacionPersonalId) {
+    <ion-card class="mb-3 capitalize">
+      <ion-card-content>
+        <div class="flex justify-end w-full">
+           <ion-icon class="text-2xl" name="arrow-forward-outline"></ion-icon>
+         </div>
+        <div class="grid grid-cols-12">
+          <div class="col-span-4">
+            <div class="flex w-full">
+              <div class="flex flex-row">
+                <ion-avatar slot="start" class="jugador-avatar">
+                  <img [src]="jugador.fotoPerfil || 'assets/images/generales/sin-foto.png'" alt="Foto de Perfil" />
+                </ion-avatar>
+                <ion-card-title class="pl-2">
+                  {{ `${jugador.nombre} ` }} <strong>{{ `${jugador.alias} ` }}</strong><br>{{ `${jugador.aPaterno} ${jugador.aMaterno}` }} <br>
+                  <span class="text-xs">{{ `${jugador.municipio}, ${jugador.estado}`}}</span>
+                </ion-card-title>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-2">
+            {{ `${jugador.posicionJuegoUno} | ${jugador.posicionJuegoDos}` }}
+          </div>
+          <div class="col-span-2">
+            {{ `${jugador.altura} mts` }}
+          </div>
+          <div class="col-span-2">
+            {{ `${jugador.peso} kg` }}
+          </div>
+          <div class="col-span-2">
+            <ion-chip class="p-1" color="success">{{ `${jugador.estatus}` }}</ion-chip>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  }
+
+  <div class="mt-4 mb-6 flex justify-center ">
+    <mat-paginator
+      [length]="filteredDesktopJugadores.length"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 15, 20]"
+      (page)="onPageChange($event)"
+      class="!bg-white !rounded-lg"
+    >
+    </mat-paginator>
+  </div>
 }
-</div>
+
+<ion-modal #modalEstados cssClass="custom-modal-selects-search" backdropDismiss="false">
+  <ng-template>
+    <app-select-list-search
+      class="ion-page"
+      title="Estados"
+      [items]="allEstados"
+      [selectedItem]="selectedEstadoId"
+      (selectionChange)="estadoSelectionChanged($event)"
+      (selectionCancel)="estadoCancel()"
+    ></app-select-list-search>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalMunicipios cssClass="custom-modal-selects-search" backdropDismiss="false" >
+  <ng-template>
+    <app-select-list-search
+      class="ion-page"
+      title="Municipio"
+      [items]="allMunicipios"
+      [selectedItem]="selectedMunicipioId"
+      (selectionChange)="municipioSelectionChanged($event)"
+      (selectionCancel)="municipioCancel()"
+    ></app-select-list-search>
+  </ng-template>
+</ion-modal>
+
 
 <app-news-bar></app-news-bar>

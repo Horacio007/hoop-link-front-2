@@ -63,3 +63,70 @@ ion-item {
     --size: 60px; /* Tamaño del avatar */
     min-width: 60px; /* Evita que el avatar se encoja */
 }
+
+
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+/* --- Estilos para la Vista Escritorio (Mat-Table) --- */
+
+.tabla-hooplink {
+    // Es buena práctica darle un padding a la tarjeta, no al div interno
+    margin: 16px 0;
+}
+
+
+// Estilo para el chip de Estatus (Fondo verde claro, texto verde oscuro)
+// Estilo para el chip de Estatus (Fondo verde claro, texto verde oscuro)
+.estatus-chip { // <--- Reemplazar ion-chip.bg-[#ffc9a4] por una clase limpia
+  // Usando el estilo que se asemeja al diseño:
+  --background: #d4f7e2; // Color de fondo verde claro
+  color: #3b8e5c; // Color de texto verde oscuro
+  padding: 6px 10px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+// Estilo para la barra de búsqueda y filtros para que se alineen
+.search-and-filters {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px; // Espacio entre filtros y tabla
+
+    .filter-input {
+        width: 300px; // Darle un ancho fijo para que se vea bien
+        margin-right: 10px;
+    }
+}
+
+.card {
+  transition: 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+
+.filtros-acordeon {
+
+  /* Header blanco */
+  ion-item[slot="header"] {
+    --background: #ffffff;
+    --color: #000;
+  }
+
+
+}
+
+

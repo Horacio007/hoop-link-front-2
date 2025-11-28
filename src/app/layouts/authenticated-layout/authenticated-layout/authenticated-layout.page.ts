@@ -49,6 +49,11 @@ export class AuthenticatedLayoutPage implements OnInit, OnDestroy, ViewWillEnter
         this._router.navigate(['/login']);
         return;
       }
+
+      if (this.user.rol.includes('coach')) {
+        this.user.rol = 'coach';
+      }
+
     });
 
     addIcons({
