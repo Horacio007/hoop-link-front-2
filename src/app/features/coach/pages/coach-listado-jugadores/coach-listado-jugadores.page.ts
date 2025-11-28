@@ -26,6 +26,7 @@ import { ViewChild } from '@angular/core'; // Ya estaba, pero asegúrate
 import { CustomPaginatorIntl } from 'src/app/shared/utils/material/custom-paginator-intl';
 import { CatalogoService } from 'src/app/shared/services/catalogo/catalogo.service';
 import { SelectListSearchComponent } from 'src/app/shared/components/ionic/select-list-search/select-list-search.component';
+import { IListadoJugadoresFiltroCoach } from '../../interfaces/filtro-listado-jugadores.interface';
 
 @Component({
   selector: 'app-coach-listado-jugadores',
@@ -92,6 +93,9 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
   @ViewChild('modalEstatus', { static: true }) modalEstatus!: IonModal;
   public selectedEstatusNombre: string = 'Selecciona El Estatus';
   public selectedEstatusId: string | undefined = undefined;
+
+  public existeFiltracion: boolean = false;
+  public allFiltrosAplicados: IListadoJugadoresFiltroCoach[] = []
 //#endregion
 
 //#region Constructor
@@ -502,9 +506,9 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
 
       // 3. Actualizar la variable de la UI
       if (estadoSeleccionado) {
-      this.selectedEstadoNombre = estadoSeleccionado.nombre;
-
+        this.selectedEstadoNombre = estadoSeleccionado.nombre;
         this.onCambiaEstado(this.selectedEstadoId);
+        this.aplicarFiltrosDesktop();
       }
 
       // 4. Cerrar el modal
@@ -530,7 +534,8 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
 
       // 3. Actualizar la variable de la UI
       if (municipioSeleccionado) {
-          this.selectedMunicipioNombre = municipioSeleccionado.nombre;
+        this.selectedMunicipioNombre = municipioSeleccionado.nombre;
+        this.aplicarFiltrosDesktop();
       }
 
       // 4. Cerrar el modal
@@ -543,6 +548,197 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
 
     public municipioCancel() {
       this.modalMunicipio.dismiss();
+    }
+  // end
+
+  // posicion
+    public posicionSelectionChanged(selectedId: string | undefined) {
+      // 1. Almacenar el ID seleccionado
+      this.selectedPosicionId = selectedId;
+
+      // 2. Buscar el nombre para mostrarlo en la UI (UX)
+      const posicionSeleccionado = this.allPosiciones.find(e => e.id === selectedId);
+
+      // 3. Actualizar la variable de la UI
+      if (posicionSeleccionado) {
+        this.selectedPosicionNombre = posicionSeleccionado.nombre;
+        this.aplicarFiltrosDesktop();
+      }
+
+      // 4. Cerrar el modal
+      this.modalPosicion.dismiss();
+    }
+
+    public onPresentPosicion() {
+      this.modalPosicion.present()
+    }
+
+    public posicionCancel() {
+      this.modalPosicion.dismiss();
+    }
+  // end
+
+  // estatus
+    public estatusSelectionChanged(selectedId: string | undefined) {
+      // 1. Almacenar el ID seleccionado
+      this.selectedEstatusId = selectedId;
+
+      // 2. Buscar el nombre para mostrarlo en la UI (UX)
+      const estatusSeleccionado = this.allEstatusJugador.find(e => e.id === selectedId);
+
+      // 3. Actualizar la variable de la UI
+      if (estatusSeleccionado) {
+        this.selectedEstatusNombre = estatusSeleccionado.nombre;
+        this.aplicarFiltrosDesktop();
+      }
+
+      // 4. Cerrar el modal
+      this.modalEstatus.dismiss();
+    }
+
+    public onPresentEstatus() {
+      this.modalEstatus.present()
+    }
+
+    public estatusCancel() {
+      this.modalEstatus.dismiss();
+    }
+  // end
+
+  // aplica filtros
+    aplicarFiltrosDesktop() {
+      let filtros = [...this.allListadoJugadores]; // copia completa
+
+      filtros = filtros.filter(jugador => {
+
+        // Filtro por estado
+        if (this.selectedEstadoId && jugador.estado.toLowerCase() !== this.selectedEstadoNombre.toLowerCase()) {
+          return false;
+        } else {
+          const ef: IListadoJugadoresFiltroCoach = {
+            tipo: 'estado',
+            valor: this.selectedEstadoNombre.toLowerCase()
+          }
+
+          if (this.allFiltrosAplicados.filter( x => x.tipo === 'estado' && x.valor == this.selectedEstadoNombre.toLowerCase()).length === 0 && !this.selectedEstadoNombre.toLowerCase().includes('selecciona') ) {
+            this.allFiltrosAplicados.push(ef);
+          }
+
+        }
+
+        // Filtro por municipio
+        if (this.selectedMunicipioId && jugador.municipio.toLowerCase() !== this.selectedMunicipioNombre.toLowerCase()) {
+          return false;
+        } else {
+          const mf: IListadoJugadoresFiltroCoach = {
+            tipo: 'municipio',
+            valor: this.selectedMunicipioNombre.toLowerCase()
+          }
+
+          if (this.allFiltrosAplicados.filter( x => x.tipo === 'municipio' && x.valor == this.selectedMunicipioNombre.toLowerCase()).length === 0 && !this.selectedMunicipioNombre.toLowerCase().includes('selecciona')) {
+            this.allFiltrosAplicados.push(mf);
+          }
+        }
+
+        // Filtro por posición
+        if (this.selectedPosicionId && jugador.posicionJuegoUno !== this.selectedPosicionNombre) {
+          return false;
+        } else {
+          const pf: IListadoJugadoresFiltroCoach = {
+            tipo: 'posicion',
+            valor: this.selectedPosicionNombre.toLowerCase()
+          }
+
+          if (this.allFiltrosAplicados.filter( x => x.tipo === 'posicion' && x.valor == this.selectedPosicionNombre.toLowerCase()).length === 0 && !this.selectedPosicionNombre.toLowerCase().includes('selecciona')) {
+            this.allFiltrosAplicados.push(pf);
+          }
+        }
+
+        // Filtro por estatus del jugador
+        if (this.selectedEstatusId && jugador.estatus?.toLowerCase() !== this.selectedEstatusNombre.toLowerCase()) {
+          return false;
+        } else {
+          const esf: IListadoJugadoresFiltroCoach = {
+            tipo: 'estatus',
+            valor: this.selectedEstatusNombre.toLowerCase()
+          }
+
+          if (this.allFiltrosAplicados.filter( x => x.tipo === 'estatus' && x.valor == this.selectedEstatusNombre.toLowerCase()).length === 0 && !this.selectedEstatusNombre.toLowerCase().includes('selecciona')) {
+            this.allFiltrosAplicados.push(esf);
+          }
+        }
+
+        return true; // pasa todos los filtros
+      });
+
+
+
+      if (this.allFiltrosAplicados.length > 0) {
+        this.existeFiltracion = true;
+      } else {
+        this.existeFiltracion = false;
+      }
+
+      this.filteredDesktopJugadores = filtros;
+      this.aplicarPaginacionDesktop(0, 5);
+    }
+
+    reseteFiltrosDesktop() {
+      this.selectedEstadoNombre = 'Selecciona El Estado';
+      this.selectedEstadoId = undefined;
+
+      this.selectedMunicipioNombre = 'Selecciona El Municipio';
+      this.selectedMunicipioId = undefined;
+
+      this.selectedPosicionNombre = 'Selecciona La Posición';
+      this.selectedPosicionId = undefined;
+
+      this.selectedEstatusNombre = 'Selecciona El Estatus';
+      this.selectedEstatusId = undefined;
+
+      let filtros = [...this.allListadoJugadores];
+      this.filteredDesktopJugadores = filtros;
+      this.allFiltrosAplicados = [];
+      this.aplicarPaginacionDesktop(0, 5);
+    }
+
+    resetFiltrosDesktopByChips(item: IListadoJugadoresFiltroCoach) {
+
+      this.allFiltrosAplicados = this.allFiltrosAplicados.filter(
+        x => !(x.tipo === item.tipo &&
+              x.valor.toString().trim().toLowerCase() === item.valor.toString().trim().toLowerCase())
+      );
+
+      switch (item.tipo) {
+        case 'estado':
+            this.selectedEstadoNombre = 'Selecciona El Estado';
+            this.selectedEstadoId = undefined;
+
+            this.selectedMunicipioNombre = 'Selecciona El Municipio';
+            this.selectedMunicipioId = undefined;
+
+            this.allFiltrosAplicados = this.allFiltrosAplicados.filter(
+              x => !(x.tipo === 'municipio'));
+          break;
+
+        case 'municipio':
+          this.selectedMunicipioNombre = 'Selecciona El Municipio';
+          this.selectedMunicipioId = undefined;
+          break;
+        case 'posicion':
+            this.selectedPosicionNombre = 'Selecciona La Posición';
+            this.selectedPosicionId = undefined;
+          break;
+        case 'estatus':
+            this.selectedEstatusNombre = 'Selecciona El Estatus';
+            this.selectedEstatusId = undefined;
+          break;
+        default:
+          this.reseteFiltrosDesktop();
+          break;
+      }
+
+      this.aplicarFiltrosDesktop();
     }
   // end
 //#endregion

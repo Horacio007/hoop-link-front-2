@@ -129,4 +129,189 @@ td, th {
 
 }
 
+/* Estilos para que el contenedor de filtros parezca un input */
+.filtro-input-container {
+    /* Mismos estilos de fondo y sombra que usa ion-searchbar por defecto */
+    background: var(--ion-color-step-50, #fff); /* Típicamente blanco */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 10px; /* Bordes redondeados */
+    /* Asegura que ocupe toda la altura disponible */
+    height: 100%;
+    /* Flex para centrar verticalmente si el contenido no ocupa todo */
+    display: flex;
+    align-items: center;
+}
 
+/* Estilos para eliminar el look de lista del acordeón */
+.filtros-acordeon {
+    /* Eliminar borde y color de fondo predeterminados */
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Estilos para el header del ion-item dentro del acordeón */
+.filtros-acordeon .header-no-style {
+    /* CLAVE: Eliminar todos los paddings y márgenes de Ionic en el item */
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --padding-end: 0;
+    --background: transparent;
+
+    /* Necesitamos añadir el padding interno que tienen los inputs (ej: 10px arriba/abajo y 16px lateral) */
+    padding: 12px 16px;
+    margin: 0;
+}
+
+/* Ajuste del icono del toggle para que se vea bien */
+.filtros-acordeon ion-icon[slot="end"] {
+    /* Esto podría necesitar ajuste fino dependiendo de la versión de Ionic */
+    margin-inline-end: 0;
+    margin-inline-start: 16px;
+}
+
+/* Opcional: Asegúrate de que ion-accordion-group no tenga márgenes */
+.ion-accordion-group {
+    margin: 0 !important;
+}
+
+
+/* ======================================= */
+/* 1. REPLICAR LA APARIENCIA DEL SEARCHBAR */
+/* ======================================= */
+
+/* Replicamos el contenedor principal de ion-searchbar */
+.search-look-group {
+    /* Fondo y bordes (esto simula el contenedor principal del searchbar) */
+    background: var(--ion-color-step-50, #fff);
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+
+    /* Eliminar el margen y padding por si el group lo tiene */
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* El acordeón interno debe ser limpio */
+.search-look-group .filtros-acordeon {
+    /* Quitar cualquier fondo, borde o sombra que venga del acordeón */
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* ======================================= */
+/* 2. ALINEAR EL HEADER CON EL TEXTO BUSCA TALENTO */
+/* ======================================= */
+
+.search-look-group .header-no-style {
+    /* Anular los estilos de lista que hacen que el ion-item se vea mal */
+    --background: transparent;
+    --border-width: 0 !important;
+    --inner-border-width: 0 !important;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+
+    /* Alinear el padding para que coincida con el texto de ion-searchbar */
+    /* El ion-searchbar tiene padding interno de ~10px vertical y ~16px horizontal */
+    // padding: 10px 16px;
+}
+
+/* Ajuste fino para la etiqueta (label) y el icono del toggle */
+.search-look-group .header-no-style ion-label {
+    /* Ajusta la fuente para que coincida si es necesario */
+    font-size: 16px;
+    color: var(--ion-color-medium-shade, #808080); /* Color de placeholder */
+}
+
+/* Mover el icono de filtro al final, como si fuera el icono de búsqueda */
+.search-look-group ion-accordion ion-icon {
+    /* Asegurar que esté a la derecha y con el margen correcto */
+    margin-inline-end: 0;
+    margin-inline-start: 16px;
+}
+
+/* ======================================= */
+/* 1. ALTURA FIJA PARA IGUALAR AL SEARCHBAR */
+/* ======================================= */
+.fixed-height-group {
+    /* *** CLAVE: ELIMINAR O COMENTAR LA ALTURA FIJA DE 45PX *** */
+    /* height: 45px; <--- ¡ESTO DEBE IRSE! */
+    height: auto !important; /* Aseguramos que pueda crecer */
+
+    /* El resto de los estilos del contenedor principal se mantienen */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /* Asegura que el acordeón se muestre por encima de otros elementos al abrirse */
+    z-index: 10;
+}
+
+/* El acordeón debe ocupar el 100% de la altura de su grupo (cuando está cerrado,
+   su altura la dará el contenido del header) */
+.fixed-height-group ion-accordion {
+    height: auto; /* Cambiamos a auto para que el contenido pueda crecer */
+    margin: 0 !important;
+}
+
+/* ======================================= */
+/* 2. FORZAR ALTURA EN EL HEADER (LA PARTE VISIBLE) */
+/* ======================================= */
+
+.search-look-group .header-no-style {
+    /* *** CLAVE: Usamos MIN-HEIGHT para mantener la altura base de 45px *** */
+    min-height: 45px;
+    height: auto;
+
+    /* La altura del ion-item NO debe ser 100% si el padre tiene height: auto */
+    /* La eliminamos para que el navegador maneje la altura del ion-item */
+    /* --min-height: 100%; <--- ELIMINAR */
+
+    /* El resto de estilos se mantiene para la alineación */
+    align-items: center;
+
+    /* Quitar padding/bordes para replicar el look de input */
+    --background: transparent;
+    --border-width: 0 !important;
+    --inner-border-width: 0 !important;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+
+    /* Padding interno para replicar el espacio del texto de búsqueda */
+    padding: 10px 16px;
+
+    /* Opcional: Asegura que el header siempre esté en la capa superior */
+    position: relative;
+    z-index: 20;
+}
+
+/* 3. Estilos Adicionales para el Contenido */
+.contenido-filtros {
+    /* Asegúrate de que el contenido no tenga un overflow que lo oculte */
+    overflow: visible !important;
+    /* Añade padding dentro del contenido expandido para que se vea mejor */
+    padding: 0 16px 16px 16px !important;
+    background-color: white; /* Asegura un fondo blanco para el contenido */
+}
+
+
+/* Asegura que el searchbar tenga la misma altura que el filtro (45px) */
+.search-bar-custom {
+    /* Establece la altura mínima del elemento input dentro del searchbar */
+    // --min-height: 100px;
+    height: 45px;
+
+    /* Asegura que el searchbar no tenga padding extra alrededor */
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Opcional: Si el ícono de la lupa y el placeholder no se alinean bien: */
+.search-bar-custom .searchbar-input-container {
+    align-items: center; /* Asegura el centrado vertical */
+}

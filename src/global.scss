@@ -442,6 +442,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 30px;
+    padding: 20px;
   }
 
   /* 3. ESTILOS Y ANIMACIÓN DEL LOADER 2 (Pelota rebotando) */
@@ -489,6 +491,36 @@ body {
       0 0 0 rgb(0 62 97);
     animation: l32 1s infinite cubic-bezier(0.5,-2000,0.5,2000);
     /* Se elimina el .loader:before y el content: attr(data-content) */
+
+    /* 1. Añadir padding interno al contenedor del texto */
+    /* Esto da espacio extra para que la animación no corte las letras */
+    padding: 10px 15px;
+
+    /* 2. Añadir background para un mejor contraste y visualización de bordes */
+    // background-color: rgba(255, 255, 255, 0.2);
+    // border-radius: 8px;
+
+    /* 3. Asegurar espacio para textos con múltiples líneas */
+    line-height: 1.2;
+
+    /* 4. Si el mensaje es muy largo, aseguramos que se envuelva */
+    max-width: 100%;
+    word-wrap: break-word;
+    text-align: left; /* Centrar el texto dentro del contenedor */
+
+  }
+
+  /* Dentro de .custom-loading {...} */
+
+  /* 4. ESTILOS PARA MENSAJES ESTÁTICOS Y DE ERROR */
+  .message-text {
+    /* Estilos para el texto de 'Error al cargar un catálogo.' */
+    color: #ffffff; /* Color de texto blanco para contraste */
+    font-size: 24px; /* Un tamaño legible */
+    font-weight: bold;
+    padding: 15px 25px; /* **Añade espacio interno** */
+    text-align: center;
+    text-shadow: none; /* Crucial: anula la sombra del .loader */
   }
 
   /* 5. DEFINICIÓN DE KEYFRAMES */

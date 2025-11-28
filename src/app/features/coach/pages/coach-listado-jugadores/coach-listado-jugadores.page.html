@@ -62,6 +62,7 @@
     <!-- Searchbar -->
     <div class="col-span-6 flex items-center">
       <ion-searchbar
+        class="search-bar-custom"
         style="padding-inline: unset; padding-top: unset; padding-bottom: unset;"
         placeholder="Busca talento..."
         (ionClear)="onResetSeacrh($event)"
@@ -74,47 +75,83 @@
 
       <!-- Filtros -->
     <div class="col-span-6 flex items-center">
-      <ion-accordion-group class="w-full">
-        <ion-accordion value="first" class="filtros-acordeon w-full" toggleIcon="filter-circle-outline" toggleIconSlot="end">
+      <div class="filtro-input-container w-full h-full">
+        <ion-accordion-group class="w-full search-look-group fixed-height-group">
+          <ion-accordion value="first" class="filtros-acordeon w-full" toggleIcon="filter-circle-outline" toggleIconSlot="end">
+            <!-- Header -->
+            <ion-item class="header-no-style" slot="header">
+              <ion-label>Filtros</ion-label>
+            </ion-item>
 
-          <!-- Header -->
-          <ion-item class="!m-0 !p-0 w-full" slot="header">
-            <ion-label>Filtros</ion-label>
-          </ion-item>
+            <!-- Contenido -->
+            <div class="ion-no-padding contenido-filtros w-full" slot="content">
 
-          <!-- Contenido -->
-          <div class="ion-no-padding contenido-filtros w-full" slot="content">
-
-            <div class="grid grid-cols-1 mb-6">
-              <div class="col-span-12 ">
-                <div class="selects-search-container">
-                  <ion-list class="no-border-list">
-                    <ion-item [button]="true" [detail]="false" class="no-border-list" id="select-estado" lines="none" (click)="onPresentEstado()" >
-                      <ion-label>Estado</ion-label>
-                      <div slot="end" id="selected-estado">{{ selectedEstadoNombre }}</div>
-                    </ion-item>
-                  </ion-list>
+              <div class="grid grid-cols-1 mb-6">
+                <div class="col-span-12 ">
+                  <div class="selects-search-container">
+                    <ion-list class="no-border-list">
+                      <ion-item [button]="true" [detail]="false" class="no-border-list" id="select-estado" lines="none" (click)="onPresentEstado()" >
+                        <ion-label>Estado</ion-label>
+                        <div slot="end" id="selected-estado">{{ selectedEstadoNombre }}</div>
+                      </ion-item>
+                    </ion-list>
+                  </div>
+                </div>
+                <div class="col-span-12 ">
+                  <div class="selects-search-container">
+                    <ion-list class="no-border-list">
+                      <ion-item [button]="true" [detail]="false" class="no-border-list" id="select-municipio" lines="none" (click)="onPresentMunicipio()" [disabled]="selectedEstadoId == '' || selectedEstadoId == undefined">
+                        <ion-label>Municipio</ion-label>
+                        <div slot="end" id="select-municipio">{{ selectedMunicipioNombre }}</div>
+                      </ion-item>
+                    </ion-list>
+                  </div>
+                </div>
+                <div class="col-span-12 ">
+                  <div class="selects-search-container">
+                    <ion-list class="no-border-list">
+                      <ion-item [button]="true" [detail]="false" class="no-border-list" id="select-posicion" lines="none" (click)="onPresentPosicion()">
+                        <ion-label>Posición</ion-label>
+                        <div slot="end" id="select-posicion">{{ selectedPosicionNombre }}</div>
+                      </ion-item>
+                    </ion-list>
+                  </div>
+                </div>
+                <div class="col-span-12 ">
+                  <div class="selects-search-container">
+                    <ion-list class="no-border-list">
+                      <ion-item [button]="true" [detail]="false" class="no-border-list" id="select-estatus" lines="none" (click)="onPresentEstatus()">
+                        <ion-label>Estatus</ion-label>
+                        <div slot="end" id="select-estatus">{{ selectedEstatusNombre }}</div>
+                      </ion-item>
+                    </ion-list>
+                  </div>
+                </div>
+                <div class="col-span-12">
+                  <div class="flex flex-row justify-end items-center mt-4">
+                    <ion-icon class="text-2xl hover:cursor-pointer" (click)="reseteFiltrosDesktop()" name="refresh-outline"></ion-icon>
+                  </div>
                 </div>
               </div>
-              <div class="col-span-12 ">
-              <div class="selects-search-container">
-                <ion-list class="no-border-list">
-                  <ion-item [button]="true" [detail]="false" class="no-border-list" id="select-municipio" lines="none" (click)="onPresentMunicipio()" [disabled]="selectedEstadoId == '' || selectedEstadoId == undefined">
-                    <ion-label>Municipio</ion-label>
-                    <div slot="end" id="select-municipio">{{ selectedMunicipioNombre }}</div>
-                  </ion-item>
-                </ion-list>
-              </div>
             </div>
-            </div>
-          </div>
-
-        </ion-accordion>
-      </ion-accordion-group>
+          </ion-accordion>
+        </ion-accordion-group>
+      </div>
     </div>
 
   </div>
 
+  @if (existeFiltracion) {
+    <div class="flex flex-row gap-4 items-center mb-6">
+      <ion-label class="text-2xl font-bold" >Filtros Aplicados</ion-label>
+      @for (filtro of allFiltrosAplicados; track $index) {
+        <ion-chip class="capitalize p-2" color="warning">
+          <ion-label>{{filtro.valor}}</ion-label>
+          <ion-icon (click)="resetFiltrosDesktopByChips(filtro)" name="close"></ion-icon>
+        </ion-chip>
+      }
+    </div>
+  }
 
   <div class="grid grid-cols-12 mb-2 text-xl font-bold" matSort (matSortChange)="onSortMaterial($event)">
     <div class="col-span-4 hover:cursor-pointer" mat-sort-header="jugador">
@@ -126,7 +163,7 @@
     <div class="col-span-2 hover:cursor-pointer" mat-sort-header="altura">
       <ion-label (click)="sortBy('altura')">Altura</ion-label>
     </div>
-    <div class="col-span-2 hover:cursor-pointer" mat-sort-header="peso">
+    <div class="col-span-1 hover:cursor-pointer" mat-sort-header="peso">
       <ion-label (click)="sortBy('peso')">Peso</ion-label>
     </div>
     <div class="col-span-2 hover:cursor-pointer" mat-sort-header="estatus">
@@ -134,11 +171,20 @@
     </div>
   </div>
 
+  @if (jugadoresDesktopPaginados.length === 0) {
+    <h1 class="my-6">Upps nada coincide con tu busqueda...</h1>
+    <div class="flex flex-row gap-4 items-center">
+      <h2>Te recomendamos reiniciar los filtros</h2>
+      <ion-icon class="text-2xl" name="arrow-forward-outline"></ion-icon>
+      <ion-icon class="text-2xl hover:cursor-pointer animate-ping" (click)="reseteFiltrosDesktop()" name="refresh-outline"></ion-icon>
+    </div>
+  }
+
   @for (jugador of jugadoresDesktopPaginados; track jugador.informacionPersonalId) {
     <ion-card class="mb-3 capitalize">
       <ion-card-content>
         <div class="flex justify-end w-full">
-           <ion-icon class="text-2xl" name="arrow-forward-outline"></ion-icon>
+           <ion-icon class="text-2xl hover:cursor-pointer" name="arrow-forward-outline"></ion-icon>
          </div>
         <div class="grid grid-cols-12">
           <div class="col-span-4">
@@ -160,11 +206,11 @@
           <div class="col-span-2">
             {{ `${jugador.altura} mts` }}
           </div>
-          <div class="col-span-2">
+          <div class="col-span-1">
             {{ `${jugador.peso} kg` }}
           </div>
-          <div class="col-span-2">
-            <ion-chip class="p-1" color="success">{{ `${jugador.estatus}` }}</ion-chip>
+          <div class="col-span-3">
+            <ion-chip class="p-2" color="success">{{ `${jugador.estatus}` }}</ion-chip>
           </div>
         </div>
       </ion-card-content>
@@ -205,6 +251,32 @@
       [selectedItem]="selectedMunicipioId"
       (selectionChange)="municipioSelectionChanged($event)"
       (selectionCancel)="municipioCancel()"
+    ></app-select-list-search>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalPosiciones cssClass="custom-modal-selects-search" backdropDismiss="false" >
+  <ng-template>
+    <app-select-list-search
+      class="ion-page"
+      title="Posición"
+      [items]="allPosiciones"
+      [selectedItem]="selectedMunicipioId"
+      (selectionChange)="posicionSelectionChanged($event)"
+      (selectionCancel)="posicionCancel()"
+    ></app-select-list-search>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalEstatus cssClass="custom-modal-selects-search" backdropDismiss="false" >
+  <ng-template>
+    <app-select-list-search
+      class="ion-page"
+      title="Estatus"
+      [items]="allEstatusJugador"
+      [selectedItem]="selectedEstatusId"
+      (selectionChange)="estatusSelectionChanged($event)"
+      (selectionCancel)="estatusCancel()"
     ></app-select-list-search>
   </ng-template>
 </ion-modal>
