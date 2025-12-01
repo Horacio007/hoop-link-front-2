@@ -24,6 +24,8 @@ export class JugadorExperienciaPage implements OnInit, OnDestroy, AfterViewInit 
   @Input({required: true}) cargandoData: boolean = true;
   public iconoSi: string = "pi pi-check";
 
+  @Input({required: true }) isReadOnly: boolean = false;
+
   @ViewChild('datetimeFC') datetimeFC!: IonDatetime;
   public hoy:Date = new Date();
   public hoyFormatoISO: string = this.hoy.toISOString();
@@ -54,6 +56,9 @@ export class JugadorExperienciaPage implements OnInit, OnDestroy, AfterViewInit 
     setTimeout(() => {
       this.setPernecesClubInicial();
     }, 0);
+    if (this.isReadOnly) {
+      this.form.disable()
+    }
   }
 
   ngAfterViewInit(): void {
