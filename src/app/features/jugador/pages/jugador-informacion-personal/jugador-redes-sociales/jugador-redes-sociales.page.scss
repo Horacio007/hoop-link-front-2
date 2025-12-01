@@ -1,0 +1,24 @@
+/* Texto dentro de inputs deshabilitados */
+ion-input[disabled] .native-input,
+ion-textarea[disabled] .native-textarea {
+  color: #000 !important;
+  opacity: 1 !important;
+}
+
+/* Evita que todo el control se vea gris */
+ion-input[disabled],
+ion-textarea[disabled] {
+  opacity: 1 !important;
+}
+
+
+/* Forzar color negro del texto dentro del ion-textarea deshabilitado */
+ion-textarea.textarea-disabled .native-textarea[disabled] {
+  color: #000 !important;
+  opacity: 1 !important;
+}
+
+/* Evitar que se apague todo el contenedor */
+ion-textarea.textarea-disabled {
+  opacity: 1 !important;
+}
