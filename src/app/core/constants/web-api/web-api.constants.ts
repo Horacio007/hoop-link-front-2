@@ -14,6 +14,7 @@ export const WebApiConstants = {
   informacion_personal: {
     save: `informacion-personal/save`,
     getInformacion: `informacion-personal`,
+    getInformacionById: (informacionPersonalId: number) => `informacion-personal/${informacionPersonalId}`,
     uploadVideos: (tipo:string, id: string) => `informacion-personal/upload-video/${tipo}${id}`
   },
   auth:{
@@ -23,6 +24,7 @@ export const WebApiConstants = {
     yopli: 'auth/yopli',
   },
   coach: {
-    getAllJugadores: `coach/list-all-jugadores`
+    getAllJugadores: `coach/list-all-jugadores`,
+    saveVistaPerfil: (informacionPersonalId: number) => `coach/save-vista-perfil/${informacionPersonalId}`
   }
 }

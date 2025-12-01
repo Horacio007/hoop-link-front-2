@@ -52,6 +52,18 @@ export class InformacionPersonalService {
     );
   }
 
+  public getInformacionPersonalById(informacionPersonalId: number): Observable<IResponse<IInformacinPersonal | undefined>> {
+    const url: string = WebApiConstants.informacion_personal.getInformacionById(informacionPersonalId)
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> getInformacionPersonal`, 'Solicitando información personal.', { endpoint: url });
+
+    return this._webApiService.get<IResponse<IInformacinPersonal | undefined>>(url, true).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
+  }
+
   public uploadVideos(tipo:string, id:string, file: FormData): Observable<HttpEvent<IResponse<IVideoInformacionPersonalResponse>>> {
     const url: string = WebApiConstants.informacion_personal.uploadVideos(tipo, id);
 

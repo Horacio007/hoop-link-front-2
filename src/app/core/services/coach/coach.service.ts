@@ -35,6 +35,18 @@ export class CoachService {
       })
     );
   }
+
+  public saveVisitaPerfil(informacionPersonalId: number): Observable<IResponse<void>> {
+    const url: string = WebApiConstants.coach.saveVistaPerfil(informacionPersonalId)
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> saveVisitaPerfil`, 'Almacenando vista en perfil.', { endpoint: url });
+
+    return this._webApiService.post<IResponse<void>>(url, {}, true).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
+  }
 //#endregion
 
 }
