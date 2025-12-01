@@ -18,6 +18,8 @@ export class ProfileImageComponent implements OnInit  , OnDestroy {
   @Input() permiteCargaMultiple:boolean = false;
   @Input() imageUrl: string | null = null;
 
+  @Input({required: true }) isReadOnly: boolean = false;
+
   @Output() imageSelected = new EventEmitter<File>();
   @Output() fileTooLarge = new EventEmitter<number>();
 
