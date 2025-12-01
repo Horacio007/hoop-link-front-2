@@ -41,6 +41,8 @@ export class VideoUploaderComponent implements OnInit, OnDestroy {
 
   private readonly _contextLog = 'VideoUploaderComponent';
   private _destroy$ = new Subject<void>();
+
+  @Input({required: true }) isReadOnly: boolean = false;
 //#endregion
 
 //#region Constructor
