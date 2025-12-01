@@ -62,6 +62,9 @@ export class JugadorPerfilPage implements OnInit, ViewWillEnter {
       this.setValoresCatalogoEstatusJugador(this.form.get('estatusBusquedaJugador')?.value);
     });
     this.cargaFotoPerfil();
+    if (this.isReadOnly) {
+      this.form.disable()
+    }
   }
 
   ionViewWillEnter(): void {
