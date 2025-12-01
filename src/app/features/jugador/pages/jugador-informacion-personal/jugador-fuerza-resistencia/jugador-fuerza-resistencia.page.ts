@@ -19,7 +19,7 @@ export class JugadorFuerzaResistenciaPage implements OnInit, OnDestroy {
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
   @Input({required: true}) cargandoData: boolean = true;
-   @Input({required: true }) isReadOnly: boolean = false;
+  @Input({required: true }) isReadOnly: boolean = false;
 
   private readonly _contextLog = 'JugadorFuerzaResistenciaPage';
 
