@@ -27,6 +27,7 @@ import { CustomPaginatorIntl } from 'src/app/shared/utils/material/custom-pagina
 import { CatalogoService } from 'src/app/shared/services/catalogo/catalogo.service';
 import { SelectListSearchComponent } from 'src/app/shared/components/ionic/select-list-search/select-list-search.component';
 import { IListadoJugadoresFiltroCoach } from '../../interfaces/filtro-listado-jugadores.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-coach-listado-jugadores',
@@ -102,7 +103,7 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
   constructor(
     private readonly _coachService: CoachService, private readonly _toastService: ToastService,
     private readonly _blockUiService:BlockUiService, private readonly _logger: LoggerService,
-    private readonly catalagoService: CatalogoService,
+    private readonly catalagoService: CatalogoService, private readonly _router:Router
   ) { }
 //#endregion
 
@@ -187,6 +188,30 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
     this._logger.log(LogLevel.Warn, `${this._contextLog} >> checkScreenSize`, `Ancho actual: ${currentWidth}px. Es móvil: ${this.isMobileView}`);
   }
 
+  public redirectPerfil(informacionPersonalId: number) {
+    this.registraVistaPerfil(informacionPersonalId);
+    this._router.navigate(
+      ['/desktop/coach/perfil-jugador', informacionPersonalId]
+    );
+  }
+
+  private registraVistaPerfil(informacionPersonalId: number) {
+    this._coachService.saveVisitaPerfil(informacionPersonalId)
+    .pipe(
+      finalize(() => {
+        this._logger.log(LogLevel.Debug, `${this._contextLog} >> registraVistaPerfil`, 'Finalizada el registro de visita.');
+        takeUntil(this._destroy$)
+      })
+    )
+    .subscribe({
+      next:( () => {
+        this._logger.log(LogLevel.Info, `${this._contextLog} >> registraVistaPerfil`, 'Finalizada el registro de visita con exito');
+      }),
+      error:( (error) => {
+        this._logger.log(LogLevel.Error, `${this._contextLog} >> registraVistaPerfil`, 'Error al registrar la visita.', error);
+      })
+    })
+  }
 
 //#endregion
 
@@ -742,4 +767,5 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
     }
   // end
 //#endregion
+
 }

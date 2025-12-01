@@ -9,7 +9,7 @@
     </div>
 
     <ng-template #tab>
-      <app-jugador-perfil #perfilTab [form]="perfil" [cargandoData]="cargandoData" [allEstatusJugador]="estatusJugadorCatalogo || []" ></app-jugador-perfil>
+      <app-jugador-perfil #perfilTab [form]="perfil" [cargandoData]="cargandoData" [allEstatusJugador]="estatusJugadorCatalogo || []" [isReadOnly]="isReadOnly" ></app-jugador-perfil>
     </ng-template>
 
     <ng-template #tab>
@@ -41,17 +41,21 @@
     </ng-template>
 
   </app-responsive-tabs>
-  <div class="flex justify-end mx-2 my-4">
-    <div class="flex align-center justify-center">
-      @if (cargandoData) {
-        <app-skeleton style="width: 5rem; height: 2.5rem;"></app-skeleton>
-      } @else {
-        <ion-button class="w-full" type="submit" [style]="{'--background': '#f47621', '--border-color': '#f47621'}">
-          Guardar
-        </ion-button>
-      }
+
+  @if (!isReadOnly) {
+    <div class="flex justify-end mx-2 my-4">
+      <div class="flex align-center justify-center">
+        @if (cargandoData) {
+          <app-skeleton style="width: 5rem; height: 2.5rem;"></app-skeleton>
+        } @else {
+          <ion-button class="w-full" type="submit" [style]="{'--background': '#f47621', '--border-color': '#f47621'}">
+            Guardar
+          </ion-button>
+        }
+      </div>
     </div>
-  </div>
+  }
+
 </form>
 
 

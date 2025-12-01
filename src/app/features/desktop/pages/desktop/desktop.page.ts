@@ -50,9 +50,9 @@ export class DesktopPage implements OnInit, OnDestroy {
       );
 
       if (user.rol.includes('coach')) {
-user.rol = 'coach'
+        user.rol = 'coach'
       } else {
-        console.warn('llego al else');
+        // console.warn('llego al else');
       }
 
       switch (user.rol) {

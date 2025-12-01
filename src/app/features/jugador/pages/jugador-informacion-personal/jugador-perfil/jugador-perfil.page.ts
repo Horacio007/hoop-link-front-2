@@ -31,6 +31,7 @@ export class JugadorPerfilPage implements OnInit, ViewWillEnter {
   @Input({required: true}) form!: FormGroup;
   @Input({required: true}) cargandoData: boolean = true;
   @Input({ required: true }) allEstatusJugador!: ICatalogo[];
+  @Input({required: true }) isReadOnly: boolean = false;
 
   public fotoPreviewUrl: string | null = null;
   public nuevoArchivoFoto: File | null = null;

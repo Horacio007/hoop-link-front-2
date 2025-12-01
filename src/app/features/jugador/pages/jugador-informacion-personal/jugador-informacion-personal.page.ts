@@ -20,7 +20,7 @@ import { JugadorConstants } from '../../constants/general/general.constants';
 import { JugadorPerfilPage } from "./jugador-perfil/jugador-perfil.page";
 import { IonIcon, IonButton } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
-import { close, informationCircleOutline } from 'ionicons/icons';
+import { close, cloudDownload, informationCircleOutline, thumbsUpOutline } from 'ionicons/icons';
 import { TooltipInfoComponent } from "src/app/shared/components/tooltip-info/tooltip-info.component";
 import { CatalogoService } from '../../../../shared/services/catalogo/catalogo.service';
 import { ICatalogo } from 'src/app/shared/interfaces/catalogo/catalogo.interface';
@@ -34,6 +34,7 @@ import { JugadorRedesSocialesPage } from "./jugador-redes-sociales/jugador-redes
 import { SkeletonComponent } from 'src/app/shared/components/ionic/skeleton/skeleton.component';
 import { InfoCardsComponent } from "src/app/layouts/authenticated-layout/components/info-cards/info-cards.component";
 import { NewsBarComponent } from "src/app/layouts/authenticated-layout/components/news-bar/news-bar.component";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-jugador-informacion-personal',
@@ -89,6 +90,10 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
   private catalogosCargados: { [key: string]: boolean } = {};
 
   @ViewChild('perfilTab') jugadorPerfilComponent!: JugadorPerfilPage;
+
+  private _userLogged = this._authService.user();
+  public isReadOnly: boolean = false;
+  private _informacionPersonalIdReadOnly: number = 0;
 //#endregion
 
 //#region Constructor
@@ -97,12 +102,18 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
     private readonly _blockUserIService:BlockUiService, private readonly _formularioService:FormularioUtilsService,
     private readonly _informacionPersonalService:InformacionPersonalService, private readonly _authService:AuthService,
     private readonly _logger: LoggerService, private readonly _catalogoService: CatalogoService,
+    private _activatedRoute: ActivatedRoute
   ) {
 
     addIcons({
       informationCircleOutline, close
     });
 
+    this._informacionPersonalIdReadOnly = +this._activatedRoute.snapshot.params['id'];
+
+    if (this._userLogged?.rol === 'coach') {
+      this.isReadOnly = true;
+    }
   }
 //#endregion
 
@@ -209,56 +220,101 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
   private cargaDatos() {
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaDatos`, 'Obteniendo información personal...');
 
-    // 1. Definir los Observables a esperar
-    const dataPrincipal$ = this._informacionPersonalService.getInformacionPersonal().pipe(
-      takeUntil(this._destroy$)
-    );
+    if (this.isReadOnly) {
+      // 1. Definir los Observables a esperar
+      const dataPrincipal$ = this._informacionPersonalService.getInformacionPersonalById(this._informacionPersonalIdReadOnly).pipe(
+        takeUntil(this._destroy$)
+      );
 
-    // Asumo que tienes un _catalogoService inyectado
-    const catalogoEstatus$ = this._catalogoService.getAllEstatusBusquedaJugador().pipe(
-      takeUntil(this._destroy$)
-    );
-
-    // 2. Usar forkJoin para esperar ambos
-    forkJoin({
-      dataPrincipal: dataPrincipal$,
-      catalogoEstatus: catalogoEstatus$
-    })
-    .pipe(
-      // El finalize se ejecuta SOLO después de que forkJoin termine (éxito o error)
-      finalize(() => {
-          this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaDatos`, 'Finalizada la carga CRÍTICA. Ocultando Skeleton.');
-          this.cargandoData = false;
+      // 2. Usar forkJoin para esperar ambos
+      forkJoin({
+        dataPrincipal: dataPrincipal$
       })
-    ).subscribe({
-      next: (results: { dataPrincipal: IResponse<IInformacinPersonal | undefined>, catalogoEstatus: ICatalogo[] }) => {
-        this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos`, 'Datos recibidos', results);
+      .pipe(
+        // El finalize se ejecuta SOLO después de que forkJoin termine (éxito o error)
+        finalize(() => {
+            this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaDatos >> ReadOnly`, 'Finalizada la carga CRÍTICA. Ocultando Skeleton.');
+            this.cargandoData = false;
+        })
+      ).subscribe({
+        next: (results: { dataPrincipal: IResponse<IInformacinPersonal | undefined>}) => {
+          this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos >> ReadOnly`, 'Datos recibidos', results);
 
-        this.estatusJugadorCatalogo = results.catalogoEstatus;
+          const { data } = results.dataPrincipal;
 
+          if (data) {
+            // preparo la informacion
+            const { perfil, fuerzaResistencia, basketball, experiencia, vision, videos, redes } = this.preparaSeccionesToSetEnFormulario(data);
 
-        const { data } = results.dataPrincipal;
+            // actualizo la informacion
+            this.setPerfilEnFormulario(perfil);
+            this.setFuerzaResistenciaEnFormulario(fuerzaResistencia);
+            this.setBasketballEnFormulario(basketball);
+            this.setExperienciaEnFormulario(experiencia);
+            this.setVisionEnFormulario(vision);
+            this.setVideosEnFormulario(videos);
+            this.setRedesEnFormulario(redes);
+          }
 
-        if (data) {
-          // preparo la informacion
-          const { perfil, fuerzaResistencia, basketball, experiencia, vision, videos, redes } = this.preparaSeccionesToSetEnFormulario(data);
-
-          // actualizo la informacion
-          this.setPerfilEnFormulario(perfil);
-          this.setFuerzaResistenciaEnFormulario(fuerzaResistencia);
-          this.setBasketballEnFormulario(basketball);
-          this.setExperienciaEnFormulario(experiencia);
-          this.setVisionEnFormulario(vision);
-          this.setVideosEnFormulario(videos);
-          this.setRedesEnFormulario(redes);
+        },
+        error: (error) => {
+          this._logger.log(LogLevel.Error, `${this._contextLog} >> cargaDatos`, 'Error al obtener información personal', error);
+          this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar la información personal.');
         }
+      });
+    } else {
+      // 1. Definir los Observables a esperar
+      const dataPrincipal$ = this._informacionPersonalService.getInformacionPersonal().pipe(
+        takeUntil(this._destroy$)
+      );
 
-      },
-      error: (error) => {
-        this._logger.log(LogLevel.Error, `${this._contextLog} >> cargaDatos`, 'Error al obtener información personal', error);
-        this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar la información personal.');
-      }
-    });
+      // Asumo que tienes un _catalogoService inyectado
+      const catalogoEstatus$ = this._catalogoService.getAllEstatusBusquedaJugador().pipe(
+        takeUntil(this._destroy$)
+      );
+
+      // 2. Usar forkJoin para esperar ambos
+      forkJoin({
+        dataPrincipal: dataPrincipal$,
+        catalogoEstatus: catalogoEstatus$
+      })
+      .pipe(
+        // El finalize se ejecuta SOLO después de que forkJoin termine (éxito o error)
+        finalize(() => {
+            this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaDatos`, 'Finalizada la carga CRÍTICA. Ocultando Skeleton.');
+            this.cargandoData = false;
+        })
+      ).subscribe({
+        next: (results: { dataPrincipal: IResponse<IInformacinPersonal | undefined>, catalogoEstatus: ICatalogo[] }) => {
+          this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos`, 'Datos recibidos', results);
+
+          this.estatusJugadorCatalogo = results.catalogoEstatus;
+
+
+          const { data } = results.dataPrincipal;
+
+          if (data) {
+            // preparo la informacion
+            const { perfil, fuerzaResistencia, basketball, experiencia, vision, videos, redes } = this.preparaSeccionesToSetEnFormulario(data);
+
+            // actualizo la informacion
+            this.setPerfilEnFormulario(perfil);
+            this.setFuerzaResistenciaEnFormulario(fuerzaResistencia);
+            this.setBasketballEnFormulario(basketball);
+            this.setExperienciaEnFormulario(experiencia);
+            this.setVisionEnFormulario(vision);
+            this.setVideosEnFormulario(videos);
+            this.setRedesEnFormulario(redes);
+          }
+
+        },
+        error: (error) => {
+          this._logger.log(LogLevel.Error, `${this._contextLog} >> cargaDatos`, 'Error al obtener información personal', error);
+          this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar la información personal.');
+        }
+      });
+    }
+
   }
 
   private preparaSeccionesToSetEnFormulario(infoPersonal?: IInformacinPersonal): IRegistraInformacionPersonal {
