@@ -43,6 +43,8 @@ export class JugadorVideosPage implements OnInit, OnDestroy {
   private readonly _contextLog = 'JugadorVideosPage';
 
   @ViewChild('modalDemostracion', { static: true }) modalDemostracion!: IonModal;
+
+  @Input({required: true }) isReadOnly: boolean = false;
 //#endregion
 
 //#region Constructor
