@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { settingsOutline, closeOutline } from 'ionicons/icons';
+import { settingsOutline, closeOutline, eyeOutline } from 'ionicons/icons';
 import { FooterComponent } from "src/app/layouts/components/footer/footer.component";
 import { HeaderAuthenticatedComponent } from "src/app/layouts/authenticated-layout/components/header-authenticated/header-authenticated.component";
 import { ActivatedRoute, Data, NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
@@ -38,7 +38,7 @@ export class JugadorDashboardPage implements OnInit, OnDestroy {
   private logger: LoggerService // 🚨 Inyección del LoggerService
   ) {
     addIcons({
-      settingsOutline, closeOutline
+      settingsOutline, closeOutline, eyeOutline
     })
     // 🚨 Log INFO al inicializar el componente, usando la sintaxis log(NIVEL, CONTEXTO, MENSAJE)
     this.logger.log(LogLevel.Info, `${this.LOG_CONTEXT} >> constructor`, 'Constructor ejecutado.');
