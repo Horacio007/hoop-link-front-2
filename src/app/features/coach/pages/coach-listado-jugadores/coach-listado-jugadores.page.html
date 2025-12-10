@@ -57,10 +57,10 @@
   </ion-infinite-scroll>
 
 } @else {
-  <div class="grid grid-cols-12 gap-4 items-center mb-6">
+  <div class="grid grid-cols-12 gap-x-4 content-end mb-6">
 
     <!-- Searchbar -->
-    <div class="col-span-6 flex items-center">
+    <div class="col-span-6 content-end">
       <ion-searchbar
         class="search-bar-custom"
         style="padding-inline: unset; padding-top: unset; padding-bottom: unset;"
@@ -154,19 +154,19 @@
   }
 
   <div class="grid grid-cols-12 mb-2 text-xl font-bold" matSort (matSortChange)="onSortMaterial($event)">
-    <div class="col-span-4 hover:cursor-pointer" mat-sort-header="jugador">
+    <div class="col-span-4 justify-items-center hover:cursor-pointer" mat-sort-header="jugador">
       <ion-label (click)="sortBy('jugador')" >Jugador</ion-label>
     </div>
-    <div class="col-span-2 hover:cursor-pointer" mat-sort-header="posicion">
+    <div class="col-span-2 justify-items-center hover:cursor-pointer" mat-sort-header="posicion">
       <ion-label (click)="sortBy('posicion')">Posición</ion-label>
     </div>
-    <div class="col-span-2 hover:cursor-pointer" mat-sort-header="altura">
+    <div class="col-span-2 justify-items-center hover:cursor-pointer" mat-sort-header="altura">
       <ion-label (click)="sortBy('altura')">Altura</ion-label>
     </div>
-    <div class="col-span-1 hover:cursor-pointer" mat-sort-header="peso">
+    <div class="col-span-1 justify-items-center hover:cursor-pointer" mat-sort-header="peso">
       <ion-label (click)="sortBy('peso')">Peso</ion-label>
     </div>
-    <div class="col-span-2 hover:cursor-pointer" mat-sort-header="estatus">
+    <div class="col-span-2 justify-items-center hover:cursor-pointer" mat-sort-header="estatus">
       <ion-label (click)="sortBy('estatus')">Estatus</ion-label>
     </div>
   </div>
@@ -186,8 +186,8 @@
         <div class="flex justify-end w-full">
            <ion-icon class="text-2xl hover:cursor-pointer" (click)="redirectPerfil(jugador.informacionPersonalId)" name="arrow-forward-outline"></ion-icon>
          </div>
-        <div class="grid grid-cols-12">
-          <div class="col-span-4">
+        <div class="grid grid-cols-12 justify-items-center">
+          <div class="col-span-4 justify-items-center">
             <div class="flex w-full">
               <div class="flex flex-row">
                 <ion-avatar slot="start" class="jugador-avatar">
@@ -200,16 +200,16 @@
               </div>
             </div>
           </div>
-          <div class="col-span-2">
+          <div class="col-span-2 justify-items-center">
             {{ `${jugador.posicionJuegoUno} | ${jugador.posicionJuegoDos}` }}
           </div>
-          <div class="col-span-2">
+          <div class="col-span-2 justify-items-center">
             {{ `${jugador.altura} mts` }}
           </div>
-          <div class="col-span-1">
+          <div class="col-span-1 justify-items-center">
             {{ `${jugador.peso} kg` }}
           </div>
-          <div class="col-span-3">
+          <div class="col-span-3 justify-items-center">
             <ion-chip class="p-2" color="success">{{ `${jugador.estatus}` }}</ion-chip>
           </div>
         </div>

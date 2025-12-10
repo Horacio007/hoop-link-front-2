@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
@@ -18,7 +18,7 @@ import { IVideosInformacionPersonal } from 'src/app/shared/interfaces/informacio
 import { InfoPersonalSummary, InfoPersonalDetail } from '../../constants';
 import { JugadorConstants } from '../../constants/general/general.constants';
 import { JugadorPerfilPage } from "./jugador-perfil/jugador-perfil.page";
-import { IonIcon, IonButton } from "@ionic/angular/standalone";
+import { IonIcon, IonButton, IonCardSubtitle, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonInput, IonLabel, IonAvatar } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
 import { close, cloudDownload, informationCircleOutline, thumbsUpOutline } from 'ionicons/icons';
 import { TooltipInfoComponent } from "src/app/shared/components/tooltip-info/tooltip-info.component";
@@ -35,13 +35,34 @@ import { SkeletonComponent } from 'src/app/shared/components/ionic/skeleton/skel
 import { InfoCardsComponent } from "src/app/layouts/authenticated-layout/components/info-cards/info-cards.component";
 import { NewsBarComponent } from "src/app/layouts/authenticated-layout/components/news-bar/news-bar.component";
 import { ActivatedRoute } from '@angular/router';
+import { IComentarioPerfil, ISaveComentarioPerfil } from '../../interfaces/comentario-perfil.interface';
+import { ComentarioPerfilJugadorService } from 'src/app/core/services/comentario-perfil-jugador/comentario-perfil-jugador.service';
 
 @Component({
   selector: 'app-jugador-informacion-personal',
   templateUrl: './jugador-informacion-personal.page.html',
   styleUrls: ['./jugador-informacion-personal.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ResponsiveTabsComponent, ReactiveFormsModule, JugadorPerfilPage, JugadorFuerzaResistenciaPage, JugadorBasketballPage, JugadorExperienciaPage, JugadorVisionPage, JugadorTestPage, JugadorVideosPage, JugadorRedesSocialesPage, SkeletonComponent, IonButton, NewsBarComponent]
+  imports: [IonAvatar, IonLabel, IonInput, IonCardTitle,
+    IonCardContent,
+    IonCardHeader,
+    IonCard,
+    CommonModule,
+    FormsModule,
+    ResponsiveTabsComponent,
+    ReactiveFormsModule,
+    JugadorPerfilPage,
+    JugadorFuerzaResistenciaPage,
+    JugadorBasketballPage,
+    JugadorExperienciaPage,
+    JugadorVisionPage,
+    JugadorTestPage,
+    JugadorVideosPage,
+    JugadorRedesSocialesPage,
+    SkeletonComponent,
+    IonButton,
+    NewsBarComponent
+  ]
 })
 export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWillEnter {
 
@@ -93,7 +114,13 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
 
   private _userLogged = this._authService.user();
   public isReadOnly: boolean = false;
-  private _informacionPersonalIdReadOnly: number = 0;
+  public _informacionPersonalIdReadOnly: number = 0;
+  public comentarioToPost: string = '';
+  @ViewChild('comentarioInput', { read: ElementRef }) comentarioInputRef!: ElementRef;
+
+  public comentariosCoachJugador: IComentarioPerfil[] = [];
+  private _tipoAutor: number = 0;
+  public tipoUsuario: string = '';
 //#endregion
 
 //#region Constructor
@@ -102,17 +129,19 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
     private readonly _blockUserIService:BlockUiService, private readonly _formularioService:FormularioUtilsService,
     private readonly _informacionPersonalService:InformacionPersonalService, private readonly _authService:AuthService,
     private readonly _logger: LoggerService, private readonly _catalogoService: CatalogoService,
-    private _activatedRoute: ActivatedRoute
+    private readonly _activatedRoute: ActivatedRoute, private readonly _comentarioPerfilJugadorService: ComentarioPerfilJugadorService
   ) {
 
     addIcons({
       informationCircleOutline, close
     });
 
-    this._informacionPersonalIdReadOnly = +this._activatedRoute.snapshot.params['id'];
-
     if (this._userLogged?.rol === 'coach') {
+      this.tipoUsuario = 'c';
+      this._informacionPersonalIdReadOnly = +this._activatedRoute.snapshot.params['id'];
       this.isReadOnly = true;
+    } else {
+      this.tipoUsuario = 'j';
     }
   }
 //#endregion
@@ -221,14 +250,20 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaDatos`, 'Obteniendo información personal...');
 
     if (this.isReadOnly) {
+      this._tipoAutor = 0;
       // 1. Definir los Observables a esperar
       const dataPrincipal$ = this._informacionPersonalService.getInformacionPersonalById(this._informacionPersonalIdReadOnly).pipe(
         takeUntil(this._destroy$)
       );
 
+      const comentariosDesdeCoach$ = this._comentarioPerfilJugadorService.getAllComentariosByInformacionPersonalId(this._informacionPersonalIdReadOnly).pipe(
+        takeUntil(this._destroy$)
+      );
+
       // 2. Usar forkJoin para esperar ambos
       forkJoin({
-        dataPrincipal: dataPrincipal$
+        dataPrincipal: dataPrincipal$,
+        comentariosDesdeCoach: comentariosDesdeCoach$
       })
       .pipe(
         // El finalize se ejecuta SOLO después de que forkJoin termine (éxito o error)
@@ -237,10 +272,11 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
             this.cargandoData = false;
         })
       ).subscribe({
-        next: (results: { dataPrincipal: IResponse<IInformacinPersonal | undefined>}) => {
+        next: (results: { dataPrincipal: IResponse<IInformacinPersonal | undefined>, comentariosDesdeCoach: IResponse<IComentarioPerfil[] | undefined>}) => {
           this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos >> ReadOnly`, 'Datos recibidos', results);
 
           const { data } = results.dataPrincipal;
+          const { data:dataComentarios } = results.comentariosDesdeCoach;
 
           if (data) {
             // preparo la informacion
@@ -256,6 +292,10 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
             this.setRedesEnFormulario(redes);
           }
 
+          if (dataComentarios) {
+            this.comentariosCoachJugador = dataComentarios;
+          }
+
         },
         error: (error) => {
           this._logger.log(LogLevel.Error, `${this._contextLog} >> cargaDatos`, 'Error al obtener información personal', error);
@@ -263,6 +303,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
         }
       });
     } else {
+      this._tipoAutor = 1;
       // 1. Definir los Observables a esperar
       const dataPrincipal$ = this._informacionPersonalService.getInformacionPersonal().pipe(
         takeUntil(this._destroy$)
@@ -296,6 +337,11 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
           if (data) {
             // preparo la informacion
             const { perfil, fuerzaResistencia, basketball, experiencia, vision, videos, redes } = this.preparaSeccionesToSetEnFormulario(data);
+
+            if (perfil.informacionPersonalId) {
+              this._informacionPersonalIdReadOnly = perfil.informacionPersonalId ?? 0;
+              this.recargaListaComentarios();
+            }
 
             // actualizo la informacion
             this.setPerfilEnFormulario(perfil);
@@ -724,6 +770,129 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
       }
     });
   }
+//#endregion
+
+//#region Comentarios
+  public customCounterFormatter(inputLength: number, maxLength: number) {
+    return `${maxLength - inputLength} caracteres faltantes`;
+  }
+
+  private valdiaComentario(): boolean {
+    if (!this.comentarioToPost || this.comentarioToPost.trim().length === 0) {
+      this._toastService.showMessage(SeverityMessageType.Warning, 'Espera', 'El comentario no puede ir vacio.', 5000);
+      return false; // mostrar mensaje: "Escribe un comentario"
+    }
+
+    if (this.comentarioToPost.trim().length < 2) {
+      this._toastService.showMessage(SeverityMessageType.Warning, 'Espera', 'El comentario es demasiado corto.', 5000);
+      return false; // "El comentario es demasiado corto"
+    }
+
+    const cleaned = this.comentarioToPost.replace(/[^\p{L}\p{N}]+/gu, '').trim();
+    if (cleaned.length === 0) {
+      this._toastService.showMessage(SeverityMessageType.Warning, 'Espera', 'Comentario inválido.', 5000);
+      return false; // Comentario inválido
+    }
+
+    if (/^(.)\1{4,}$/.test(this.comentarioToPost)) {
+      this._toastService.showMessage(SeverityMessageType.Warning, 'Espera', 'Evita comentarios repetitivos.', 5000);
+      return false; // "Evita comentarios repetitivos"
+    }
+
+    return true;
+  }
+
+  public saveComentario() {
+    if (this.valdiaComentario()) {
+      const comentarioSave: ISaveComentarioPerfil = {
+        informacionPersonalId: this._informacionPersonalIdReadOnly,
+        autor: this._tipoAutor,
+        comentario: this.comentarioToPost.trim()
+      }
+
+      this._blockUserIService.show(JugadorConstants.AGREGANDO_COMENTARIO);
+      this._logger.log(LogLevel.Debug, `${this._contextLog} >> saveComentario`, 'Enviando comentario al servidor.');
+
+      this._comentarioPerfilJugadorService.save(comentarioSave).pipe(
+      takeUntil(this._destroy$),
+      finalize(() => this._blockUserIService.hide())
+      ).subscribe({
+        next: (response: any) => {
+          this._logger.log(LogLevel.Info, `${this._contextLog} >> saveComentario`, 'Comentario guardado correctamente', response);
+          this.resetComentario();
+          this.recargaListaComentarios();
+          this._toastService.showMessage(SeverityMessageType.Success, 'Genial', response.mensaje, 5000);
+        },
+        error: (error: any) => {
+          // Aquí puedes mostrar un toast, modal o mensaje en pantalla
+          this._logger.log(LogLevel.Error, `${this._contextLog} >> saveComentario`, 'Error guardando comentario', error);
+          this._toastService.showMessage(SeverityMessageType.Error, 'Error al guardar', error.error.message || 'Algo salió mal');
+          this._blockUserIService.hide();
+        }
+      });
+    }
+
+  }
+
+  private resetComentario() {
+    // 1. Limpiar modelo
+    this.comentarioToPost = '';
+
+    // 2. Obtener el ion-input
+    const ionInput: HTMLElement = this.comentarioInputRef.nativeElement;
+
+    // 3. Limpiar clases agregadas por Angular e Ionic
+    ionInput.classList.remove(
+      'ng-dirty',
+      'ng-touched',
+      'ion-touched',
+      'ion-dirty',
+      'ion-valid',
+      'ion-invalid'
+    );
+
+    // 4. Acceder al <input> interno y limpiarlo
+    const realInput = ionInput.querySelector('input');
+    if (realInput) {
+      realInput.value = '';
+    }
+  }
+
+  private recargaListaComentarios() {
+    // 1. Definir los Observables a esperar
+    const comentariosDesdeCoach$ = this._comentarioPerfilJugadorService.getAllComentariosByInformacionPersonalId(this._informacionPersonalIdReadOnly).pipe(
+      takeUntil(this._destroy$)
+    );
+
+    // 2. Usar forkJoin para esperar ambos
+    forkJoin({
+      comentariosDesdeCoach: comentariosDesdeCoach$
+    })
+    .pipe(
+      // El finalize se ejecuta SOLO después de que forkJoin termine (éxito o error)
+      finalize(() => {
+          this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaDatos >> ReadOnly`, 'Finalizada la carga CRÍTICA. Ocultando Skeleton.');
+          this.cargandoData = false;
+      })
+    ).subscribe({
+      next: (results: { comentariosDesdeCoach: IResponse<IComentarioPerfil[] | undefined>}) => {
+        this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos >> ReadOnly`, 'Datos recibidos', results);
+
+        const { data:dataComentarios } = results.comentariosDesdeCoach;
+
+        if (dataComentarios) {
+          this.comentariosCoachJugador = dataComentarios;
+        }
+
+      },
+      error: (error) => {
+        this._logger.log(LogLevel.Error, `${this._contextLog} >> cargaDatos`, 'Error al obtener información personal', error);
+        this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar la información personal.');
+      }
+    });
+  }
+
+
 //#endregion
 
 }

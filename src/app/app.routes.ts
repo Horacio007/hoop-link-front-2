@@ -167,7 +167,7 @@ export const routes: Routes = [
         path: 'coach',
         canActivate: [roleGuard],
         canLoad: [roleGuard],
-        data: { role: ['escuela coach', 'club coach'] },
+        data: { role: ['coach'] },
         title: 'Dashboard | HoopLink',
         loadComponent: () => import('./features/coach/pages/coach-index/coach-index.page').then( m => m.CoachIndexPage),
         children: [

@@ -128,7 +128,7 @@ export class JugadorPerfilPage implements OnInit, ViewWillEnter {
   public handleFileTooLarge(size: number): void {
     const sizeMB = (size / (1024 * 1024)).toFixed(2);
     this._logger.log(LogLevel.Warn, `${this._contextLog} >> handleFileTooLarge`, `Archivo demasiado grande (${sizeMB} MB)`);
-    this._toastService.showMessage(SeverityMessageType.Warn, `${CommonMessages.Atencion}: ${ErrorImagenPerfil.ArchivoDemasiadoGrande}`, `La imagen supera los 7 MB (actual: ${sizeMB} MB)`, 5000);
+    this._toastService.showMessage(SeverityMessageType.Warning, `${CommonMessages.Atencion}: ${ErrorImagenPerfil.ArchivoDemasiadoGrande}`, `La imagen supera los 7 MB (actual: ${sizeMB} MB)`, 5000);
   }
 
   public openEstatusModal() {

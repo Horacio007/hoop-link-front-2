@@ -190,17 +190,18 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
 
   public redirectPerfil(informacionPersonalId: number) {
     this.registraVistaPerfil(informacionPersonalId);
-    this._router.navigate(
-      ['/desktop/coach/perfil-jugador', informacionPersonalId]
-    );
   }
 
   private registraVistaPerfil(informacionPersonalId: number) {
     this._coachService.saveVisitaPerfil(informacionPersonalId)
     .pipe(
+      takeUntil(this._destroy$),
       finalize(() => {
         this._logger.log(LogLevel.Debug, `${this._contextLog} >> registraVistaPerfil`, 'Finalizada el registro de visita.');
-        takeUntil(this._destroy$)
+        this._logger.log(LogLevel.Debug, `${this._contextLog} >> registraVistaPerfil`, 'Redirigiendo /desktop/coach/perfil-jugador/', informacionPersonalId);
+        this._router.navigate(
+          ['/desktop/coach/perfil-jugador', informacionPersonalId]
+        );
       })
     )
     .subscribe({
