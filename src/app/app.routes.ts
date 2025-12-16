@@ -180,6 +180,13 @@ export const routes: Routes = [
           {
             path: 'listado-jugadores', // URL: /desktop/jugador/informacion-personal
             title: 'Listado Jugadores | HoopLink',
+            data: { vistaDeFavoritos: false },
+            loadComponent: () => import('./features/coach/pages/coach-listado-jugadores/coach-listado-jugadores.page').then(m => m.CoachListadoJugadoresPage),
+          },
+          {
+            path: 'listado-jugadores-favoritos',
+            title: 'Listado Jugadores Favoritos | HoopLink',
+            data: { vistaDeFavoritos: true },
             loadComponent: () => import('./features/coach/pages/coach-listado-jugadores/coach-listado-jugadores.page').then(m => m.CoachListadoJugadoresPage),
           },
           {
@@ -233,10 +240,6 @@ export const routes: Routes = [
   {
     path: '**',
     redirectTo: '/portal',
-  },
-  {
-    path: 'coach-listado-jugadores',
-    loadComponent: () => import('./features/coach/pages/coach-listado-jugadores/coach-listado-jugadores.page').then( m => m.CoachListadoJugadoresPage)
   },
 
 ];

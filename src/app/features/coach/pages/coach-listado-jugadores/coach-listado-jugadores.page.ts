@@ -28,6 +28,7 @@ import { CatalogoService } from 'src/app/shared/services/catalogo/catalogo.servi
 import { SelectListSearchComponent } from 'src/app/shared/components/ionic/select-list-search/select-list-search.component';
 import { IListadoJugadoresFiltroCoach } from '../../interfaces/filtro-listado-jugadores.interface';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-coach-listado-jugadores',
@@ -97,14 +98,19 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
 
   public existeFiltracion: boolean = false;
   public allFiltrosAplicados: IListadoJugadoresFiltroCoach[] = []
+
+  public vistaDeFavoritos: boolean = false;
 //#endregion
 
 //#region Constructor
   constructor(
     private readonly _coachService: CoachService, private readonly _toastService: ToastService,
     private readonly _blockUiService:BlockUiService, private readonly _logger: LoggerService,
-    private readonly catalagoService: CatalogoService, private readonly _router:Router
-  ) { }
+    private readonly catalagoService: CatalogoService, private readonly _router:Router,
+    private route: ActivatedRoute
+  ) {
+    this.vistaDeFavoritos = this.route.snapshot.data['vistaDeFavoritos'];
+  }
 //#endregion
 
 //#region Ng
@@ -136,42 +142,82 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
   private cargaDatos() {
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaDatos`, 'Obteniendo información personal...');
 
-    this._coachService.getAllJugadores()
-    .pipe(
-      finalize(() => {
-        this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaDatos`, 'Finalizada la carga CRÍTICA. Ocultando Skeleton.');
-        this.cargandoData = false;
-        takeUntil(this._destroy$)
-      })
-    )
-    .subscribe({
-      next: (response: IResponse<IListadoJugadores[] | undefined>) => {
-        this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos`, 'Datos recibidos', response.data);
-        const { data } = response;
-        this.allListadoJugadores = data!;
-        this.allListadoJugadoresParcial = data!;
+    if (this.vistaDeFavoritos) {
+      this._coachService.getAllJugadoresFavoritos()
+      .pipe(
+        finalize(() => {
+          this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaDatos`, 'Finalizada la carga CRÍTICA. Ocultando Skeleton.');
+          this.cargandoData = false;
+          takeUntil(this._destroy$)
+        })
+      )
+      .subscribe({
+        next: (response: IResponse<IListadoJugadores[] | undefined>) => {
+          this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos`, 'Datos recibidos', response.data);
+          const { data } = response;
+          this.allListadoJugadores = data!;
+          this.allListadoJugadoresParcial = data!;
 
-        this.allListadoJugadoresParcial = [];
-        this.allListadoJugadoresParcialIndex = 0;
-        this.allListadoJugadoresFiltrados = [...this.allListadoJugadores];
+          this.allListadoJugadoresParcial = [];
+          this.allListadoJugadoresParcialIndex = 0;
+          this.allListadoJugadoresFiltrados = [...this.allListadoJugadores];
 
-        for (let i = this.allListadoJugadoresParcialIndex; i < this.allListadoJugadoresParcialIndex + 5; i++) {
-          if (i < this.allListadoJugadores.length) {
-            this.allListadoJugadoresParcial.push(this.allListadoJugadores[i]);
+          for (let i = this.allListadoJugadoresParcialIndex; i < this.allListadoJugadoresParcialIndex + 5; i++) {
+            if (i < this.allListadoJugadores.length) {
+              this.allListadoJugadoresParcial.push(this.allListadoJugadores[i]);
+            }
           }
+          this.allListadoJugadoresParcialIndex += 5;
+
+          this.filteredDesktopJugadores = [...this.allListadoJugadores];
+          this.aplicarPaginacionDesktop(0, 5);
+
+          this.dataSource.data = this.allListadoJugadores;
+        },
+        error: (error) => {
+          this._logger.log(LogLevel.Error, `${this._contextLog} >> cargaDatos`, 'Error al obtener listado de jugadores', error);
+          this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar el listado de jugadores.');
         }
-        this.allListadoJugadoresParcialIndex += 5;
+      });
+    } else {
+      this._coachService.getAllJugadores()
+      .pipe(
+        finalize(() => {
+          this._logger.log(LogLevel.Debug, `${this._contextLog} >> cargaDatos`, 'Finalizada la carga CRÍTICA. Ocultando Skeleton.');
+          this.cargandoData = false;
+          takeUntil(this._destroy$)
+        })
+      )
+      .subscribe({
+        next: (response: IResponse<IListadoJugadores[] | undefined>) => {
+          this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos`, 'Datos recibidos', response.data);
+          const { data } = response;
+          this.allListadoJugadores = data!;
+          this.allListadoJugadoresParcial = data!;
 
-        this.filteredDesktopJugadores = [...this.allListadoJugadores];
-        this.aplicarPaginacionDesktop(0, 5);
+          this.allListadoJugadoresParcial = [];
+          this.allListadoJugadoresParcialIndex = 0;
+          this.allListadoJugadoresFiltrados = [...this.allListadoJugadores];
 
-        this.dataSource.data = this.allListadoJugadores;
-      },
-      error: (error) => {
-        this._logger.log(LogLevel.Error, `${this._contextLog} >> cargaDatos`, 'Error al obtener listado de jugadores', error);
-        this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar el listado de jugadores.');
-      }
-    })
+          for (let i = this.allListadoJugadoresParcialIndex; i < this.allListadoJugadoresParcialIndex + 5; i++) {
+            if (i < this.allListadoJugadores.length) {
+              this.allListadoJugadoresParcial.push(this.allListadoJugadores[i]);
+            }
+          }
+          this.allListadoJugadoresParcialIndex += 5;
+
+          this.filteredDesktopJugadores = [...this.allListadoJugadores];
+          this.aplicarPaginacionDesktop(0, 5);
+
+          this.dataSource.data = this.allListadoJugadores;
+        },
+        error: (error) => {
+          this._logger.log(LogLevel.Error, `${this._contextLog} >> cargaDatos`, 'Error al obtener listado de jugadores', error);
+          this._toastService.showMessage(SeverityMessageType.Error, CommonMessages.Error, 'No se pudo cargar el listado de jugadores.');
+        }
+      });
+    }
+
   }
 
   @HostListener('window:resize', ['$event'])
@@ -190,54 +236,6 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
 
   public redirectPerfil(informacionPersonalId: number) {
     this.registraVistaPerfil(informacionPersonalId);
-  }
-
-  private registraVistaPerfil(informacionPersonalId: number) {
-    this._coachService.saveVisitaPerfil(informacionPersonalId)
-    .pipe(
-      takeUntil(this._destroy$),
-      finalize(() => {
-        this._logger.log(LogLevel.Debug, `${this._contextLog} >> registraVistaPerfil`, 'Finalizada el registro de visita.');
-        this._logger.log(LogLevel.Debug, `${this._contextLog} >> registraVistaPerfil`, 'Redirigiendo /desktop/coach/perfil-jugador/', informacionPersonalId);
-        this._router.navigate(
-          ['/desktop/coach/perfil-jugador', informacionPersonalId]
-        );
-      })
-    )
-    .subscribe({
-      next:( () => {
-        this._logger.log(LogLevel.Info, `${this._contextLog} >> registraVistaPerfil`, 'Finalizada el registro de visita con exito');
-      }),
-      error:( (error) => {
-        this._logger.log(LogLevel.Error, `${this._contextLog} >> registraVistaPerfil`, 'Error al registrar la visita.', error);
-      })
-    })
-  }
-
-  public actualizaPerfilFavorito(informacionPersonalId: number, jugador: IListadoJugadores) {
-    this._coachService.saveFavoritoPerfil(informacionPersonalId)
-    .pipe(
-      takeUntil(this._destroy$),
-      finalize(() => {
-        this._logger.log(LogLevel.Debug, `${this._contextLog} >> saveFavoritoPerfil`, 'Finalizada el registro de faavorito.');
-        const indexJugador = this.jugadoresDesktopPaginados.findIndex(x => x.informacionPersonalId === informacionPersonalId);
-        const interes = !this.jugadoresDesktopPaginados[indexJugador].interesado;
-        this.jugadoresDesktopPaginados[indexJugador].interesado = interes;
-        if (interes) {
-          this._toastService.showMessage(SeverityMessageType.Success, 'Excelente', 'Talento agregado a favoritos.');
-        } else {
-          this._toastService.showMessage(SeverityMessageType.Success, 'Excelente', 'Talento eliminado a favoritos.');
-        }
-      })
-    )
-    .subscribe({
-      next:( () => {
-        this._logger.log(LogLevel.Info, `${this._contextLog} >> saveFavoritoPerfil`, 'Finalizada el registro de faavorito con exito');
-      }),
-      error:( (error) => {
-        this._logger.log(LogLevel.Error, `${this._contextLog} >> saveFavoritoPerfil`, 'Error al registrar la faavorito.', error);
-      })
-    })
   }
 
 //#endregion
@@ -795,8 +793,63 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
   // end
 //#endregion
 
-//#region Favoritos
+//#region Vistas
+  private registraVistaPerfil(informacionPersonalId: number) {
+    this._coachService.saveVisitaPerfil(informacionPersonalId)
+    .pipe(
+      takeUntil(this._destroy$),
+      finalize(() => {
+        this._logger.log(LogLevel.Debug, `${this._contextLog} >> registraVistaPerfil`, 'Finalizada el registro de visita.');
+        this._logger.log(LogLevel.Debug, `${this._contextLog} >> registraVistaPerfil`, 'Redirigiendo /desktop/coach/perfil-jugador/', informacionPersonalId);
+        this._router.navigate(
+          ['/desktop/coach/perfil-jugador', informacionPersonalId]
+        );
+      })
+    )
+    .subscribe({
+      next:( () => {
+        this._logger.log(LogLevel.Info, `${this._contextLog} >> registraVistaPerfil`, 'Finalizada el registro de visita con exito');
+      }),
+      error:( (error) => {
+        this._logger.log(LogLevel.Error, `${this._contextLog} >> registraVistaPerfil`, 'Error al registrar la visita.', error);
+      })
+    })
+  }
+//#endregion
 
+//#region Favoritos
+  public actualizaPerfilFavorito(informacionPersonalId: number, jugador: IListadoJugadores) {
+    this._coachService.saveFavoritoPerfil(informacionPersonalId)
+    .pipe(
+      takeUntil(this._destroy$),
+      finalize(() => {
+        this._logger.log(LogLevel.Debug, `${this._contextLog} >> saveFavoritoPerfil`, 'Finalizada el registro de faavorito.');
+        const indexJugador = this.jugadoresDesktopPaginados.findIndex(x => x.informacionPersonalId === informacionPersonalId);
+        const interes = !this.jugadoresDesktopPaginados[indexJugador].interesado;
+
+        if (this.vistaDeFavoritos) {
+          this.jugadoresDesktopPaginados.splice(indexJugador, 1);
+          this._toastService.showMessage(SeverityMessageType.Success, 'Excelente', 'Talento eliminado de favoritos.');
+        } else {
+          this.jugadoresDesktopPaginados[indexJugador].interesado = interes;
+          if (interes) {
+            this._toastService.showMessage(SeverityMessageType.Success, 'Excelente', 'Talento agregado a favoritos.');
+          } else {
+            this._toastService.showMessage(SeverityMessageType.Success, 'Excelente', 'Talento eliminado de favoritos.');
+          }
+        }
+
+      })
+    )
+    .subscribe({
+      next:( () => {
+        this._logger.log(LogLevel.Info, `${this._contextLog} >> saveFavoritoPerfil`, 'Finalizada el registro de faavorito con exito');
+      }),
+      error:( (error) => {
+        this._logger.log(LogLevel.Error, `${this._contextLog} >> saveFavoritoPerfil`, 'Error al registrar la faavorito.', error);
+      })
+    })
+  }
 //#endregion
 
 }

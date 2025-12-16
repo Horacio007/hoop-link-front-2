@@ -31,9 +31,14 @@
           <ion-label (click)="closeMenu()">Dashboard</ion-label>
         </ion-item>
 
-         <ion-item lines="none" button routerLink="/desktop/coach/listado-jugadores" routerDirection="forward" routerLinkActive="menu-item-activo" [routerLinkActiveOptions]="{exact: true}">
+        <ion-item lines="none" button routerLink="/desktop/coach/listado-jugadores" routerDirection="forward" routerLinkActive="menu-item-activo" [routerLinkActiveOptions]="{exact: true}">
           <ion-icon slot="start" name="accessibility-outline"></ion-icon>
           <ion-label (click)="closeMenu()">Listado Jugadores</ion-label>
+        </ion-item>
+
+        <ion-item lines="none" button routerLink="/desktop/coach/listado-jugadores-favoritos" routerDirection="forward" routerLinkActive="menu-item-activo" [routerLinkActiveOptions]="{exact: true}">
+          <ion-icon slot="start" name="star"></ion-icon>
+          <ion-label (click)="closeMenu()">Listado Jugadores Favoritos</ion-label>
         </ion-item>
       }
 
