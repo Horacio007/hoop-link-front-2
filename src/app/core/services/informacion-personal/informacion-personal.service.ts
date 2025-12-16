@@ -87,6 +87,18 @@ export class InformacionPersonalService {
       })
     );
   }
+
+  public getTotalFavoritosPerfil(): Observable<IResponse<number | undefined>> {
+    const url: string = WebApiConstants.informacion_personal.getTotalFavoritosPerfil;
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> getTotalFavoritosPerfil`, 'Solicitando favoritos de perfil.', { endpoint: url });
+
+    return this._webApiService.get<IResponse<number | undefined>>(url, true).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
+  }
 //#endregion
 
 }

@@ -24,6 +24,7 @@ export class JugadorDashboardIndexPage implements OnInit, ViewDidEnter, OnDestro
 //#region Variables
 private readonly _contextLog = 'JugadorDashboardIndexPage';
 public totalVistasPerfil: number | undefined  = 0;
+public totalFavoritosPerfil: number | undefined  = 0;
 private readonly _destroy$ = new Subject<void>();
 public cargandoData = true;
 //#endregion
@@ -69,9 +70,14 @@ public cargandoData = true;
       takeUntil(this._destroy$)
     );
 
+    const totalFavoritosPerfil$ = this._informacionPersonalService.getTotalFavoritosPerfil().pipe(
+      takeUntil(this._destroy$)
+    );
+
     // 2. Usar forkJoin para esperar ambos
     forkJoin({
-      totalVistasPerfil: totalVistasPerfil$
+      totalVistasPerfil: totalVistasPerfil$,
+      totalFavoritosPerfil: totalFavoritosPerfil$
     })
     .pipe(
       // El finalize se ejecuta SOLO después de que forkJoin termine (éxito o error)
@@ -80,10 +86,11 @@ public cargandoData = true;
         this.cargandoData = false;
       })
     ).subscribe({
-      next: (results: { totalVistasPerfil: IResponse<number | undefined>}) => {
+      next: (results: { totalVistasPerfil: IResponse<number | undefined>, totalFavoritosPerfil: IResponse<number | undefined>}) => {
         this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos >> ReadOnly`, 'Datos recibidos', results);
 
         this.totalVistasPerfil = results.totalVistasPerfil.data;
+        this.totalFavoritosPerfil = results.totalFavoritosPerfil.data;
 
       },
       error: (error) => {
