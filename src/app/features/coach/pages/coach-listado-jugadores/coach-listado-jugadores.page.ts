@@ -214,6 +214,32 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
     })
   }
 
+  public actualizaPerfilFavorito(informacionPersonalId: number, jugador: IListadoJugadores) {
+    this._coachService.saveFavoritoPerfil(informacionPersonalId)
+    .pipe(
+      takeUntil(this._destroy$),
+      finalize(() => {
+        this._logger.log(LogLevel.Debug, `${this._contextLog} >> saveFavoritoPerfil`, 'Finalizada el registro de faavorito.');
+        const indexJugador = this.jugadoresDesktopPaginados.findIndex(x => x.informacionPersonalId === informacionPersonalId);
+        const interes = !this.jugadoresDesktopPaginados[indexJugador].interesado;
+        this.jugadoresDesktopPaginados[indexJugador].interesado = interes;
+        if (interes) {
+          this._toastService.showMessage(SeverityMessageType.Success, 'Excelente', 'Talento agregado a favoritos.');
+        } else {
+          this._toastService.showMessage(SeverityMessageType.Success, 'Excelente', 'Talento eliminado a favoritos.');
+        }
+      })
+    )
+    .subscribe({
+      next:( () => {
+        this._logger.log(LogLevel.Info, `${this._contextLog} >> saveFavoritoPerfil`, 'Finalizada el registro de faavorito con exito');
+      }),
+      error:( (error) => {
+        this._logger.log(LogLevel.Error, `${this._contextLog} >> saveFavoritoPerfil`, 'Error al registrar la faavorito.', error);
+      })
+    })
+  }
+
 //#endregion
 
 //#region Busqueda movil
@@ -767,6 +793,10 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
       this.aplicarFiltrosDesktop();
     }
   // end
+//#endregion
+
+//#region Favoritos
+
 //#endregion
 
 }

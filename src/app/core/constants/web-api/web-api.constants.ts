@@ -26,7 +26,9 @@ export const WebApiConstants = {
   },
   coach: {
     getAllJugadores: `coach/list-all-jugadores`,
-    saveVistaPerfil: (informacionPersonalId: number) => `coach/save-vista-perfil/${informacionPersonalId}`
+    saveVistaPerfil: (informacionPersonalId: number) => `coach/save-vista-perfil/${informacionPersonalId}`,
+    saveFavoritoPerfil: (informacionPersonalId: number) => `coach/save-favorito-perfil/${informacionPersonalId}`,
+    getAllJugadoresFavoritos: `coach/list-all-jugadores-favoritos`,
   },
   comentario: {
     save: `comentarios-perfil-jugador/save`,

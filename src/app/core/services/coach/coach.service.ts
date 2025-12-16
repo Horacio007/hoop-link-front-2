@@ -47,6 +47,30 @@ export class CoachService {
       })
     );
   }
+
+  public saveFavoritoPerfil(informacionPersonalId: number): Observable<IResponse<void>> {
+    const url: string = WebApiConstants.coach.saveFavoritoPerfil(informacionPersonalId)
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> saveFavoritoPerfil`, 'Almacenando favorito en perfil.', { endpoint: url });
+
+    return this._webApiService.post<IResponse<void>>(url, {}, true).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
+  }
+
+  public getAllJugadoresFavoritos(): Observable<IResponse<IListadoJugadores[] | undefined>> {
+    const url: string = WebApiConstants.coach.getAllJugadoresFavoritos;
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> getAllJugadoresFavoritos`, 'Solicitando todos los jugdadores favoritos.', { endpoint: url });
+
+    return this._webApiService.get<IResponse<IListadoJugadores[] | undefined>>(url, true).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
+  }
 //#endregion
 
 }

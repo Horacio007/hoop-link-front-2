@@ -20,7 +20,11 @@
               <span class="text-xs">{{ `${jugador.municipio}, ${jugador.estado}`}}</span>
             </ion-card-title>
           </div>
-
+            @if (jugador.interesado) {
+              <ion-icon class="text-2xl hover:cursor-pointer" (click)="actualizaPerfilFavorito(jugador.informacionPersonalId, jugador)" name="star"></ion-icon>
+            } @else {
+              <ion-icon class="text-2xl hover:cursor-pointer" (click)="actualizaPerfilFavorito(jugador.informacionPersonalId, jugador)" name="star-outline"></ion-icon>
+            }
             <ion-icon class="text-2xl hover:cursor-pointer" (click)="redirectPerfil(jugador.informacionPersonalId)" name="arrow-forward-outline"></ion-icon>
         </div>
       </ion-card-header>
@@ -184,6 +188,11 @@
     <ion-card class="mb-3 capitalize">
       <ion-card-content>
         <div class="flex justify-end w-full">
+            @if (jugador.interesado) {
+              <ion-icon class="text-2xl hover:cursor-pointer" (click)="actualizaPerfilFavorito(jugador.informacionPersonalId, jugador)" name="star"></ion-icon>
+            } @else {
+              <ion-icon class="text-2xl hover:cursor-pointer" (click)="actualizaPerfilFavorito(jugador.informacionPersonalId, jugador)" name="star-outline"></ion-icon>
+            }
            <ion-icon class="text-2xl hover:cursor-pointer" (click)="redirectPerfil(jugador.informacionPersonalId)" name="arrow-forward-outline"></ion-icon>
          </div>
         <div class="grid grid-cols-12 justify-items-center">

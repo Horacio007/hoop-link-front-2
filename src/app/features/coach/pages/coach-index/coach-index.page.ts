@@ -5,7 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 import { HeaderAuthenticatedComponent } from "src/app/layouts/authenticated-layout/components/header-authenticated/header-authenticated.component";
 import { Router, ActivatedRoute, NavigationEnd, Data, RouterOutlet } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { settingsOutline, closeOutline, starOutline, arrowForwardOutline, trashBin, caretDownCircle, funnel, filterCircle, filterCircleOutline, refreshOutline, close, arrowForwardCircleOutline } from 'ionicons/icons';
+import { settingsOutline, closeOutline, starOutline, arrowForwardOutline, trashBin, caretDownCircle, funnel, filterCircle, filterCircleOutline, refreshOutline, close, arrowForwardCircleOutline, star, } from 'ionicons/icons';
 import { Subscription, filter, map } from 'rxjs';
 import { LogLevel } from 'src/app/core/enums';
 import { LoggerService } from 'src/app/core/services/logger/logger.service';
@@ -35,7 +35,7 @@ export class CoachIndexPage implements OnInit, OnDestroy {
   private logger: LoggerService // 🚨 Inyección del LoggerService
   ) {
     addIcons({
-      settingsOutline, closeOutline, starOutline, arrowForwardOutline, trashBin, caretDownCircle, funnel, filterCircleOutline, refreshOutline, close
+      settingsOutline, closeOutline, starOutline, arrowForwardOutline, trashBin, caretDownCircle, funnel, filterCircleOutline, refreshOutline, close, star
     })
     // 🚨 Log INFO al inicializar el componente, usando la sintaxis log(NIVEL, CONTEXTO, MENSAJE)
     this.logger.log(LogLevel.Info, `${this.LOG_CONTEXT} >> constructor`, 'Constructor ejecutado.');
