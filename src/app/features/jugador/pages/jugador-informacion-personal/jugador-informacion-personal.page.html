@@ -5,6 +5,10 @@
     <div header>
       <div class="mb-4">
         <app-news-bar></app-news-bar>
+        @if (isReadOnly) {
+          <br>
+          <ion-icon class="text-2xl hover:cursor-pointer" (click)="goBack()" name="arrow-back-outline"></ion-icon>
+        }
       </div>
     </div>
 

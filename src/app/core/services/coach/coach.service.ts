@@ -14,6 +14,7 @@ import { IListadoJugadores } from 'src/app/shared/interfaces/coach/listado-jugad
 export class CoachService {
 //#region Propiedades
   private readonly _contextLog = 'InformacionPersonalService';
+  private readonly KEY = 'coach_listado_state';
 //#endregion
 
 //#region Constructor
@@ -71,6 +72,33 @@ export class CoachService {
       })
     );
   }
+//#endregion
+
+//#region Servicios Filtros
+
+  private getKey(vistaDeFavoritos: boolean): string {
+    return vistaDeFavoritos
+      ? 'coach_listado_favoritos_state'
+      : 'coach_listado_state';
+  }
+
+  save(state: any, vistaDeFavoritos: boolean) {
+    sessionStorage.setItem(
+      this.getKey(vistaDeFavoritos),
+      JSON.stringify(state)
+    );
+  }
+
+  load(vistaDeFavoritos: boolean): any | null {
+    const data = sessionStorage.getItem(this.getKey(vistaDeFavoritos));
+    return data ? JSON.parse(data) : null;
+  }
+
+  clear(vistaDeFavoritos: boolean) {
+    sessionStorage.removeItem(this.getKey(vistaDeFavoritos));
+  }
+
+
 //#endregion
 
 }

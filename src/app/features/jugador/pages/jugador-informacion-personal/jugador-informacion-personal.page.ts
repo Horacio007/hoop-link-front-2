@@ -20,7 +20,7 @@ import { JugadorConstants } from '../../constants/general/general.constants';
 import { JugadorPerfilPage } from "./jugador-perfil/jugador-perfil.page";
 import { IonIcon, IonButton, IonCardSubtitle, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonInput, IonLabel, IonAvatar } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
-import { close, cloudDownload, informationCircleOutline, thumbsUpOutline } from 'ionicons/icons';
+import { arrowBackOutline, close, cloudDownload, informationCircleOutline, thumbsUpOutline } from 'ionicons/icons';
 import { TooltipInfoComponent } from "src/app/shared/components/tooltip-info/tooltip-info.component";
 import { CatalogoService } from '../../../../shared/services/catalogo/catalogo.service';
 import { ICatalogo } from 'src/app/shared/interfaces/catalogo/catalogo.interface';
@@ -34,7 +34,7 @@ import { JugadorRedesSocialesPage } from "./jugador-redes-sociales/jugador-redes
 import { SkeletonComponent } from 'src/app/shared/components/ionic/skeleton/skeleton.component';
 import { InfoCardsComponent } from "src/app/layouts/authenticated-layout/components/info-cards/info-cards.component";
 import { NewsBarComponent } from "src/app/layouts/authenticated-layout/components/news-bar/news-bar.component";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IComentarioPerfil, ISaveComentarioPerfil } from '../../interfaces/comentario-perfil.interface';
 import { ComentarioPerfilJugadorService } from 'src/app/core/services/comentario-perfil-jugador/comentario-perfil-jugador.service';
 
@@ -61,7 +61,8 @@ import { ComentarioPerfilJugadorService } from 'src/app/core/services/comentario
     JugadorRedesSocialesPage,
     SkeletonComponent,
     IonButton,
-    NewsBarComponent
+    NewsBarComponent,
+    IonIcon
   ]
 })
 export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWillEnter {
@@ -121,6 +122,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
   public comentariosCoachJugador: IComentarioPerfil[] = [];
   private _tipoAutor: number = 0;
   public tipoUsuario: string = '';
+  vistaDeFavoritos = false;
 //#endregion
 
 //#region Constructor
@@ -129,11 +131,12 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
     private readonly _blockUserIService:BlockUiService, private readonly _formularioService:FormularioUtilsService,
     private readonly _informacionPersonalService:InformacionPersonalService, private readonly _authService:AuthService,
     private readonly _logger: LoggerService, private readonly _catalogoService: CatalogoService,
-    private readonly _activatedRoute: ActivatedRoute, private readonly _comentarioPerfilJugadorService: ComentarioPerfilJugadorService
+    private readonly _activatedRoute: ActivatedRoute, private readonly _comentarioPerfilJugadorService: ComentarioPerfilJugadorService,
+    private readonly _router: Router,
   ) {
 
     addIcons({
-      informationCircleOutline, close
+      informationCircleOutline, close, arrowBackOutline
     });
 
     if (this._userLogged?.rol === 'coach') {
@@ -149,6 +152,9 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
 
 //#region Ng
   ngOnInit(): void {
+    this._activatedRoute.queryParams.subscribe(params => {
+      this.vistaDeFavoritos = params['fromFavoritos'] === 'true';
+    });
     this.inicializa();
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
   }
@@ -892,6 +898,18 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
     });
   }
 
+
+//#endregion
+
+//#region GoBack
+
+  goBack() {
+    const ruta = this.vistaDeFavoritos
+      ? '/desktop/coach/listado-jugadores-favoritos'
+      : '/desktop/coach/listado-jugadores';
+
+    this._router.navigate([ruta]);
+  }
 
 //#endregion
 

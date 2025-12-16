@@ -11,6 +11,8 @@ import { Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { addIcons } from 'ionicons';
 import { personOutline, cogOutline, logOutOutline, barChartOutline, closeOutline, accessibilityOutline, star } from 'ionicons/icons';
+import { NavigationCoachContextService } from 'src/app/core/services/context/navigation-coach-context.service';
+import { CoachService } from 'src/app/core/services/coach/coach.service';
 
 @Component({
   selector: 'app-authenticated-layout',
@@ -30,7 +32,8 @@ export class AuthenticatedLayoutPage implements OnInit, OnDestroy, ViewWillEnter
 //#region Constructor
   constructor(
     private readonly _logger: LoggerService, private readonly _authService: AuthService,
-    private readonly _router: Router, private readonly _menuController: MenuController
+    private readonly _router: Router, private readonly _menuController: MenuController,
+    private readonly _navigationCoachContextSercvice: NavigationCoachContextService, private readonly _coachService:CoachService
   ) {
     effect(() => {
       this.user = this._authService.user();
@@ -82,6 +85,11 @@ export class AuthenticatedLayoutPage implements OnInit, OnDestroy, ViewWillEnter
 //#region Generales
   logout(): void {
     this._logger.log(LogLevel.Info, `${this._contextLog} >> logout`, 'Intentando cerrar sesión...');
+
+    this._coachService.clear(false);
+    this._coachService.clear(true);
+    this._navigationCoachContextSercvice.clear();
+    sessionStorage.clear();
 
     this._authService.logout()
     .pipe(takeUntil(this._destroy$))

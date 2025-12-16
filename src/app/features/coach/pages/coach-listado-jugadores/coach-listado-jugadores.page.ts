@@ -29,6 +29,8 @@ import { SelectListSearchComponent } from 'src/app/shared/components/ionic/selec
 import { IListadoJugadoresFiltroCoach } from '../../interfaces/filtro-listado-jugadores.interface';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { NavigationCoachContextService } from 'src/app/core/services/context/navigation-coach-context.service';
+import { CoachContext } from 'src/app/core/services/context/types/coach-context.types';
 
 @Component({
   selector: 'app-coach-listado-jugadores',
@@ -107,7 +109,7 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
     private readonly _coachService: CoachService, private readonly _toastService: ToastService,
     private readonly _blockUiService:BlockUiService, private readonly _logger: LoggerService,
     private readonly catalagoService: CatalogoService, private readonly _router:Router,
-    private route: ActivatedRoute
+    private readonly route: ActivatedRoute, private readonly _navigationCoachContextSercvice: NavigationCoachContextService
   ) {
     this.vistaDeFavoritos = this.route.snapshot.data['vistaDeFavoritos'];
   }
@@ -115,10 +117,16 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
 
 //#region Ng
   async ngOnInit(): Promise<void> {
+    this.route.data.subscribe(data => {
+      this.vistaDeFavoritos = data['vistaDeFavoritos'];
+      this.handleContextChange();
+      this.cargaDatos();
+    });
     this.inicializa();
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
     this.checkScreenSize();
     await this.cargarCatalogos();
+    this.restaurarEstadoVista();
   }
 
   ionViewWillEnter() {
@@ -127,6 +135,7 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
   }
 
   ngOnDestroy(): void {
+    // this._coachService.clear(this.vistaDeFavoritos);
     this._destroy$.next();
     this._destroy$.complete();
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
@@ -236,6 +245,17 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
 
   public redirectPerfil(informacionPersonalId: number) {
     this.registraVistaPerfil(informacionPersonalId);
+  }
+
+  private handleContextChange() {
+    const nuevoContexto = this.vistaDeFavoritos ? 'favoritos' : 'listado';
+
+    if (this._navigationCoachContextSercvice.isContextChange(nuevoContexto)) {
+      // Limpia SOLO el contexto que abandonas
+      this._coachService.clear(!this.vistaDeFavoritos);
+    }
+
+    this._navigationCoachContextSercvice.setContext(nuevoContexto);
   }
 
 //#endregion
@@ -665,14 +685,15 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
         if (this.selectedEstadoId && jugador.estado.toLowerCase() !== this.selectedEstadoNombre.toLowerCase()) {
           return false;
         } else {
-          const ef: IListadoJugadoresFiltroCoach = {
-            tipo: 'estado',
-            valor: this.selectedEstadoNombre.toLowerCase()
-          }
+          this.setFiltroChip('estado', this.selectedEstadoNombre);
+          // const ef: IListadoJugadoresFiltroCoach = {
+          //   tipo: 'estado',
+          //   valor: this.selectedEstadoNombre.toLowerCase()
+          // }
 
-          if (this.allFiltrosAplicados.filter( x => x.tipo === 'estado' && x.valor == this.selectedEstadoNombre.toLowerCase()).length === 0 && !this.selectedEstadoNombre.toLowerCase().includes('selecciona') ) {
-            this.allFiltrosAplicados.push(ef);
-          }
+          // if (this.allFiltrosAplicados.filter( x => x.tipo === 'estado' && x.valor == this.selectedEstadoNombre.toLowerCase()).length === 0 && !this.selectedEstadoNombre.toLowerCase().includes('selecciona') ) {
+          //   this.allFiltrosAplicados.push(ef);
+          // }
 
         }
 
@@ -680,42 +701,45 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
         if (this.selectedMunicipioId && jugador.municipio.toLowerCase() !== this.selectedMunicipioNombre.toLowerCase()) {
           return false;
         } else {
-          const mf: IListadoJugadoresFiltroCoach = {
-            tipo: 'municipio',
-            valor: this.selectedMunicipioNombre.toLowerCase()
-          }
+          this.setFiltroChip('municipio', this.selectedMunicipioNombre);
+          // const mf: IListadoJugadoresFiltroCoach = {
+          //   tipo: 'municipio',
+          //   valor: this.selectedMunicipioNombre.toLowerCase()
+          // }
 
-          if (this.allFiltrosAplicados.filter( x => x.tipo === 'municipio' && x.valor == this.selectedMunicipioNombre.toLowerCase()).length === 0 && !this.selectedMunicipioNombre.toLowerCase().includes('selecciona')) {
-            this.allFiltrosAplicados.push(mf);
-          }
+          // if (this.allFiltrosAplicados.filter( x => x.tipo === 'municipio' && x.valor == this.selectedMunicipioNombre.toLowerCase()).length === 0 && !this.selectedMunicipioNombre.toLowerCase().includes('selecciona')) {
+          //   this.allFiltrosAplicados.push(mf);
+          // }
         }
 
         // Filtro por posición
         if (this.selectedPosicionId && jugador.posicionJuegoUno !== this.selectedPosicionNombre) {
           return false;
         } else {
-          const pf: IListadoJugadoresFiltroCoach = {
-            tipo: 'posicion',
-            valor: this.selectedPosicionNombre.toLowerCase()
-          }
+          this.setFiltroChip('posicion', this.selectedPosicionNombre);
+          // const pf: IListadoJugadoresFiltroCoach = {
+          //   tipo: 'posicion',
+          //   valor: this.selectedPosicionNombre.toLowerCase()
+          // }
 
-          if (this.allFiltrosAplicados.filter( x => x.tipo === 'posicion' && x.valor == this.selectedPosicionNombre.toLowerCase()).length === 0 && !this.selectedPosicionNombre.toLowerCase().includes('selecciona')) {
-            this.allFiltrosAplicados.push(pf);
-          }
+          // if (this.allFiltrosAplicados.filter( x => x.tipo === 'posicion' && x.valor == this.selectedPosicionNombre.toLowerCase()).length === 0 && !this.selectedPosicionNombre.toLowerCase().includes('selecciona')) {
+          //   this.allFiltrosAplicados.push(pf);
+          // }
         }
 
         // Filtro por estatus del jugador
         if (this.selectedEstatusId && jugador.estatus?.toLowerCase() !== this.selectedEstatusNombre.toLowerCase()) {
           return false;
         } else {
-          const esf: IListadoJugadoresFiltroCoach = {
-            tipo: 'estatus',
-            valor: this.selectedEstatusNombre.toLowerCase()
-          }
+          this.setFiltroChip('estatus', this.selectedEstatusNombre);
+          // const esf: IListadoJugadoresFiltroCoach = {
+          //   tipo: 'estatus',
+          //   valor: this.selectedEstatusNombre.toLowerCase()
+          // }
 
-          if (this.allFiltrosAplicados.filter( x => x.tipo === 'estatus' && x.valor == this.selectedEstatusNombre.toLowerCase()).length === 0 && !this.selectedEstatusNombre.toLowerCase().includes('selecciona')) {
-            this.allFiltrosAplicados.push(esf);
-          }
+          // if (this.allFiltrosAplicados.filter( x => x.tipo === 'estatus' && x.valor == this.selectedEstatusNombre.toLowerCase()).length === 0 && !this.selectedEstatusNombre.toLowerCase().includes('selecciona')) {
+          //   this.allFiltrosAplicados.push(esf);
+          // }
         }
 
         return true; // pasa todos los filtros
@@ -749,6 +773,7 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
       let filtros = [...this.allListadoJugadores];
       this.filteredDesktopJugadores = filtros;
       this.allFiltrosAplicados = [];
+      this.existeFiltracion = false;
       this.aplicarPaginacionDesktop(0, 5);
     }
 
@@ -790,11 +815,32 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
 
       this.aplicarFiltrosDesktop();
     }
+
+    private setFiltroChip(tipo: IListadoJugadoresFiltroCoach['tipo'], valor: string) {
+
+      // eliminar chip previo del mismo tipo
+      this.allFiltrosAplicados = this.allFiltrosAplicados.filter(
+        x => x.tipo !== tipo
+      );
+
+      // no agregar si es "Selecciona..."
+      if (!valor || valor.toLowerCase().includes('selecciona')) {
+        return;
+      }
+
+      this.allFiltrosAplicados.push({
+        tipo,
+        valor: valor.toLowerCase()
+      });
+    }
+
   // end
 //#endregion
 
 //#region Vistas
   private registraVistaPerfil(informacionPersonalId: number) {
+    this.guardarEstadoVista();
+
     this._coachService.saveVisitaPerfil(informacionPersonalId)
     .pipe(
       takeUntil(this._destroy$),
@@ -802,7 +848,12 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
         this._logger.log(LogLevel.Debug, `${this._contextLog} >> registraVistaPerfil`, 'Finalizada el registro de visita.');
         this._logger.log(LogLevel.Debug, `${this._contextLog} >> registraVistaPerfil`, 'Redirigiendo /desktop/coach/perfil-jugador/', informacionPersonalId);
         this._router.navigate(
-          ['/desktop/coach/perfil-jugador', informacionPersonalId]
+          ['/desktop/coach/perfil-jugador', informacionPersonalId],
+          {
+            queryParams: {
+              fromFavoritos: this.vistaDeFavoritos
+            }
+          }
         );
       })
     )
@@ -850,6 +901,81 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
       })
     })
   }
+//#endregion
+
+//#region Persistencia Filtros
+  private guardarEstadoVista() {
+    this._coachService.save({
+      filtros: {
+        estadoId: this.selectedEstadoId,
+        estadoNombre: this.selectedEstadoNombre,
+        municipioId: this.selectedMunicipioId,
+        municipioNombre: this.selectedMunicipioNombre,
+        posicionId: this.selectedPosicionId,
+        posicionNombre: this.selectedPosicionNombre,
+        estatusId: this.selectedEstatusId,
+        estatusNombre: this.selectedEstatusNombre,
+        chips: this.allFiltrosAplicados,
+        existeFiltracion: this.existeFiltracion
+      },
+      tabla: {
+        sortColumn: this.lastSortColumn,
+        sortDirection: this.sortDirection,
+        pageIndex: this.paginator?.pageIndex ?? 0,
+        pageSize: this.paginator?.pageSize ?? 5
+      },
+      scrollY: window.scrollY
+    }, this.vistaDeFavoritos);
+  }
+
+  private restaurarEstadoVista() {
+    const state = this._coachService.load(this.vistaDeFavoritos);
+    if (!state) return;
+
+    // filtros
+    this.selectedEstadoId = state.filtros.estadoId;
+    this.selectedEstadoNombre = state.filtros.estadoNombre;
+    this.selectedMunicipioId = state.filtros.municipioId;
+    this.selectedMunicipioNombre = state.filtros.municipioNombre;
+    this.selectedPosicionId = state.filtros.posicionId;
+    this.selectedPosicionNombre = state.filtros.posicionNombre;
+    this.selectedEstatusId = state.filtros.estatusId;
+    this.selectedEstatusNombre = state.filtros.estatusNombre;
+
+    this.allFiltrosAplicados = state.filtros.chips ?? [];
+    this.existeFiltracion = state.filtros.existeFiltracion ?? false;
+
+    // sort
+    this.lastSortColumn = state.tabla.sortColumn;
+    this.sortDirection = state.tabla.sortDirection;
+
+    // aplicar filtros y orden
+    this.aplicarFiltrosDesktop();
+    if (this.lastSortColumn) {
+      this.sortBy(this.lastSortColumn);
+    }
+
+    //
+    if (this.selectedEstadoId && +this.selectedEstadoId > 0) {
+      this.onCambiaEstado(this.selectedEstadoId);
+    }
+
+    // paginación
+    setTimeout(() => {
+      this.paginator.pageIndex = state.tabla.pageIndex;
+      this.paginator.pageSize = state.tabla.pageSize;
+      this.onPageChange({
+        pageIndex: state.tabla.pageIndex,
+        pageSize: state.tabla.pageSize
+      });
+    });
+
+    // scroll
+    setTimeout(() => {
+      window.scrollTo(0, state.scrollY ?? 0);
+    }, 100);
+  }
+
 //#endregion
 
 }
