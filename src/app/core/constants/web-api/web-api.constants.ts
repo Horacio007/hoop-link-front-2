@@ -30,6 +30,7 @@ export const WebApiConstants = {
     saveVistaPerfil: (informacionPersonalId: number) => `coach/save-vista-perfil/${informacionPersonalId}`,
     saveFavoritoPerfil: (informacionPersonalId: number) => `coach/save-favorito-perfil/${informacionPersonalId}`,
     getAllJugadoresFavoritos: `coach/list-all-jugadores-favoritos`,
+    getTotalFavoritosPerfil: `coach/total-favoritos`
   },
   comentario: {
     save: `comentarios-perfil-jugador/save`,
