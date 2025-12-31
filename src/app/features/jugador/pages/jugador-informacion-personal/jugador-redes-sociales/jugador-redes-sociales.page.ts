@@ -19,6 +19,7 @@ export class JugadorRedesSocialesPage implements OnInit, OnDestroy {
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
   @Input({required: true}) cargandoData: boolean = true;
+  @Input({required: true }) isReadOnly: boolean = false;
 
   private readonly _contextLog = 'JugadorRedesSocialesComponent';
 
@@ -35,7 +36,10 @@ export class JugadorRedesSocialesPage implements OnInit, OnDestroy {
 //#region Ng
   ngOnInit(): void {
     this._logger.log(LogLevel.Info, `${this._contextLog} >> ngOnInit`, 'Inicializando componente.');
-    console.log(this.form);
+    // console.log(this.form);
+    if (this.isReadOnly) {
+      this.form.disable()
+    }
   }
 
   ngOnDestroy(): void {

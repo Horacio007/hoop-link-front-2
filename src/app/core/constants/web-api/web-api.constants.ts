@@ -14,12 +14,26 @@ export const WebApiConstants = {
   informacion_personal: {
     save: `informacion-personal/save`,
     getInformacion: `informacion-personal`,
-    uploadVideos: (tipo:string, id: string) => `informacion-personal/upload-video/${tipo}${id}`
+    getInformacionById: (informacionPersonalId: number) => `informacion-personal/detalle/${informacionPersonalId}`,
+    uploadVideos: (tipo:string, id: string) => `informacion-personal/upload-video/${tipo}${id}`,
+    getTotalVistasPerfil: `informacion-personal/total-vistas`,
+    getTotalFavoritosPerfil: `informacion-personal/total-favoritos`,
   },
   auth:{
     login: `auth/login`,
     refresh: `auth/refresh`,
     logout: `auth/logout`,
     yopli: 'auth/yopli',
+  },
+  coach: {
+    getAllJugadores: `coach/list-all-jugadores`,
+    saveVistaPerfil: (informacionPersonalId: number) => `coach/save-vista-perfil/${informacionPersonalId}`,
+    saveFavoritoPerfil: (informacionPersonalId: number) => `coach/save-favorito-perfil/${informacionPersonalId}`,
+    getAllJugadoresFavoritos: `coach/list-all-jugadores-favoritos`,
+    getTotalFavoritosPerfil: `coach/total-favoritos`
+  },
+  comentario: {
+    save: `comentarios-perfil-jugador/save`,
+    getAllComentarioByInformacionPersonalId: (informacionPersonalId: number) => `comentarios-perfil-jugador/perfil/${informacionPersonalId}`,
   }
 }

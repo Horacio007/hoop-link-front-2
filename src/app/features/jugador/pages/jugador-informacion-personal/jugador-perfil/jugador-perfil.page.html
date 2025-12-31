@@ -33,7 +33,8 @@
           <app-profile-image
               [imageUrl]="fotoPreviewUrl || form.get('fotoPerfil')?.value"
               (imageSelected)="onFileSelected($event)"
-              (fileTooLarge)="handleFileTooLarge($event)">
+              (fileTooLarge)="handleFileTooLarge($event)"
+              [isReadOnly]="isReadOnly">
           </app-profile-image>
       </div>
 
@@ -160,7 +161,7 @@
               }"
             >
               <ion-list class="no-border-list w-full">
-                <ion-item [button]="true" [detail]="false" (click)="openEstatusModal()" class="no-border-list" id="select-estatus-jugador" lines="none">
+                <ion-item [button]="!isReadOnly" [detail]="false" (click)="!isReadOnly && openEstatusModal()" class="no-border-list" id="select-estatus-jugador" lines="none">
                   <ion-label class="whitespace-normal w-full" >Estatus Jugador</ion-label>
                   <div slot="end" id="selected-estatus-jugador">{{ selectedEstatusJugadorNombre }}</div>
                 </ion-item>

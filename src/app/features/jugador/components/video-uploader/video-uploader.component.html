@@ -30,6 +30,7 @@
     </label>
 
     <input
+      [disabled]="isReadOnly"
       [id]="'fileInput_'+id"
       type="file"
       accept="video/*"

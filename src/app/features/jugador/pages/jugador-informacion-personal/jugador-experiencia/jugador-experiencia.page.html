@@ -45,7 +45,7 @@
               lines="none"
             >
               <ion-label>Desde cuando juegas</ion-label>
-              <ion-datetime-button datetime="datetimeFC" backdropDismiss="false" ></ion-datetime-button><br>
+              <ion-datetime-button datetime="datetimeFC" [disabled]="isReadOnly" backdropDismiss="false" ></ion-datetime-button><br>
             </ion-item>
           </div>
           <div class="col-span-12 md:col-span-6">
@@ -89,7 +89,7 @@
               <div slot="end" class="flex items-center gap-2 p-1">
 
                 <!-- Etiqueta Izquierda (sin formControlName) -->
-                <span class="text-sm font-medium text-gray-500">Nel</span>
+                <span class="text-sm font-medium text-gray-500">No</span>
 
                 <!-- EL formControlName DEBE IR EN EL ION-TOGGLE -->
                 <ion-toggle
@@ -100,7 +100,7 @@
                 ></ion-toggle>
 
                 <!-- Etiqueta Derecha (sin formControlName) -->
-                <span class="text-sm font-medium text-gray-700">Simon</span>
+                <span class="text-sm font-medium text-gray-700">Si</span>
               </div>
             </ion-item>
             <br>
@@ -135,7 +135,7 @@
           <div class="col-span-12 md:col-span-6">
             <div class="flex justify-between mb-4">
               <h1 class="text-3xl">Historial de Equipos</h1>
-              <ion-button color="success" shape="round" fill="clear" (click)="onAgregaEquipo()" severity="success">
+              <ion-button color="success" shape="round" fill="clear" (click)="!isReadOnly && onAgregaEquipo()" severity="success">
                 <ion-icon class="text-4xl" name="add-circle-outline"></ion-icon>
               </ion-button>
             </div>
@@ -144,7 +144,7 @@
                 @for (control of Equipo.controls; track control.get('id')!.value ) {
                   <div [formGroupName]="$index">
                     <div class="flex justify-end mb-4">
-                      <ion-button color="danger" fill="clear" shape="round" (click)="onEliminaEquipo($index)">
+                      <ion-button color="danger" fill="clear" shape="round" (click)="!isReadOnly && onEliminaEquipo($index)">
                         <ion-icon class="text-3xl" name="trash"></ion-icon>
                       </ion-button>
                     </div>
@@ -170,7 +170,7 @@
           <div class="col-span-12 md:col-span-6">
             <div class="flex justify-between mb-4">
               <h1 class="text-3xl">Historial de Entrenadores</h1>
-              <ion-button color="success" fill="clear" shape="round" (click)="onAgregaEntrenadores()" severity="success">
+              <ion-button color="success" fill="clear" shape="round" (click)="!isReadOnly && onAgregaEntrenadores()" severity="success">
                 <ion-icon class="text-4xl" name="add-circle-outline"></ion-icon>
               </ion-button>
             </div>
@@ -179,7 +179,7 @@
                 @for (control of Entrenadores.controls; track control.get('id')!.value ) {
                   <div [formGroupName]="$index">
                     <div class="flex justify-end mb-4">
-                      <ion-button color="danger" fill="clear" shape="round" (click)="onEliminaEntrenadores($index)">
+                      <ion-button color="danger" fill="clear" shape="round" (click)="!isReadOnly && onEliminaEntrenadores($index)">
                         <ion-icon class="text-3xl" name="trash"></ion-icon>
                       </ion-button>
                     </div>
@@ -218,7 +218,7 @@
           <div class="col-span-12 md:col-span-6">
             <div class="flex justify-between mb-4">
                 <h1 class="text-3xl">Logros clave</h1>
-                <ion-button color="success" fill="clear" shape="round" (click)="onAgregaLogros()">
+                <ion-button color="success" fill="clear" shape="round" (click)="!isReadOnly && onAgregaLogros()">
                   <ion-icon class="text-4xl" name="add-circle-outline"></ion-icon>
                 </ion-button>
               </div>
@@ -227,7 +227,7 @@
                   @for (control of Logros.controls; track control.get('id')!.value ) {
                     <div [formGroupName]="$index">
                       <div class="flex justify-end mb-4">
-                        <ion-button color="danger" fill="clear" shape="round" (click)="onEliminaLogros($index)">
+                        <ion-button color="danger" fill="clear" shape="round" (click)="!isReadOnly && onEliminaLogros($index)">
                           <ion-icon class="text-3xl" name="trash"></ion-icon>
                         </ion-button>
                       </div>

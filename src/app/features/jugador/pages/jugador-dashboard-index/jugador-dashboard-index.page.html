@@ -3,7 +3,96 @@
 </div>
 
 <div class="max-w-screen-xl mx-auto px-4 mb-4">
-  <h1>aqui va algo</h1>
+  @if (cargandoData) {
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <app-skeleton style="height: 10rem;"></app-skeleton>
+
+      <app-skeleton style="height: 10rem;"></app-skeleton>
+
+      <app-skeleton style="height: 10rem;"></app-skeleton>
+
+      <app-skeleton style="height: 10rem;"></app-skeleton>
+
+      <app-skeleton style="height: 10rem;"></app-skeleton>
+
+      <app-skeleton style="height: 10rem;"></app-skeleton>
+
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <ion-card class="rounded-xl">
+        <ion-card-header class="m-4">
+          <div class="flex justify-between items-center  w-full">
+            <ion-card-title class="text-3xl">Vistas </ion-card-title>
+
+            <ion-icon class="text-5xl" style="color: #f47621;" name="eye-outline"></ion-icon>
+          </div>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="flex justify-center items-center w-full">
+            <h1 class="!text-8xl">{{ totalVistasPerfil }}</h1>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="rounded-xl">
+        <ion-card-header class="m-4">
+          <div class="flex justify-between items-center  w-full">
+            <ion-card-title class="text-3xl">Interesados </ion-card-title>
+
+            <ion-icon class="text-5xl" style="color: #f47621;" name="eye-outline"></ion-icon>
+          </div>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="flex justify-center items-center w-full">
+            <h1 class="!text-8xl">{{ totalFavoritosPerfil }}</h1>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="rounded-xl">
+        <ion-card-header class="m-4">
+          <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
+          <ion-card-title>Awesome Title</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Awesome content
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="rounded-xl">
+        <ion-card-header class="m-4">
+          <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
+          <ion-card-title>Awesome Title</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Awesome content
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="rounded-xl">
+        <ion-card-header class="m-4">
+          <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
+          <ion-card-title>Awesome Title</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Awesome content
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="rounded-xl">
+        <ion-card-header class="m-4">
+          <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
+          <ion-card-title>Awesome Title</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Awesome content
+        </ion-card-content>
+      </ion-card>
+
+    </div>
+
+  }
 </div>
 
 <app-news-bar></app-news-bar>

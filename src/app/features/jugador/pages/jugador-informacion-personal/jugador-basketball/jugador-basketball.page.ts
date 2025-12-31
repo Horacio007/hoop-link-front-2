@@ -23,6 +23,7 @@ export class JugadorBasketballPage implements OnInit, OnDestroy, AfterViewInit {
   @Input({required: true}) form!: FormGroup;
   @Input({required: true}) cargandoData: boolean = true;
   @Input({required: true}) allPosicionJugador!: ICatalogo[] | undefined;
+  @Input({required: true }) isReadOnly: boolean = false;
 
   public iconoSi: string = "fa-solid fa-hand-point-left";
   public iconoSi2: string = "pi pi-check";
@@ -66,6 +67,9 @@ export class JugadorBasketballPage implements OnInit, OnDestroy, AfterViewInit {
     }, 0);
     this.form.valueChanges.subscribe(val => {
     });
+    if (this.isReadOnly) {
+      this.form.disable()
+    }
   }
 
   ngAfterViewInit(): void {

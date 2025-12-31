@@ -52,12 +52,48 @@ export class InformacionPersonalService {
     );
   }
 
+  public getInformacionPersonalById(informacionPersonalId: number): Observable<IResponse<IInformacinPersonal | undefined>> {
+    const url: string = WebApiConstants.informacion_personal.getInformacionById(informacionPersonalId);
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> getInformacionPersonal`, 'Solicitando información personal.', { endpoint: url });
+
+    return this._webApiService.get<IResponse<IInformacinPersonal | undefined>>(url, true).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
+  }
+
   public uploadVideos(tipo:string, id:string, file: FormData): Observable<HttpEvent<IResponse<IVideoInformacionPersonalResponse>>> {
     const url: string = WebApiConstants.informacion_personal.uploadVideos(tipo, id);
 
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> uploadVideos`, 'Subiendo video', { endpoint: url, tipo, id, file });
 
     return this._webApiService.post<IResponse<IVideoInformacionPersonalResponse>>(url, file, true, { reportProgress: true, observe: 'events' }).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
+  }
+
+  public getTotalVistasPerfil(): Observable<IResponse<number | undefined>> {
+    const url: string = WebApiConstants.informacion_personal.getTotalVistasPerfil;
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> getTotalVistasPerfil`, 'Solicitando vistas de perfil.', { endpoint: url });
+
+    return this._webApiService.get<IResponse<number | undefined>>(url, true).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
+  }
+
+  public getTotalFavoritosPerfil(): Observable<IResponse<number | undefined>> {
+    const url: string = WebApiConstants.informacion_personal.getTotalFavoritosPerfil;
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> getTotalFavoritosPerfil`, 'Solicitando favoritos de perfil.', { endpoint: url });
+
+    return this._webApiService.get<IResponse<number | undefined>>(url, true).pipe(
       catchError(error => {
         return throwError(() => error);
       })

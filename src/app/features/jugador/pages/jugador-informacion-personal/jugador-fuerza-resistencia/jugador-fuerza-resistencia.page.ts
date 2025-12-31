@@ -19,6 +19,7 @@ export class JugadorFuerzaResistenciaPage implements OnInit, OnDestroy {
 //#region Propiedades
   @Input({required: true}) form!: FormGroup;
   @Input({required: true}) cargandoData: boolean = true;
+  @Input({required: true }) isReadOnly: boolean = false;
 
   private readonly _contextLog = 'JugadorFuerzaResistenciaPage';
 
@@ -37,6 +38,9 @@ export class JugadorFuerzaResistenciaPage implements OnInit, OnDestroy {
 //#region Ng
   ngOnInit(): void {
     this._logger.log(LogLevel.Info, `${this._contextLog} >> ngOnInit`, 'Componente inicializado.');
+    if (this.isReadOnly) {
+      this.form.disable()
+    }
   }
 
   ngOnDestroy(): void {

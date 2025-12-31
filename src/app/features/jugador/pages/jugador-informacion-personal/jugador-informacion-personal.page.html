@@ -5,27 +5,31 @@
     <div header>
       <div class="mb-4">
         <app-news-bar></app-news-bar>
+        @if (isReadOnly) {
+          <br>
+          <ion-icon class="text-2xl hover:cursor-pointer" (click)="goBack()" name="arrow-back-outline"></ion-icon>
+        }
       </div>
     </div>
 
     <ng-template #tab>
-      <app-jugador-perfil #perfilTab [form]="perfil" [cargandoData]="cargandoData" [allEstatusJugador]="estatusJugadorCatalogo || []" ></app-jugador-perfil>
+      <app-jugador-perfil #perfilTab [form]="perfil" [cargandoData]="cargandoData" [allEstatusJugador]="estatusJugadorCatalogo || []" [isReadOnly]="isReadOnly" ></app-jugador-perfil>
     </ng-template>
 
     <ng-template #tab>
-      <app-jugador-fuerza-resistencia [form]="fuerzaResistencia" [cargandoData]="cargandoData"></app-jugador-fuerza-resistencia>
+      <app-jugador-fuerza-resistencia [form]="fuerzaResistencia" [cargandoData]="cargandoData" [isReadOnly]="isReadOnly" ></app-jugador-fuerza-resistencia>
     </ng-template>
 
     <ng-template #tab>
-      <app-jugador-basketball [form]="basketball" [cargandoData]="cargandoData" [allPosicionJugador]="posicionJugadorCatalogo || undefined" ></app-jugador-basketball>
+      <app-jugador-basketball [form]="basketball" [cargandoData]="cargandoData" [allPosicionJugador]="posicionJugadorCatalogo || undefined" [isReadOnly]="isReadOnly"></app-jugador-basketball>
     </ng-template>
 
     <ng-template #tab>
-      <app-jugador-experiencia [form]="experiencia" [cargandoData]="cargandoData"></app-jugador-experiencia>
+      <app-jugador-experiencia [form]="experiencia" [cargandoData]="cargandoData" [isReadOnly]="isReadOnly"></app-jugador-experiencia>
     </ng-template>
 
     <ng-template #tab>
-      <app-jugador-vision [form]="vision" [cargandoData]="cargandoData"></app-jugador-vision>
+      <app-jugador-vision [form]="vision" [cargandoData]="cargandoData" [isReadOnly]="isReadOnly"></app-jugador-vision>
     </ng-template>
 
     <ng-template #tab>
@@ -33,26 +37,126 @@
     </ng-template>
 
     <ng-template #tab>
-      <app-jugador-videos [form]="videos" [cargandoData]="cargandoData"></app-jugador-videos>
+      <app-jugador-videos [form]="videos" [cargandoData]="cargandoData" [isReadOnly]="isReadOnly"></app-jugador-videos>
     </ng-template>
 
     <ng-template #tab>
-      <app-jugador-redes-sociales [form]="redes" [cargandoData]="cargandoData"></app-jugador-redes-sociales>
+      <app-jugador-redes-sociales [form]="redes" [cargandoData]="cargandoData" [isReadOnly]="isReadOnly"></app-jugador-redes-sociales>
     </ng-template>
 
   </app-responsive-tabs>
-  <div class="flex justify-end mx-2 my-4">
-    <div class="flex align-center justify-center">
-      @if (cargandoData) {
-        <app-skeleton style="width: 5rem; height: 2.5rem;"></app-skeleton>
-      } @else {
-        <ion-button class="w-full" type="submit" [style]="{'--background': '#f47621', '--border-color': '#f47621'}">
-          Guardar
-        </ion-button>
-      }
+
+  @if (!isReadOnly) {
+    <div class="flex justify-end mx-2 my-4">
+      <div class="flex align-center justify-center">
+        @if (cargandoData) {
+          <app-skeleton style="width: 5rem; height: 2.5rem;"></app-skeleton>
+        } @else {
+          <ion-button class="w-full" type="submit" [style]="{'--background': '#f47621', '--border-color': '#f47621'}">
+            Guardar
+          </ion-button>
+        }
+      </div>
     </div>
-  </div>
+  }
+
 </form>
+
+@if (!cargandoData && _informacionPersonalIdReadOnly > 0 ) {
+  <ion-card class="my-6">
+    <ion-card-header class="m-4">
+      <ion-card-title class="text-3xl">Comentarios</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+      @if (tipoUsuario === 'c') {
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 md:col-span-10">
+            <ion-input
+              #comentarioInput
+              id="custom-input"
+              label="Comentario"
+              labelPlacement="floating"
+              [counter]="true"
+              maxlength="150"
+              fill="outline"
+              [(ngModel)]="comentarioToPost"
+              [counterFormatter]="customCounterFormatter"
+            ></ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-2 content-center">
+            <ion-button class="w-full" type="submit" (click)="saveComentario()" [style]="{'--background': '#f47621', '--border-color': '#f47621'}">
+              Comentar
+            </ion-button>
+          </div>
+        </div>
+      }
+
+      @if (tipoUsuario === 'j' && comentariosCoachJugador.length > 0) {
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 md:col-span-10">
+            <ion-input
+              #comentarioInput
+              id="custom-input"
+              label="Comentario"
+              labelPlacement="floating"
+              [counter]="true"
+              maxlength="150"
+              fill="outline"
+              [(ngModel)]="comentarioToPost"
+              [counterFormatter]="customCounterFormatter"
+            ></ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-2 content-center">
+            <ion-button class="w-full" type="submit" (click)="saveComentario()" [style]="{'--background': '#f47621', '--border-color': '#f47621'}">
+              Comentar
+            </ion-button>
+          </div>
+        </div>
+      }
+
+      <div class="relative flex items-center my-6">
+        <div class="flex-grow border-t border-gray-300"></div>
+        <span class="mx-4 text-gray-500 text-xl">Comentarios</span>
+        <div class="flex-grow border-t border-gray-300"></div>
+      </div>
+
+      @if (comentariosCoachJugador.length === 0) {
+        <h1>Sin comentarios...</h1>
+      } @else {
+        @for (comentario of comentariosCoachJugador; track comentario.comentarios_perfil_jugador_id) {
+          <div class="flex flex-row mb-1 items-center">
+            <div class="grow">
+              <div class="flex flex-row items-center">
+                @if (+comentario.autor === 0) {
+                  <ion-avatar slot="start" class="jugador-avatar">
+                    <img [src]="'assets/images/generales/sin-foto.png'" alt="Foto de Perfil" />
+                  </ion-avatar>&nbsp;&nbsp;
+                  <ion-label class="text-2xl font-bold">{{comentario.nombre_autor}}</ion-label>
+                } @else {
+                  <ion-avatar slot="start" class="jugador-avatar">
+                    <img [src]="perfil.get('fotoPerfil')?.value" alt="Foto de Perfil" />
+                  </ion-avatar>&nbsp;&nbsp;
+                  <ion-label class="text-2xl font-bold">{{comentario.nombre_perfil}}</ion-label>
+                }
+              </div>
+            </div>
+            <div>
+              <ion-label class="text-xl">{{comentario.fecha_creacion | date:'dd/MM/yyyy HH:mm:ss'}}</ion-label>
+            </div>
+          </div>
+          <div class="flex flex-row mb-2">
+            <ion-label class="text-xl">{{comentario.comentario}}</ion-label>
+          </div>
+          <div class="relative flex items-center my-6">
+            <div class="flex-grow border-t border-gray-300"></div>
+          </div>
+        }
+      }
+
+    </ion-card-content>
+  </ion-card>
+}
 
 
 

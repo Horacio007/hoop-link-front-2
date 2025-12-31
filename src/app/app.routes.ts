@@ -163,6 +163,73 @@ export const routes: Routes = [
           },
         ]
       },
+      {
+        path: 'coach',
+        canActivate: [roleGuard],
+        canLoad: [roleGuard],
+        data: { role: ['coach'] },
+        title: 'Dashboard | HoopLink',
+        loadComponent: () => import('./features/coach/pages/coach-index/coach-index.page').then( m => m.CoachIndexPage),
+        children: [
+          {
+            // 2. Ruta Hija Index (Carga el Contenido REAL del Dashboard)
+            path: '',
+            pathMatch: 'full',
+            loadComponent: () => import('./features/coach/pages/coach-dashboard/coach-dashboard.page').then(m => m.CoachDashboardPage)
+          },
+          {
+            path: 'listado-jugadores', // URL: /desktop/jugador/informacion-personal
+            title: 'Listado Jugadores | HoopLink',
+            data: { vistaDeFavoritos: false },
+            loadComponent: () => import('./features/coach/pages/coach-listado-jugadores/coach-listado-jugadores.page').then(m => m.CoachListadoJugadoresPage),
+          },
+          {
+            path: 'listado-jugadores-favoritos',
+            title: 'Listado Jugadores Favoritos | HoopLink',
+            data: { vistaDeFavoritos: true },
+            loadComponent: () => import('./features/coach/pages/coach-listado-jugadores/coach-listado-jugadores.page').then(m => m.CoachListadoJugadoresPage),
+          },
+          {
+            path: 'perfil-jugador/:id', // URL: /desktop/jugador/informacion-personal
+            title: 'Perfil Jugador | HoopLink',
+            loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-informacion-personal.page').then(m => m.JugadorInformacionPersonalPage),
+            children: [
+              {
+                path: 'jugador-perfil',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-perfil/jugador-perfil.page').then( m => m.JugadorPerfilPage)
+              },
+              {
+                path: 'jugador-fuerza-resistencia',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-fuerza-resistencia/jugador-fuerza-resistencia.page').then( m => m.JugadorFuerzaResistenciaPage)
+              },
+              {
+                path: 'jugador-basketball',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-basketball/jugador-basketball.page').then( m => m.JugadorBasketballPage)
+              },
+              {
+                path: 'jugador-experiencia',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-experiencia/jugador-experiencia.page').then( m => m.JugadorExperienciaPage)
+              },
+              {
+                path: 'jugador-vision',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-vision/jugador-vision.page').then( m => m.JugadorVisionPage)
+              },
+              {
+                path: 'jugador-test',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-test/jugador-test.page').then( m => m.JugadorTestPage)
+              },
+              {
+                path: 'jugador-videos',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-videos/jugador-videos.page').then( m => m.JugadorVideosPage)
+              },
+              {
+                path: 'jugador-redes-sociales',
+                loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-redes-sociales/jugador-redes-sociales.page').then( m => m.JugadorRedesSocialesPage)
+              },
+            ]
+          }
+        ]
+      }
     ]
   },
   {
@@ -173,6 +240,6 @@ export const routes: Routes = [
   {
     path: '**',
     redirectTo: '/portal',
-  }
+  },
 
 ];
