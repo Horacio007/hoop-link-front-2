@@ -13,7 +13,11 @@
     </div>
 
     <ng-template #tab>
-      <app-jugador-perfil #perfilTab [form]="perfil" [cargandoData]="cargandoData" [allEstatusJugador]="estatusJugadorCatalogo || []" [isReadOnly]="isReadOnly" ></app-jugador-perfil>
+      <app-jugador-perfil #perfilTab [form]="perfil" [cargandoData]="cargandoData"
+        [allEstatusJugador]="estatusJugadorCatalogo || []"
+        [allSexo]="sexoCatalogo || []"
+        [isReadOnly]="isReadOnly"
+      ></app-jugador-perfil>
     </ng-template>
 
     <ng-template #tab>

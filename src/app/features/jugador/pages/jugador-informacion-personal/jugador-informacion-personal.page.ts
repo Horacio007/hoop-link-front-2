@@ -107,6 +107,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
   public cargandoData = true;
   public estatusJugadorCatalogo: ICatalogo[] | undefined;
   public posicionJugadorCatalogo: ICatalogo[] | undefined;
+  public sexoCatalogo: ICatalogo[] | undefined;
   private readonly _destroy$ = new Subject<void>();
 
   private catalogosCargados: { [key: string]: boolean } = {};
@@ -188,6 +189,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
         altura: new FormControl(null, Validators.required),
         peso: new FormControl(null, Validators.required),
         estatusBusquedaJugador: new FormControl('', Validators.required),
+        sexo: new FormControl('', Validators.required),
         medidaMano: new FormControl(null, Validators.required),
         largoBrazo: new FormControl(null, Validators.required),
         quienEres: new FormControl(null, Validators.required),
@@ -320,10 +322,16 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
         takeUntil(this._destroy$)
       );
 
+      // Asumo que tienes un _catalogoService inyectado
+      const catalogoSexo$ = this._catalogoService.getAllSexo().pipe(
+        takeUntil(this._destroy$)
+      );
+
       // 2. Usar forkJoin para esperar ambos
       forkJoin({
         dataPrincipal: dataPrincipal$,
-        catalogoEstatus: catalogoEstatus$
+        catalogoEstatus: catalogoEstatus$,
+        catalogoSexo: catalogoSexo$
       })
       .pipe(
         // El finalize se ejecuta SOLO después de que forkJoin termine (éxito o error)
@@ -332,10 +340,11 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
             this.cargandoData = false;
         })
       ).subscribe({
-        next: (results: { dataPrincipal: IResponse<IInformacinPersonal | undefined>, catalogoEstatus: ICatalogo[] }) => {
+        next: (results: { dataPrincipal: IResponse<IInformacinPersonal | undefined>, catalogoEstatus: ICatalogo[], catalogoSexo: ICatalogo[] }) => {
           this._logger.log(LogLevel.Info, `${this._contextLog} >> cargaDatos`, 'Datos recibidos', results);
 
           this.estatusJugadorCatalogo = results.catalogoEstatus;
+          this.sexoCatalogo = results.catalogoSexo;
 
 
           const { data } = results.dataPrincipal;
@@ -375,6 +384,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
       altura: infoPersonal?.altura,
       peso: infoPersonal?.peso,
       estatusBusquedaJugador: infoPersonal?.estatusBusquedaJugador ?? { id: '', nombre: ''},
+      sexo: infoPersonal?.sexo ?? { id: '', nombre: ''},
       largoBrazo: infoPersonal?.largoBrazo,
       medidaMano: infoPersonal?.medidaMano,
       quienEres: infoPersonal?.quienEres ?? '',
@@ -578,6 +588,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
   }
 
   private setPerfilEnFormulario(perfil: IPerfilInformacionPersonal) {
+    console.warn(perfil);
     this.perfil.patchValue({
       informacionPersonalId: perfil.informacionPersonalId,
       fotoPerfil: perfil.fotoPerfil,
@@ -585,6 +596,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
       altura: perfil.altura,
       peso: perfil.peso,
       estatusBusquedaJugador: perfil.estatusBusquedaJugador,
+      sexo: perfil.sexo,
       medidaMano: perfil.medidaMano,
       largoBrazo: perfil.largoBrazo,
       quienEres: perfil.quienEres,

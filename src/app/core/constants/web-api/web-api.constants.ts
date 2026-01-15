@@ -4,7 +4,8 @@ export const WebApiConstants = {
     getAllEstado: `catalogo/getAllEstado`,
     getAllMunicipioByEstado: (id:string) => `catalogo/getAllMunicipioByEstado/${id}`,
     getAllEstatusBusquedaJugador: `catalogo/getAllEstatusBusquedaJugador`,
-    getAllPosicionJugador: `catalogo/getAllPosicionJugador`
+    getAllPosicionJugador: `catalogo/getAllPosicionJugador`,
+    getAllSexo: `catalogo/getAllSexo`,
   },
   usuario: {
     save: `usuario/save`,

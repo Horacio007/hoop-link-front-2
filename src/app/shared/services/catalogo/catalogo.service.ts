@@ -59,10 +59,18 @@ export class CatalogoService {
     return this.webApiService.get<ICatalogo[]>(url);
   }
 
-   public getAllPosicionJugador(): Observable<ICatalogo[]> {
+  public getAllPosicionJugador(): Observable<ICatalogo[]> {
     const url: string = WebApiConstants.catalogo.getAllPosicionJugador;
 
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> getAllPosicionJugador`, 'Iniciando llamada al API.', { endpoint: url });
+
+    return this.webApiService.get<ICatalogo[]>(url);
+  }
+
+  public getAllSexo(): Observable<ICatalogo[]> {
+    const url: string = WebApiConstants.catalogo.getAllSexo;
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> getAllSexo`, 'Iniciando llamada al API.', { endpoint: url });
 
     return this.webApiService.get<ICatalogo[]>(url);
   }

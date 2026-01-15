@@ -13,5 +13,6 @@ export interface IListadoJugadores {
     posicionJuegoDos?: string ,
     estado: string,
     municipio: string,
-    interesado: boolean
+    interesado: boolean,
+    sexo?: string
 }

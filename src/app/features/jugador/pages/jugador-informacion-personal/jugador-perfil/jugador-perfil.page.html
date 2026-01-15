@@ -26,6 +26,9 @@
       <div class="col-span-12 md:col-span-6 ">
         <app-skeleton style="height: 3rem;" ></app-skeleton>
       </div>
+       <div class="col-span-12 md:col-span-6 ">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
+      </div>
     </div>
   } @else {
   <div class="grid grid-cols-12 gap-4 mb-4">
@@ -142,6 +145,36 @@
       </ion-card-content>
     </ion-card>
 
+    <ion-card class="mb-6">
+      <ion-card-header class="m-4">
+        <div class="flex justify-between  w-full">
+          <ion-card-title class="text-3xl">Género</ion-card-title>
+
+          <ion-icon (click)="openModalSexo()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 ">
+            <div class="selects-search-validation-container"
+              [ngClass]="{
+                  'ng-valid': form.controls['sexo'].valid,
+                  'ng-invalid': form.controls['sexo'].invalid,
+                  'ng-touched': form.controls['sexo'].touched
+              }"
+            >
+              <ion-list class="no-border-list w-full">
+                <ion-item [button]="!isReadOnly" [detail]="false" (click)="!isReadOnly && openSexoModal()" class="no-border-list" id="select-estatus-jugador" lines="none">
+                  <ion-label class="whitespace-normal w-full" >Género Jugador</ion-label>
+                  <div slot="end" id="selected-estatus-jugador">{{ selectedSexoNombre }}</div>
+                </ion-item>
+              </ion-list>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
     <ion-card>
       <ion-card-header class="m-4">
         <div class="flex justify-between  w-full">
@@ -184,6 +217,19 @@
       [selectedItem]="selectedEstatusJugadorId"
       (selectionChange)="estatusJugadorSelectionChanged($event)"
       (selectionCancel)="estatusJugadorCancel()"
+    ></app-select-list-search>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalSexo [isOpen]="false" cssClass="custom-modal-selects-search" backdropDismiss="false">
+  <ng-template>
+    <app-select-list-search
+      class="ion-page"
+      title="Género"
+      [items]="allSexo"
+      [selectedItem]="selectedSexoId"
+      (selectionChange)="sexoSelectionChanged($event)"
+      (selectionCancel)="sexoCancel()"
     ></app-select-list-search>
   </ng-template>
 </ion-modal>

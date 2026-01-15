@@ -98,6 +98,11 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
   public selectedEstatusNombre: string = 'Selecciona El Estatus';
   public selectedEstatusId: string | undefined = undefined;
 
+  public allSexo: ICatalogo[] = [];
+  @ViewChild('modalSexo', { static: true }) modalSexo!: IonModal;
+  public selectedSexoNombre: string = 'Selecciona El Género';
+  public selectedSexoId: string | undefined = undefined;
+
   public existeFiltracion: boolean = false;
   public allFiltrosAplicados: IListadoJugadoresFiltroCoach[] = []
 
@@ -306,6 +311,7 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
         j.estatus,
         j.altura?.toString(),
         j.peso?.toString(),
+        j.sexo?.toString()
       ]
       .join(' ')
       .toLowerCase();
@@ -361,6 +367,7 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
         j.estatus,
         j.altura?.toString(),
         j.peso?.toString(),
+        j.sexo?.toString()
       ]
       .join(' ')
       .toLowerCase();
@@ -443,6 +450,12 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
           valB = `${b.estatus}`.toLowerCase();
           break;
 
+
+        case 'sexo':
+          valA = `${a.sexo}`.toLowerCase();
+          valB = `${b.sexo}`.toLowerCase();
+          break;
+
         default:
           valA = (a as any)[active] ?? '';
           valB = (b as any)[active] ?? '';
@@ -505,6 +518,10 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
       const estatusJugador = await firstValueFrom(this.catalagoService.getAllEstatusBusquedaJugador());
       this.allEstatusJugador = estatusJugador;
       // console.log('Tipos de usuario cargados con éxito.');
+
+      this._blockUiService.updateMessage('Cargando catálogo de Género...');
+      const sexo = await firstValueFrom(this.catalagoService.getAllSexo());
+      this.allSexo = sexo;
 
       // 4. Éxito total
       this._blockUiService.updateMessage('✅ Catálogos cargados exitosamente.');
@@ -675,6 +692,33 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
     }
   // end
 
+   // sexoo
+    public sexoSelectionChanged(selectedId: string | undefined) {
+      // 1. Almacenar el ID seleccionado
+      this.selectedSexoId = selectedId;
+
+      // 2. Buscar el nombre para mostrarlo en la UI (UX)
+      const sexoSeleccionado = this.allSexo.find(e => e.id === selectedId);
+
+      // 3. Actualizar la variable de la UI
+      if (sexoSeleccionado) {
+        this.selectedSexoNombre = sexoSeleccionado.nombre;
+        this.aplicarFiltrosDesktop();
+      }
+
+      // 4. Cerrar el modal
+      this.modalSexo.dismiss();
+    }
+
+    public onPresentSexo() {
+      this.modalSexo.present()
+    }
+
+    public sexoCancel() {
+      this.modalSexo.dismiss();
+    }
+  // end
+
   // aplica filtros
     aplicarFiltrosDesktop() {
       let filtros = [...this.allListadoJugadores]; // copia completa
@@ -742,6 +786,20 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
           // }
         }
 
+        if (this.selectedSexoId && jugador.sexo?.toLowerCase() !== this.selectedSexoNombre.toLowerCase()) {
+          return false;
+        } else {
+          this.setFiltroChip('sexo', this.selectedSexoNombre);
+          // const esf: IListadoJugadoresFiltroCoach = {
+          //   tipo: 'estatus',
+          //   valor: this.selectedEstatusNombre.toLowerCase()
+          // }
+
+          // if (this.allFiltrosAplicados.filter( x => x.tipo === 'estatus' && x.valor == this.selectedEstatusNombre.toLowerCase()).length === 0 && !this.selectedEstatusNombre.toLowerCase().includes('selecciona')) {
+          //   this.allFiltrosAplicados.push(esf);
+          // }
+        }
+
         return true; // pasa todos los filtros
       });
 
@@ -769,6 +827,9 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
 
       this.selectedEstatusNombre = 'Selecciona El Estatus';
       this.selectedEstatusId = undefined;
+
+      this.selectedSexoNombre = 'Selecciona El Género';
+      this.selectedSexoId = undefined;
 
       let filtros = [...this.allListadoJugadores];
       this.filteredDesktopJugadores = filtros;
@@ -807,6 +868,10 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
         case 'estatus':
             this.selectedEstatusNombre = 'Selecciona El Estatus';
             this.selectedEstatusId = undefined;
+          break;
+        case 'sexo':
+            this.selectedSexoNombre = 'Selecciona El Género';
+            this.selectedSexoId = undefined;
           break;
         default:
           this.reseteFiltrosDesktop();
@@ -916,7 +981,9 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
         estatusId: this.selectedEstatusId,
         estatusNombre: this.selectedEstatusNombre,
         chips: this.allFiltrosAplicados,
-        existeFiltracion: this.existeFiltracion
+        existeFiltracion: this.existeFiltracion,
+        sexoId: this.selectedSexoId,
+        sexoNombre: this.selectedSexoNombre,
       },
       tabla: {
         sortColumn: this.lastSortColumn,
@@ -941,6 +1008,8 @@ export class CoachListadoJugadoresPage implements OnInit, ViewWillEnter, OnDestr
     this.selectedPosicionNombre = state.filtros.posicionNombre;
     this.selectedEstatusId = state.filtros.estatusId;
     this.selectedEstatusNombre = state.filtros.estatusNombre;
+    this.selectedSexoId = state.filtros.sexoId;
+    this.selectedSexoNombre = state.filtros.sexoNombre;
 
     this.allFiltrosAplicados = state.filtros.chips ?? [];
     this.existeFiltracion = state.filtros.existeFiltracion ?? false;

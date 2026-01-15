@@ -17,6 +17,7 @@
             </ion-avatar>
             <ion-card-title class="pl-2">
               {{ `${jugador.nombre} ` }} <strong>{{ `${jugador.alias} ` }}</strong><br>{{ `${jugador.aPaterno} ${jugador.aMaterno}` }} <br>
+              <span class="text-xs">{{ `${jugador.sexo}`}}</span> <br>
               <span class="text-xs">{{ `${jugador.municipio}, ${jugador.estado}`}}</span>
             </ion-card-title>
           </div>
@@ -131,6 +132,16 @@
                     </ion-list>
                   </div>
                 </div>
+                <div class="col-span-12 ">
+                  <div class="selects-search-container">
+                    <ion-list class="no-border-list">
+                      <ion-item [button]="true" [detail]="false" class="no-border-list" id="select-sexo" lines="none" (click)="onPresentSexo()">
+                        <ion-label>Género</ion-label>
+                        <div slot="end" id="select-sexo">{{ selectedSexoNombre }}</div>
+                      </ion-item>
+                    </ion-list>
+                  </div>
+                </div>
                 <div class="col-span-12">
                   <div class="flex flex-row justify-end items-center mt-4">
                     <ion-icon class="text-2xl hover:cursor-pointer" (click)="reseteFiltrosDesktop()" name="refresh-outline"></ion-icon>
@@ -199,11 +210,12 @@
           <div class="col-span-4 justify-items-center">
             <div class="flex w-full">
               <div class="flex flex-row">
-                <ion-avatar slot="start" class="jugador-avatar">
+                <ion-avatar slot="start" class="jugador-avatar mt-2">
                   <img [src]="jugador.fotoPerfil || 'assets/images/generales/sin-foto.png'" alt="Foto de Perfil" />
                 </ion-avatar>
                 <ion-card-title class="pl-2">
                   {{ `${jugador.nombre} ` }} <strong>{{ `${jugador.alias} ` }}</strong><br>{{ `${jugador.aPaterno} ${jugador.aMaterno}` }} <br>
+                  <span class="text-xs">{{ `${jugador.sexo}`}}</span> <br>
                   <span class="text-xs">{{ `${jugador.municipio}, ${jugador.estado}`}}</span>
                 </ion-card-title>
               </div>
@@ -290,5 +302,17 @@
   </ng-template>
 </ion-modal>
 
+<ion-modal #modalSexo cssClass="custom-modal-selects-search" backdropDismiss="false" >
+  <ng-template>
+    <app-select-list-search
+      class="ion-page"
+      title="Género"
+      [items]="allSexo"
+      [selectedItem]="selectedSexoId"
+      (selectionChange)="sexoSelectionChanged($event)"
+      (selectionCancel)="sexoCancel()"
+    ></app-select-list-search>
+  </ng-template>
+</ion-modal>
 
 <app-news-bar></app-news-bar>
