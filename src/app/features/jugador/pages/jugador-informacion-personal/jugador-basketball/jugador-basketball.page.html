@@ -58,7 +58,7 @@
               class="custom-date-item"
               lines="none"
             >
-              <ion-label>Cuando empezaste a jugar</ion-label>
+              <ion-label>Cuando empezaste a jugar?</ion-label>
               <ion-datetime-button datetime="datetimeFC" backdropDismiss="false" [disabled]="isReadOnly" ></ion-datetime-button><br>
             </ion-item>
           </div>
@@ -69,7 +69,7 @@
                 lines="none"
             >
               <!-- Título/Label principal a la izquierda -->
-              <ion-label class="text-base text-gray-700">Mano de Juego?</ion-label>
+              <ion-label class="text-base text-gray-700">Mano de juego?</ion-label>
 
               <!-- Contenedor del Toggle a la derecha (slot="end") -->
               <div slot="end" class="flex items-center gap-2 p-1">
@@ -94,7 +94,7 @@
             <div class="selects-search-validation-container">
               <ion-list class="no-border-list">
                 <ion-item [button]="!isReadOnly" [detail]="false" (click)="!isReadOnly && openPosicionUnoModal()" class="no-border-list" id="select-posicion-juego-uno" lines="none">
-                  <ion-label>Posición Juego Uno</ion-label>
+                  <ion-label>Posición de juego (uno)</ion-label>
                   <div slot="end" id="selected-posicion-juego-uno">{{ selectedPosicionUnoNombre }}</div>
                 </ion-item>
               </ion-list>
@@ -104,7 +104,7 @@
             <div class="selects-search-validation-container">
               <ion-list class="no-border-list">
                 <ion-item [button]="!isReadOnly" [detail]="false" (click)="!isReadOnly && openPosicionDosModal()" class="no-border-list" id="select-posicion-juego-dos" lines="none">
-                  <ion-label>Posición Juego Dos</ion-label>
+                  <ion-label>Posición de juego (dos)</ion-label>
                   <div slot="end" id="selected-posicion-juego-dos">{{ selectedPosicionDosNombre }}</div>
                 </ion-item>
               </ion-list>
@@ -117,7 +117,7 @@
                 lines="none"
             >
               <!-- Título/Label principal a la izquierda -->
-              <ion-label class="text-base text-gray-700">Clavas?</ion-label>
+              <ion-label class="text-base text-gray-700">La clavas?</ion-label>
 
               <!-- Contenedor del Toggle a la derecha (slot="end") -->
               <div slot="end" class="flex items-center gap-2 p-1">

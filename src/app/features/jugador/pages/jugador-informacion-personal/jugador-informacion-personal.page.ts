@@ -76,10 +76,6 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
       icon: 'fa-solid fa-id-card'
     },
     {
-      tabName: 'Fuerza y Resistencia',
-      icon: 'fa-solid fa-dumbbell',
-    },
-    {
       tabName: 'Basketball',
       icon: 'fa-solid fa-basketball',
     },
@@ -90,6 +86,10 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
     {
       tabName: 'Visión',
       icon: 'fa-solid fa-crosshairs',
+    },
+    {
+      tabName: 'Fuerza y Resistencia',
+      icon: 'fa-solid fa-dumbbell',
     },
     {
       tabName: 'Tests',

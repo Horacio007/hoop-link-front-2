@@ -40,12 +40,12 @@ export class JugadorPerfilPage implements OnInit, ViewWillEnter {
   private readonly _contextLog = 'JugadorPerfilPage';
 
   @ViewChild('modalEstatusJugador', { static: true }) modalEstatusJugador!: IonModal;
-  public selectedEstatusJugadorNombre: string = 'Selecciona El Estatus Jugador';
+  public selectedEstatusJugadorNombre: string = 'Selecciona el estatus jugador';
   public selectedEstatusJugadorId: string | undefined = undefined;
   public estatusJugadorValido: boolean = false;
 
   @ViewChild('modalSexo', { static: true }) modalSexo!: IonModal;
-  public selectedSexoNombre: string = 'Selecciona El Género';
+  public selectedSexoNombre: string = 'Selecciona el género';
   public selectedSexoId: string | undefined = undefined;
   public sexoValido: boolean = false;
 
@@ -173,7 +173,7 @@ export class JugadorPerfilPage implements OnInit, ViewWillEnter {
       this.form.controls['estatusBusquedaJugador'].setValue(estatusJugador);
       this.form.controls['estatusBusquedaJugador'].markAsTouched();
     } else {
-      this.selectedEstatusJugadorId = 'Selecciona El Estatus Jugador';
+      this.selectedEstatusJugadorId = 'Selecciona el estatus jugador';
       this.form.controls['estatusBusquedaJugador'].markAsTouched();
 
       if (this.esValido('estatusBusquedaJugador')) {
@@ -225,7 +225,7 @@ export class JugadorPerfilPage implements OnInit, ViewWillEnter {
       this.form.controls['sexo'].setValue(sexo);
       this.form.controls['sexo'].markAsTouched();
     } else {
-      this.selectedSexoId = 'Selecciona El Sexo';
+      this.selectedSexoId = 'Selecciona el sexo';
       this.form.controls['sexo'].markAsTouched();
 
       if (this.esValido('sexo')) {

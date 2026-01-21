@@ -21,10 +21,6 @@
     </ng-template>
 
     <ng-template #tab>
-      <app-jugador-fuerza-resistencia [form]="fuerzaResistencia" [cargandoData]="cargandoData" [isReadOnly]="isReadOnly" ></app-jugador-fuerza-resistencia>
-    </ng-template>
-
-    <ng-template #tab>
       <app-jugador-basketball [form]="basketball" [cargandoData]="cargandoData" [allPosicionJugador]="posicionJugadorCatalogo || undefined" [isReadOnly]="isReadOnly"></app-jugador-basketball>
     </ng-template>
 
@@ -34,6 +30,10 @@
 
     <ng-template #tab>
       <app-jugador-vision [form]="vision" [cargandoData]="cargandoData" [isReadOnly]="isReadOnly"></app-jugador-vision>
+    </ng-template>
+
+    <ng-template #tab>
+      <app-jugador-fuerza-resistencia [form]="fuerzaResistencia" [cargandoData]="cargandoData" [isReadOnly]="isReadOnly" ></app-jugador-fuerza-resistencia>
     </ng-template>
 
     <ng-template #tab>
