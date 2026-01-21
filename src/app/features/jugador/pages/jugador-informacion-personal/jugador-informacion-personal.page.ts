@@ -190,13 +190,13 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
         peso: new FormControl(null, Validators.required),
         estatusBusquedaJugador: new FormControl('', Validators.required),
         sexo: new FormControl('', Validators.required),
-        medidaMano: new FormControl(null, Validators.required),
-        largoBrazo: new FormControl(null, Validators.required),
+        medidaMano: new FormControl(null),
+        largoBrazo: new FormControl(null),
         quienEres: new FormControl(null, Validators.required),
       }),
       fuerzaResistencia: this._fb.group({
-        alturaSaltoVertical: new FormControl(null, Validators.required),
-        distanciaSaltoHorizontal: new FormControl(null, Validators.required),
+        alturaSaltoVertical: new FormControl(null),
+        distanciaSaltoHorizontal: new FormControl(null),
         pesoBenchPress: new FormControl(null),
         pesoSquats: new FormControl(null),
         pesoPressMilitar: new FormControl(null),
@@ -213,7 +213,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
         manoJuego: new FormControl(false, Validators.required),
         posicionJuegoUno: new FormControl('', Validators.required),
         posicionJuegoDos: new FormControl('', Validators.required),
-        clavas: new FormControl(false, Validators.required),
+        clavas: new FormControl(false),
         puntosPorJuego: new FormControl(null),
         asistenciasPorJuego: new FormControl(null),
         rebotesPorJuego: new FormControl(null),
@@ -222,18 +222,18 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
         porcentajeTirosLibres: new FormControl(null),
       }),
       experiencia: this._fb.group({
-        desdeCuandoJuegas: new FormControl(null, Validators.required),
+        desdeCuandoJuegas: new FormControl(null),
         horasEntrenamientoSemana: new FormControl(null),
         horasGymSemana: new FormControl(null),
-        pertenecesClub: new FormControl(false, Validators.required) ,
+        pertenecesClub: new FormControl(false) ,
         nombreClub: new FormControl(null) ,
         historialEquipos: this._fb.array([]) ,
         historialEntrenadores: this._fb.array([]) ,
         logrosClave: this._fb.array([]) ,
       }),
       vision: this._fb.group({
-        objetivos: new FormControl(null, Validators.required),
-        valores: new FormControl(null, Validators.required),
+        objetivos: new FormControl(null),
+        valores: new FormControl(null),
       }),
       videos: this._fb.group({
         videoBotando: new FormControl(null),
@@ -712,11 +712,11 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
   private validaErrores() {
     this._logger.log(LogLevel.Warn, `${this._contextLog} >> validaErrores`, `Validando formularios...`);
     this.validaPerfil();
-    this.validaFuerzaResistencia();
+    // this.validaFuerzaResistencia();
     this.validaBasketball();
-    this.validaExperiencia();
-    this.validaVision();
-    this.validaRedes();
+    // this.validaExperiencia();
+    // this.validaVision();
+    // this.validaRedes();
   }
 
   public onSubmit(): void {
@@ -744,49 +744,49 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
       return formData;
     }
 
-    // if (this.formularioPrincipal.invalid) {
-    //   this.formularioPrincipal.markAllAsTouched();
-    //   this.validaErrores();
-    //   this._logger.log(LogLevel.Warn, `${this._contextLog} >> onSubmit`, 'Formulario inválido al intentar guardar.');
-    // } else {
+    if (this.formularioPrincipal.invalid) {
+      this.formularioPrincipal.markAllAsDirty();
+      this.validaErrores();
+      this._logger.log(LogLevel.Warn, `${this._contextLog} >> onSubmit`, 'Formulario inválido al intentar guardar.');
+    } else {
       // aqui iva la informacion si le pongo otra vez lo de validar todo
+      this._blockUserIService.show(JugadorConstants.APLICANDO_CAMBIOS);
+      this._logger.log(LogLevel.Debug, `${this._contextLog} >> onSubmit`, 'Enviando datos al servidor.');
 
-    // }
+      const raw = this.formularioPrincipal.getRawValue();
 
-    this._blockUserIService.show(JugadorConstants.APLICANDO_CAMBIOS);
-    this._logger.log(LogLevel.Debug, `${this._contextLog} >> onSubmit`, 'Enviando datos al servidor.');
-
-    const raw = this.formularioPrincipal.getRawValue();
-
-    let formCompleto: IRegistraInformacionPersonal;
-    formCompleto = {
-      perfil: raw.perfil,
-      fuerzaResistencia: raw.fuerzaResistencia,
-      basketball: raw.basketball,
-      experiencia: raw.experiencia,
-      vision: raw.vision,
-      videos: raw.videos,
-      redes: raw.redes,
-    }
-    const formData = dtoToFormData(formCompleto, this.formularioPrincipal, this.jugadorPerfilComponent);
-
-    this._informacionPersonalService.save(formData).pipe(
-      takeUntil(this._destroy$),
-      finalize(() => this._blockUserIService.hide())
-    ).subscribe({
-      next: (response: any) => {
-        this._logger.log(LogLevel.Info, `${this._contextLog} >> onSubmit`, 'Información guardada correctamente', response);
-        this._toastService.showMessage(SeverityMessageType.Success, 'Genial', response.mensaje, 5000);
-        this.perfil.get('fotoPerfilFile')?.setValue(null);
-        this.cargaDatos();
-      },
-      error: (error: any) => {
-        // Aquí puedes mostrar un toast, modal o mensaje en pantalla
-        this._logger.log(LogLevel.Error, `${this._contextLog} >> onSubmit`, 'Error guardando información', error);
-        this._toastService.showMessage(SeverityMessageType.Error, 'Error al guardar', error.error.message || 'Algo salió mal');
-        this._blockUserIService.hide();
+      let formCompleto: IRegistraInformacionPersonal;
+      formCompleto = {
+        perfil: raw.perfil,
+        fuerzaResistencia: raw.fuerzaResistencia,
+        basketball: raw.basketball,
+        experiencia: raw.experiencia,
+        vision: raw.vision,
+        videos: raw.videos,
+        redes: raw.redes,
       }
-    });
+      const formData = dtoToFormData(formCompleto, this.formularioPrincipal, this.jugadorPerfilComponent);
+
+      this._informacionPersonalService.save(formData).pipe(
+        takeUntil(this._destroy$),
+        finalize(() => this._blockUserIService.hide())
+      ).subscribe({
+        next: (response: any) => {
+          this._logger.log(LogLevel.Info, `${this._contextLog} >> onSubmit`, 'Información guardada correctamente', response);
+          this._toastService.showMessage(SeverityMessageType.Success, 'Genial', response.mensaje, 5000);
+          this.perfil.get('fotoPerfilFile')?.setValue(null);
+          this.cargaDatos();
+        },
+        error: (error: any) => {
+          // Aquí puedes mostrar un toast, modal o mensaje en pantalla
+          this._logger.log(LogLevel.Error, `${this._contextLog} >> onSubmit`, 'Error guardando información', error);
+          this._toastService.showMessage(SeverityMessageType.Error, 'Error al guardar', error.error.message || 'Algo salió mal');
+          this._blockUserIService.hide();
+        }
+      });
+
+    }
+
   }
 //#endregion
 

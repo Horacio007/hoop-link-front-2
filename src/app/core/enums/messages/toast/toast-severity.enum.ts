@@ -5,6 +5,6 @@ export enum SeverityMessageType {
   Error = 'error',
   Contrast = 'contrast',
   Secondary = 'secondary',
-  Warn = "Warn",
+  Warn = "warning",
   // Puedes agregar más tipos según tus necesidades
 }
