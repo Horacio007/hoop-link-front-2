@@ -51,6 +51,7 @@ export class JugadorPerfilPage implements OnInit, ViewWillEnter {
 
   @ViewChild('modalAttr', { static: true }) modalAttr!: IonModal;
   @ViewChild('modalBuscas', { static: true }) modalBuscas!: IonModal;
+  @ViewChild('modalGenero', { static: true }) modalGenero!: IonModal;
 //#endregion
 
 //#region Constructor
@@ -264,11 +265,11 @@ export class JugadorPerfilPage implements OnInit, ViewWillEnter {
   }
 
    public openModalSexo() {
-    this.modalSexo.present();
+    this.modalGenero.present();
   }
 
   public closeModalSexo() {
-    this.modalSexo.dismiss();
+    this.modalGenero.dismiss();
   }
 
 //#endregion

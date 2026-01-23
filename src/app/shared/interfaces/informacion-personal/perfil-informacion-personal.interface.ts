@@ -11,5 +11,7 @@ export interface IPerfilInformacionPersonal {
   sexo?: ICatalogo,
   medidaMano?: number,
   largoBrazo?: number,
+  aperturaBrazo?: number,
+  alcanceMaximo?: number,
   quienEres?: string,
 }

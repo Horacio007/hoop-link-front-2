@@ -190,8 +190,10 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
         peso: new FormControl(null, Validators.required),
         estatusBusquedaJugador: new FormControl('', Validators.required),
         sexo: new FormControl('', Validators.required),
-        medidaMano: new FormControl(null),
-        largoBrazo: new FormControl(null),
+        medidaMano: new FormControl('', Validators.required),
+        largoBrazo: new FormControl('', Validators.required),
+        aperturaBrazo: new FormControl('', Validators.required),
+        alcanceMaximo: new FormControl('', Validators.required),
         quienEres: new FormControl(null, Validators.required),
       }),
       fuerzaResistencia: this._fb.group({
@@ -387,6 +389,8 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
       sexo: infoPersonal?.sexo ?? { id: '', nombre: ''},
       largoBrazo: infoPersonal?.largoBrazo,
       medidaMano: infoPersonal?.medidaMano,
+      aperturaBrazo: infoPersonal?.aperturaBrazo,
+      alcanceMaximo: infoPersonal?.alcanceMaximo,
       quienEres: infoPersonal?.quienEres ?? '',
       informacionPersonalId: infoPersonal?.informacionPersonalId,
       fotoPerfil: infoPersonal?.fotoPerfilPublicUrl
@@ -599,6 +603,8 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
       sexo: perfil.sexo,
       medidaMano: perfil.medidaMano,
       largoBrazo: perfil.largoBrazo,
+      aperturaBrazo: perfil.aperturaBrazo,
+      alcanceMaximo: perfil.alcanceMaximo,
       quienEres: perfil.quienEres,
     });
 
@@ -745,7 +751,7 @@ export class JugadorInformacionPersonalPage implements OnInit, OnDestroy, ViewWi
     }
 
     if (this.formularioPrincipal.invalid) {
-      this.formularioPrincipal.markAllAsDirty();
+      this.formularioPrincipal.markAllAsTouched();
       this.validaErrores();
       this._logger.log(LogLevel.Warn, `${this._contextLog} >> onSubmit`, 'Formulario inválido al intentar guardar.');
     } else {

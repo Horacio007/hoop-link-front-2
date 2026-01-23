@@ -206,7 +206,7 @@
       </ion-card-header>
       <ion-card-content>
         <div class="grid grid-cols-12 gap-4 mb-4">
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <div class="col-span-12 md:col-span-6">
             <ion-input
               label="Porcentaje de tiro de media"
               inputId="on_label_reb_prom_juego"
@@ -220,7 +220,7 @@
               <span slot="end" class="text-gray-500"> %</span>
             </ion-input>
           </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <div class="col-span-12 md:col-span-6">
             <ion-input
               label="Porcentaje de tiro de tres"
               inputId="on_label_reb_prom_juego"
@@ -234,7 +234,7 @@
               <span slot="end" class="text-gray-500"> %</span>
             </ion-input>
           </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <div class="col-span-12 md:col-span-6">
             <ion-input
               label="Porcentaje de tiro libre"
               inputId="on_label_reb_prom_juego"
@@ -312,9 +312,39 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-text>
-        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
-      </ion-text>
+      <ul class="list-disc mx-2 pl-4 my-2">
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">¿Cuándo empezaste a jugar?</span>
+          <p class="text-base mt-1">
+           Año en que jugaste basketball por primera vez de forma organizada.
+          </p>
+        </li>
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Mano de juego</span>
+          <p class="text-base mt-1">
+            Mano dominante para botar, pasar y tirar.
+          </p>
+        </li>
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Posición juego uno</span>
+          <p class="text-base mt-1">
+            Posición principal en la que juegas la mayoría del tiempo.
+          </p>
+        </li>
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Posición juego dos</span>
+          <p class="text-base mt-1">
+            Posición secundaria que también puedes jugar.
+          </p>
+        </li>
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">¿Clavas?</span>
+          <p class="text-base mt-1">
+            Indica si puedes clavar el balón en juego real.
+            (No “una vez”, no “en calentamiento”. Juego real.)
+          </p>
+        </li>
+      </ul>
     </ion-content>
   </ng-template>
 </ion-modal>
@@ -332,9 +362,27 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-text>
-        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
-      </ion-text>
+      <ul class="list-disc mx-2 pl-4 my-2">
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Pts promedio por juego</span>
+          <p class="text-base mt-1">
+           Puntos anotados por partido en competencia oficial.
+          </p>
+        </li>
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Asist promedio por juego</span>
+          <p class="text-base mt-1">
+            Asistencias registradas por partido en competencia oficial.
+          </p>
+        </li>
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Reb promedio por juego</span>
+          <p class="text-base mt-1">
+            Rebotes totales por partido en competencia oficial.
+            (No sumes entrenamientos, cascaritas ni ligas mixtas)
+          </p>
+        </li>
+      </ul>
     </ion-content>
   </ng-template>
 </ion-modal>
@@ -352,9 +400,28 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-text>
-        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
-      </ion-text>
+      <ul class="list-disc mx-2 pl-4 my-2">
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Porcentaje de tiro de media (%)</span>
+          <p class="text-base mt-1">
+            Tiros anotados desde media distancia en juegos oficiales.
+            (Media = dentro de la línea de 3, fuera de la pintura)
+          </p>
+        </li>
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Porcentaje de tiro de tres (%)</span>
+          <p class="text-base mt-1">
+            Tiros de tres anotados en juegos oficiales.
+            (Solo triples, no “tiros largos”)
+          </p>
+        </li>
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Porcentaje de tiro libre (%)</span>
+          <p class="text-base mt-1">
+            Tiros libres anotados en juegos oficiales.
+          </p>
+        </li>
+      </ul>
     </ion-content>
   </ng-template>
 </ion-modal>

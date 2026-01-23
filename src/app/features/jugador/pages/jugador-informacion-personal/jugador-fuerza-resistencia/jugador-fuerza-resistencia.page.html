@@ -70,7 +70,7 @@
           </div>
           <div class="col-span-12 md:col-span-6">
             <ion-input
-              label="Distancia de salto horizontal"
+              label="Distancia de salto frontal"
               inputId="on_label_distanciaSaltoHorizontal"
               formControlName='distanciaSaltoHorizontal'
               autocomplete="off"
@@ -113,36 +113,6 @@
           </div>
           <div class="col-span-12 md:col-span-6">
             <ion-input
-              label="Peso máximo en squats"
-              inputId="on_label_pesoSquats"
-              formControlName='pesoSquats'
-              autocomplete="off"
-              type="number"
-              step="0.01"
-              placeholder="Ej: 185"
-              label-placement="floating"
-              fill="outline"
-            >
-              <span slot="end" class="text-gray-500"> kg</span>
-            </ion-input>
-          </div>
-          <div class="col-span-12 md:col-span-6">
-            <ion-input
-              label="Peso máximo en press militar"
-              inputId="on_label_pesoPressMilitar"
-              formControlName='pesoPressMilitar'
-              autocomplete="off"
-              type="number"
-              step="0.01"
-              placeholder="Ej: 185"
-              label-placement="floating"
-              fill="outline"
-            >
-              <span slot="end" class="text-gray-500"> kg</span>
-            </ion-input>
-          </div>
-          <div class="col-span-12 md:col-span-6">
-            <ion-input
               label="Peso máximo en 10 repeticiones de bench press"
               inputId="on_label_pesoRepeticionBenchPress"
               formControlName='pesoRepeticionBenchPress'
@@ -158,9 +128,39 @@
           </div>
           <div class="col-span-12 md:col-span-6">
             <ion-input
+              label="Peso máximo en squats"
+              inputId="on_label_pesoSquats"
+              formControlName='pesoSquats'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> kg</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
               label="Peso máximo en 10 repeticiones de squats"
               inputId="on_label_pesoRepeticionSquats"
               formControlName='pesoRepeticionSquats'
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 185"
+              label-placement="floating"
+              fill="outline"
+            >
+              <span slot="end" class="text-gray-500"> kg</span>
+            </ion-input>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-input
+              label="Peso máximo en press militar"
+              inputId="on_label_pesoPressMilitar"
+              formControlName='pesoPressMilitar'
               autocomplete="off"
               type="number"
               step="0.01"
@@ -278,9 +278,22 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-text>
-        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
-      </ion-text>
+      <ul class="list-disc mx-2 pl-4 my-2">
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Altura salto vertical (cm)</span>
+          <p class="text-base mt-1">
+            Altura máxima que alcanza la mano en un salto vertical desde parado.
+            (Medir con ambos pies, sin pasos previos)
+          </p>
+        </li>
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Distancia salto frontal (cm)</span>
+          <p class="text-base mt-1">
+            Distancia desde la línea de despegue hasta el talón más cercano al caer.
+            (Salto hacia adelante desde parado, ambos pies)
+          </p>
+        </li>
+      </ul>
     </ion-content>
   </ng-template>
 </ion-modal>
@@ -298,9 +311,14 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-text>
-        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
-      </ion-text>
+      <ul class="list-disc mx-2 pl-4 my-2">
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Fuerza</span>
+          <p class="text-base mt-1">
+            Todos los pesos deben realizarse con barra olímpica, técnica correcta y movimiento completo. No se aceptan estimaciones.
+          </p>
+        </li>
+      </ul>
     </ion-content>
   </ng-template>
 </ion-modal>
@@ -318,9 +336,14 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-text>
-        <p>Laboris pariatur et tempor fugiat excepteur non anim sint id veniam proident do deserunt incididunt. Labore ex sint deserunt consequat sit duis sunt ipsum elit Lorem velit. Officia qui fugiat amet pariatur cupidatat qui ullamco tempor tempor laborum. Quis do eu nulla aliqua ipsum mollit enim anim cupidatat proident excepteur. Est id amet anim et aute reprehenderit laborum deserunt Lorem do. Voluptate adipisicing duis adipisicing ea proident tempor veniam ut sunt.</p>
-      </ion-text>
+      <ul class="list-disc mx-2 pl-4 my-2">
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Resistencia</span>
+          <p class="text-base mt-1">
+            Todos los tiempos se realizan corriendo de forma continua, sin pausas, en superficie plana.
+          </p>
+        </li>
+      </ul>
     </ion-content>
   </ng-template>
 </ion-modal>
