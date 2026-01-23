@@ -15,7 +15,7 @@ import { SelectListSearchComponent } from "src/app/shared/components/ionic/selec
   templateUrl: './jugador-basketball.page.html',
   styleUrls: ['./jugador-basketball.page.scss'],
   standalone: true,
-  imports: [IonText, IonButtons, IonButton, IonToolbar, IonHeader, IonCardContent, IonIcon, IonContent, IonCard, IonCardTitle, IonCardHeader, IonInput, IonToggle, IonItem, IonList, IonDatetime, IonDatetimeButton, IonLabel, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonModal, SelectListSearchComponent]
+  imports: [IonButtons, IonButton, IonToolbar, IonHeader, IonCardContent, IonIcon, IonContent, IonCard, IonCardTitle, IonCardHeader, IonInput, IonToggle, IonItem, IonList, IonDatetime, IonDatetimeButton, IonLabel, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonModal, SelectListSearchComponent]
 })
 export class JugadorBasketballPage implements OnInit, OnDestroy, AfterViewInit {
 

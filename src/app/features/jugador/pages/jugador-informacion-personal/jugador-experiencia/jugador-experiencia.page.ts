@@ -15,7 +15,7 @@ import { addCircleOutline, trash } from 'ionicons/icons';
   templateUrl: './jugador-experiencia.page.html',
   styleUrls: ['./jugador-experiencia.page.scss'],
   standalone: true,
-  imports: [IonText, IonContent, IonButtons, IonToolbar, IonHeader, IonCardTitle, IonCardContent, IonCardHeader, IonCard, IonIcon, IonToggle, IonItem, IonInput, IonModal, IonDatetime, IonDatetimeButton, IonLabel, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonButton]
+  imports: [IonContent, IonButtons, IonToolbar, IonHeader, IonCardTitle, IonCardContent, IonCardHeader, IonCard, IonIcon, IonToggle, IonItem, IonInput, IonModal, IonDatetime, IonDatetimeButton, IonLabel, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonButton]
 })
 export class JugadorExperienciaPage implements OnInit, OnDestroy, AfterViewInit {
 

@@ -12,7 +12,7 @@ import { IonTextarea, IonCardSubtitle, IonCard, IonCardHeader, IonCardTitle, Ion
   templateUrl: './jugador-vision.page.html',
   styleUrls: ['./jugador-vision.page.scss'],
   standalone: true,
-  imports: [IonButtons, IonButton, IonContent, IonText, IonHeader, IonToolbar, IonModal, IonIcon, IonCardContent, IonCardTitle, IonCardHeader, IonCard, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonTextarea]
+  imports: [IonButtons, IonButton, IonContent, IonHeader, IonToolbar, IonModal, IonIcon, IonCardContent, IonCardTitle, IonCardHeader, IonCard, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonTextarea]
 })
 export class JugadorVisionPage implements OnInit, OnDestroy {
 //#region Propiedades

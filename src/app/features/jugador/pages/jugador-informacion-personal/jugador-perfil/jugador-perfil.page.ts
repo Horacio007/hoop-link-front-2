@@ -23,7 +23,7 @@ import { ViewWillEnter } from '@ionic/angular';
   templateUrl: './jugador-perfil.page.html',
   styleUrls: ['./jugador-perfil.page.scss'],
   standalone: true,
-  imports: [IonText, IonContent, IonButton, IonButtons, IonToolbar, IonHeader, IonIcon, IonCardContent, IonCardHeader, IonCard, IonCardTitle, IonTextarea, IonModal, IonList, IonItem, IonLabel, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, ProfileImageComponent, IonInput, SelectListSearchComponent]
+  imports: [IonContent, IonButton, IonButtons, IonToolbar, IonHeader, IonIcon, IonCardContent, IonCardHeader, IonCard, IonCardTitle, IonTextarea, IonModal, IonList, IonItem, IonLabel, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, ProfileImageComponent, IonInput, SelectListSearchComponent]
 })
 export class JugadorPerfilPage implements OnInit, ViewWillEnter {
 

@@ -12,7 +12,7 @@ import { SkeletonComponent } from "src/app/shared/components/ionic/skeleton/skel
   templateUrl: './jugador-redes-sociales.page.html',
   styleUrls: ['./jugador-redes-sociales.page.scss'],
   standalone: true,
-  imports: [IonContent, IonToolbar, IonModal, IonButton, IonButtons, IonText, IonCardContent, IonIcon, IonCardTitle, IonCardHeader, IonCard, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonInput, IonHeader]
+  imports: [IonContent, IonToolbar, IonModal, IonButton, IonButtons, IonCardContent, IonIcon, IonCardTitle, IonCardHeader, IonCard, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, IonInput, IonHeader]
 })
 export class JugadorRedesSocialesPage implements OnInit, OnDestroy {
 

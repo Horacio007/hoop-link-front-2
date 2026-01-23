@@ -12,7 +12,7 @@ import { VideoUploaderComponent } from '../../../components/video-uploader/video
   templateUrl: './jugador-videos.page.html',
   styleUrls: ['./jugador-videos.page.scss'],
   standalone: true,
-  imports: [IonIcon, IonToolbar, IonContent ,IonModal, IonText, IonButtons, IonButton, IonCardTitle, IonCardContent, IonCardHeader, IonCard, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, VideoUploaderComponent, IonHeader]
+  imports: [IonIcon, IonToolbar, IonContent ,IonModal, IonButtons, IonButton, IonCardTitle, IonCardContent, IonCardHeader, IonCard, CommonModule, FormsModule, ReactiveFormsModule, SkeletonComponent, VideoUploaderComponent, IonHeader]
 })
 export class JugadorVideosPage implements OnInit, OnDestroy {
 //#region Propiedades
