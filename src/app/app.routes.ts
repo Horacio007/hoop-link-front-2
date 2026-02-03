@@ -227,7 +227,12 @@ export const routes: Routes = [
                 loadComponent: () => import('./features/jugador/pages/jugador-informacion-personal/jugador-redes-sociales/jugador-redes-sociales.page').then( m => m.JugadorRedesSocialesPage)
               },
             ]
-          }
+          },
+          {
+            path: 'informacion-personal',
+            title: 'Información Personal | HoopLink',
+            loadComponent: () => import('./features/coach/pages/coach-informacion-personal/coach-informacion-personal.page').then( m => m.CoachInformacionPersonalPage)
+          },
         ]
       }
     ]

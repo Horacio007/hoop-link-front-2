@@ -7,6 +7,7 @@ import { WebApiConstants } from '../../constants/web-api/web-api.constants';
 import { LogLevel } from '../../enums';
 import { IResponse } from '../../interfaces/response/response.interface';
 import { IListadoJugadores } from 'src/app/shared/interfaces/coach/listado-jugadores.interface';
+import { IInformacionPersonalCoach } from 'src/app/features/coach/interfaces/informacion-personal.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -84,6 +85,30 @@ export class CoachService {
       })
     );
   }
+
+  public saveInformcionPersonal(datos: FormData): Observable<IResponse<any>> {
+    const url: string = WebApiConstants.coach.save;
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> save`, 'Guardando información personal.', { endpoint: url, datos });
+
+    return this._webApiService.post<IResponse<any>>(url, datos, true).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
+  }
+
+  public getInformacionPersonal(): Observable<IResponse<IInformacionPersonalCoach | undefined>> {
+    const url: string = WebApiConstants.coach.getInformacion
+
+    this._logger.log(LogLevel.Debug, `${this._contextLog} >> getInformacionPersonal`, 'Solicitando información personal.', { endpoint: url });
+
+    return this._webApiService.get<IResponse<IInformacionPersonalCoach | undefined>>(url, true).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
+  }
+
 //#endregion
 
 //#region Servicios Filtros

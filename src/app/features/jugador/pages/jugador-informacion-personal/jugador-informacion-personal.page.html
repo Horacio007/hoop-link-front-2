@@ -134,7 +134,7 @@
               <div class="flex flex-row items-center">
                 @if (+comentario.autor === 0) {
                   <ion-avatar slot="start" class="jugador-avatar">
-                    <img [src]="'assets/images/generales/sin-foto.png'" alt="Foto de Perfil" />
+                    <img [src]="comentario.fotoPerfilPublicUrl || 'assets/images/generales/sin-foto.png'" alt="Foto de Perfil" />
                   </ion-avatar>&nbsp;&nbsp;
                   <ion-label class="text-2xl font-bold">{{comentario.nombre_autor}}</ion-label>
                 } @else {

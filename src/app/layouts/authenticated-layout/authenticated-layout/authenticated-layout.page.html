@@ -31,6 +31,11 @@
           <ion-label (click)="closeMenu()">Dashboard</ion-label>
         </ion-item>
 
+        <ion-item lines="none" button routerLink="/desktop/coach/informacion-personal" routerDirection="forward" routerLinkActive="menu-item-activo" [routerLinkActiveOptions]="{exact: true}">
+          <ion-icon slot="start" name="person-outline"></ion-icon>
+          <ion-label (click)="closeMenu()">Info. Personal</ion-label>
+        </ion-item>
+
         <ion-item lines="none" button routerLink="/desktop/coach/listado-jugadores" routerDirection="forward" routerLinkActive="menu-item-activo" [routerLinkActiveOptions]="{exact: true}">
           <ion-icon slot="start" name="accessibility-outline"></ion-icon>
           <ion-label (click)="closeMenu()">Listado Jugadores</ion-label>

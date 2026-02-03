@@ -1,0 +1,244 @@
+<form [formGroup]="form" (submit)="onSubmit()" class="my-4">
+  @if (cargandoData) {
+    <div class="grid grid-cols-12 gap-4 mb-4 flex items-center justify-center">
+      <div class="col-span-12 lg:col-span-6 flex items-center justify-center">
+        <app-skeleton type="circle" style="width: 10rem; height: 10rem;" ></app-skeleton>
+      </div>
+      <div class="col-span-12 lg:col-span-6">
+        <app-skeleton style="height: 8rem;" ></app-skeleton>
+      </div>
+    </div>
+    <div class="grid grid-cols-12 gap-4 mb-4">
+      <div class="col-span-12 md:col-span-6 ">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
+      </div>
+      <div class="col-span-12 md:col-span-6 ">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
+      </div>
+      <div class="col-span-12 md:col-span-6 ">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
+      </div>
+    </div>
+    <div class="grid grid-cols-12 gap-4 mb-4">
+      <div class="col-span-12 md:col-span-6 ">
+        <app-skeleton style="height: 3rem;" ></app-skeleton>
+      </div>
+    </div>
+  } @else {
+    <div class="grid grid-cols-12 gap-4 mb-4">
+      <div class="col-span-12 md:col-span-6 flex items-center justify-center">
+        <app-profile-image
+            [imageUrl]="fotoPreviewUrl || form.get('fotoPerfil')?.value"
+            (imageSelected)="onFileSelected($event)"
+            (fileTooLarge)="handleFileTooLarge($event)"
+            [isReadOnly]="false">
+        </app-profile-image>
+      </div>
+
+      <div class="col-span-12 md:col-span-6 w-full flex items-end">
+        <ion-card class="w-full">
+          <ion-card-content>
+            <ion-input
+              label="Trabajo actual"
+              inputId="on_label_trabajo_actual"
+              formControlName='trabajoActual'
+              autocomplete="off"
+              placeholder="Ej: Entrenador de borregos."
+              label-placement="floating"
+              fill="outline"
+            >
+            </ion-input>
+            <br>
+            <div class="col-span-12 md:col-span-6 ">
+              <ion-input
+                label="Antiguedad"
+                inputId="on_label_antiguedaad"
+                formControlName='antiguedad'
+                autocomplete="off"
+                type="number"
+                step="0.01"
+                placeholder="Ej: 20"
+                label-placement="floating"
+                fill="outline"
+              >
+                <span slot="end" class="text-gray-500"> años</span>
+              </ion-input>
+            </div>
+            <br>
+            <ion-textarea
+                label="Hablame de ti"
+                formControlName='personalidad'
+                label-placement="floating"
+                fill="outline"
+                [autoGrow]="true"
+                placeholder="Ej: Líder carismático y empático, enfocado en el desarrollo del carácter y la química de equipo."
+                style="min-height: 100px;">
+            </ion-textarea>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+    <ion-card class="mb-6">
+      <ion-card-header class="m-4">
+        <div class="flex justify-between  w-full">
+          <ion-card-title class="text-3xl">
+            Filosofía Personal
+          </ion-card-title>
+
+          <ion-icon (click)="openModalAttr()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 md:col-span-6">
+            <ion-textarea
+              label="Objetivos"
+              inputId="on_label_objetivos"
+              formControlName='objetivos'
+              autocomplete="off"
+              placeholder="Define tus metas deportivas a corto y largo plazo -> Ej: Desarrollar jugadores de la categoría juvenil promocionen al equipo mayor o consigan
+                becas universitarias el próximo año...."
+              label-placement="floating"
+              fill="outline"
+              [autoGrow]="true"
+            >
+            </ion-textarea>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <ion-textarea
+              label="Valores"
+              inputId="on_label_valores"
+              formControlName='valores'
+              autocomplete="off"
+              placeholder="Menciona los valores que guían tu forma de entrenar -> Ej: Disciplina y compromiso, Trabajo en equipo..."
+              label-placement="floating"
+              fill="outline"
+              [autoGrow]="true"
+            >
+            </ion-textarea>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="mb-6">
+      <ion-card-header class="m-4">
+        <div class="flex justify-between  w-full">
+          <ion-card-title class="text-3xl">Trayectoria</ion-card-title>
+
+          <ion-icon (click)="openModalTrayectoria()" class="animate-bounce text-5xl hover:cursor-pointer" style="color: #004e6d;" name="information-circle-outline"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+          <div class="col-span-12 md:col-span-6">
+            <div class="flex justify-between mb-4">
+              <h1 class="text-3xl">Historial de trabajos</h1>
+              <ion-button color="success" shape="round" fill="clear" (click)="onAgregaTrabajo()" severity="success">
+                <ion-icon class="text-4xl" name="add-circle-outline"></ion-icon>
+              </ion-button>
+            </div>
+            @if (Trabajo.controls.length > 0) {
+              <div formArrayName="historialTrabajoCoaches">
+                @for (control of Trabajo.controls; track control.get('id')!.value ) {
+                  <div [formGroupName]="$index">
+                    <div class="flex justify-end mb-4">
+                      <ion-button color="danger" fill="clear" shape="round" (click)="onEliminaTrabajo($index)">
+                        <ion-icon class="text-3xl" name="trash"></ion-icon>
+                      </ion-button>
+                    </div>
+                    <div class="grid grid-cols-12 gap-4 mb-4">
+                      <div class="col-span-12">
+                        <ion-input
+                          label="Nombre del trabajo"
+                          inputId="on_label_nombre_club"
+                          formControlName='nombre'
+                          autocomplete="off"
+                          placeholder="Ej: Universidad Autonoma del Noreste"
+                          label-placement="floating"
+                          fill="outline"
+                        >
+                        </ion-input>
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="flex justify-end mx-2 my-4">
+      <div class="flex align-center justify-center">
+        @if (cargandoData) {
+          <app-skeleton style="width: 5rem; height: 2.5rem;"></app-skeleton>
+        } @else {
+          <ion-button class="w-full" type="submit" [style]="{'--background': '#f47621', '--border-color': '#f47621'}">
+            Guardar
+          </ion-button>
+        }
+      </div>
+    </div>
+
+  }
+</form>
+
+<ion-modal #modalAttr [isOpen]="false" cssClass="custom-modal-info-buttons">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="mx-2">
+        <h1>Instrucciones.</h1>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModalAttr()">
+            <ion-icon class="text-3xl" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ul class="list-disc mx-2 pl-4 my-2">
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Objetivos</span>
+          <p class="text-base mt-1">
+            Meta deportiva que buscas alcanzar en el corto o mediano plazo.
+            (Ejemplo mental: consolidarte en tu liga, obtener becas deportivas)
+          </p>
+        </li>
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Valores</span>
+          <p class="text-base mt-1">
+            Principios que guían tu comportamiento dentro y fuera de la cancha.
+            (Ejemplo mental: disciplina, trabajo en equipo, constancia)
+          </p>
+        </li>
+      </ul>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #modalTrayectoria [isOpen]="false" cssClass="custom-modal-info-buttons">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="mx-2">
+        <h1>Instrucciones.</h1>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModalTrayectoria()">
+            <ion-icon class="text-3xl" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ul class="list-disc mx-2 pl-4 my-2">
+        <li class="text-xl marker:text-black">
+          <span class="font-medium">Historial de trabajos</span>
+          <p class="text-base mt-1">
+            Instituciones en los que has fungido como entrenador.
+          </p>
+        </li>
+      </ul>
+    </ion-content>
+  </ng-template>
+</ion-modal>

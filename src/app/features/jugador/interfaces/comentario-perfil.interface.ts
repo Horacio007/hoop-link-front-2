@@ -5,6 +5,8 @@ export interface IComentarioPerfil {
   fecha_creacion: Date;
   nombre_autor: string;
   nombre_perfil: string;
+  fotoPerfilPublicUrl: string | null;
+  autorId?: number | null
 }
 
 export interface ISaveComentarioPerfil {
