@@ -1,0 +1,12 @@
+/* Aplica esto a las columnas laterales o al componente app-banner-space */
+.sticky {
+  position: -webkit-sticky; /* Soporte para Safari */
+  position: sticky;
+  top: 1rem; /* Margen de respiro cuando el header ya se fue */
+
+  /* Esto asegura que la columna no "empuje" hacia abajo si el banner es corto */
+  align-self: flex-start;
+
+  /* Opcional: suaviza el inicio del movimiento */
+  transition: top 0.2s ease-in-out;
+}

@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { LoggerService } from '../../../../core/services/logger/logger.service';
 import { LogLevel } from '../../../../core/enums';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-banner-space',
@@ -12,6 +13,13 @@ import { LogLevel } from '../../../../core/enums';
 export class BannerSpaceComponent implements OnInit, OnDestroy {
 
 //#region Propieades
+  // @Input({ required: true })
+  // scroll$!: BehaviorSubject<number>;
+
+  // @ViewChild('parallaxImg', { static: true })
+  // parallaxImg!: ElementRef<HTMLImageElement>;
+
+  // private scrollSub?: Subscription;
   private readonly _contextLog = 'BannerSpaceComponent';
 //#endregion
 
@@ -25,8 +33,24 @@ export class BannerSpaceComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    // this.scrollSub?.unsubscribe();
     this._logger.log(LogLevel.Debug, `${this._contextLog} >> ngOnDestroy`, 'Componente destruido.');
   }
+
+  ngAfterViewInit(): void {
+    // this.scrollSub = this.scroll$.subscribe(scrollTop => {
+    //   const speed = 0.3;
+    //   this.parallaxImg.nativeElement.style.transform =
+    //     `translateY(${scrollTop * speed}px)`;
+    // });
+  }
+//#endregion
+
+//#region Generales
+
+
+
+
 //#endregion
 
 }

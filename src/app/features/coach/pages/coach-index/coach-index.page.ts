@@ -10,13 +10,15 @@ import { Subscription, filter, map } from 'rxjs';
 import { LogLevel } from 'src/app/core/enums';
 import { LoggerService } from 'src/app/core/services/logger/logger.service';
 import { FooterComponent } from "src/app/layouts/components/footer/footer.component";
+import { BannerSpaceComponent } from "src/app/layouts/authenticated-layout/components/banner-space/banner-space.component";
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-coach-index',
   templateUrl: './coach-index.page.html',
   styleUrls: ['./coach-index.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, HeaderAuthenticatedComponent, RouterOutlet, FooterComponent]
+  imports: [IonContent, CommonModule, FormsModule, HeaderAuthenticatedComponent, RouterOutlet, FooterComponent, BannerSpaceComponent]
 })
 export class CoachIndexPage implements OnInit, OnDestroy {
 
@@ -24,6 +26,7 @@ export class CoachIndexPage implements OnInit, OnDestroy {
   private readonly LOG_CONTEXT = 'CoachIndexPage';
 
 //#region Propiedades
+//  public parallaxScroll$ = new BehaviorSubject<number>(0);
   public pageTitle: string = 'Dashboard';
   private routerSubscription: Subscription | null = null;
 //#endregion
@@ -125,5 +128,13 @@ export class CoachIndexPage implements OnInit, OnDestroy {
       // 2. Fallback por clave 'title' (si se definió explícitamente en data: { title: '...' })
       return routeData['title'] as string | undefined;
     }
+
+
+
+    // onContentScroll(event: any) {
+    //   const scrollTop = event.detail.scrollTop;
+    //   this.parallaxScroll$.next(scrollTop);
+    // }
+
 //#endregion
 }

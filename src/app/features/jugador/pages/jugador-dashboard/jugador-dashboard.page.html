@@ -5,11 +5,13 @@
     <div class="max-w-screen mx-auto px-4 md:px-2 bg-[#EDEDED]">
 
         <!-- GRID DE TRES COLUMNAS (2 - 8 - 2) para el layout tipo revista/decoración lateral -->
-        <div class="grid grid-cols-12 gap-x-4 min-h-screen">
+        <div class="grid grid-cols-12 gap-x-4 min-h-screen items-start">
 
             <!-- 1. Columna Izquierda (Marco/Banner Decorativo) -->
             <!-- Lo ocultamos en móvil (hidden) y mostramos en grande (lg:block) -->
-            <div class="hidden lg:block lg:col-span-2"></div>
+            <div class="hidden lg:block lg:col-span-2 sticky top-4">
+              <app-banner-space></app-banner-space>
+            </div>
 
             <!-- 2. Columna Central (Contenido Principal) -->
             <!-- Ocupa todo el ancho en móvil (col-span-12) y 8 columnas en desktop (lg:col-span-8) -->
@@ -19,7 +21,9 @@
 
             <!-- 3. Columna Derecha (Marco/Banner Decorativo) -->
             <!-- Lo ocultamos en móvil (hidden) y mostramos en grande (lg:block) -->
-            <div class="hidden lg:block lg:col-span-2"></div>
+            <div class="hidden lg:block lg:col-span-2 sticky top-4">
+              <app-banner-space></app-banner-space>
+            </div>
 
         </div>
 

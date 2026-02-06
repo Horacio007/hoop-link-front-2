@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+.marquee-wrapper {
+  width: 100%;
+  overflow: hidden;
+  padding: 1rem 0;
+  position: relative;
+}
+
+.marquee {
+  display: flex;
+  width: 100%;
+}
+
+.marquee-content {
+  display: flex;
+  min-width: 200%;
+  animation: scrollLoop 8s linear infinite;
+}
+
+.marquee-text {
+  white-space: nowrap;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding-right: 4rem;
+  color: #004e6d;
+  /* color: #ffffff; */
+  /* text-shadow:
+    2px 2px 0 #f47621,
+    -2px -2px 0 #004e6d,
+    3px 3px 5px #000; */
+}
+
+@keyframes scrollLoop {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+

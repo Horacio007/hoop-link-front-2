@@ -1,0 +1,10 @@
+.banner-wrapper {
+  position: sticky;
+  top: 6rem; /* debajo del header */
+}
+
+.banner-wrapper img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
